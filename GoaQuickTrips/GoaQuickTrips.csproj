@@ -185,16 +185,44 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Amenity.cs">
+      <DependentUpon>GQTmodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Apartment.cs">
+      <DependentUpon>GQTmodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="BookedCustomer.cs">
+      <DependentUpon>GQTmodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Booking.cs">
+      <DependentUpon>GQTmodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BookingDetail.cs">
+      <DependentUpon>GQTmodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Cart.cs">
+      <DependentUpon>GQTmodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AmenitiesController.cs" />
+    <Compile Include="Controllers\ApartmentsController.cs" />
+    <Compile Include="Controllers\BookingsController.cs" />
+    <Compile Include="Controllers\CartsController.cs" />
     <Compile Include="Controllers\EAController.cs" />
+    <Compile Include="Controllers\AdminHomeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImagesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PricesController.cs" />
     <Compile Include="Controllers\TablesController.cs" />
+    <Compile Include="Customer.cs">
+      <DependentUpon>GQTmodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -213,19 +241,50 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GQTMdl.edmx</DependentUpon>
     </Compile>
+    <Compile Include="GQTmodel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GQTmodel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GQTmodel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GQTmodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GQTmodel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GQTmodel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Image.cs">
+      <DependentUpon>GQTmodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Metadata.cs" />
     <Compile Include="Models\PartialClasses.cs" />
+    <Compile Include="Price.cs">
+      <DependentUpon>GQTmodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Review.cs">
+      <DependentUpon>GQTmodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="Status.cs">
+      <DependentUpon>GQTmodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Table.cs">
-      <DependentUpon>GQTMdl.tt</DependentUpon>
+      <DependentUpon>GQTmodel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\GoaQuickTrips.mdf" />
+    <Content Include="App_Data\GoaQuickTrips_log.ldf">
+      <DependentUpon>GoaQuickTrips.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\EA.css" />
@@ -247,6 +306,16 @@
       <DependentUpon>GQTMdl.edmx</DependentUpon>
       <LastGenOutput>GQTMdl.cs</LastGenOutput>
     </Content>
+    <Content Include="GQTmodel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GQTmodel.edmx</DependentUpon>
+      <LastGenOutput>GQTmodel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="GQTmodel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>GQTmodel.edmx</DependentUpon>
+      <LastGenOutput>GQTmodel.cs</LastGenOutput>
+    </Content>
     <Content Include="Reset.sql" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -259,6 +328,13 @@
     </EntityDeploy>
     <Content Include="GQTMdl.edmx.diagram">
       <DependentUpon>GQTMdl.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="GQTmodel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>GQTmodel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="GQTmodel.edmx.diagram">
+      <DependentUpon>GQTmodel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -282,9 +358,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -316,10 +389,46 @@
     <Content Include="Views\Tables\Details.cshtml" />
     <Content Include="Views\Tables\Edit.cshtml" />
     <Content Include="Views\Tables\Index.cshtml" />
+    <Content Include="Views\Carts\Payment.cshtml" />
+    <Content Include="Views\Carts\Delete.cshtml" />
+    <Content Include="Views\Carts\Details.cshtml" />
+    <Content Include="Views\Carts\Edit.cshtml" />
+    <Content Include="Views\Carts\Index.cshtml" />
+    <Content Include="Views\Shared\_AdminMenuPartial.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\ApartmentsView.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\SearchApartments.cshtml" />
+    <Content Include="Views\Apartments\Create.cshtml" />
+    <Content Include="Views\Apartments\Delete.cshtml" />
+    <Content Include="Views\Apartments\Details.cshtml" />
+    <Content Include="Views\Apartments\Edit.cshtml" />
+    <Content Include="Views\Apartments\Index.cshtml" />
+    <Content Include="Views\Apartments\_ViewStart.cshtml" />
+    <Content Include="Views\Home\ApartmentDetail.cshtml" />
+    <Content Include="Views\Bookings\Create.cshtml" />
+    <Content Include="Views\Bookings\Delete.cshtml" />
+    <Content Include="Views\Bookings\Details.cshtml" />
+    <Content Include="Views\Bookings\Edit.cshtml" />
+    <Content Include="Views\Bookings\Index.cshtml" />
+    <Content Include="Views\Amenities\Create.cshtml" />
+    <Content Include="Views\Amenities\Delete.cshtml" />
+    <Content Include="Views\Amenities\Details.cshtml" />
+    <Content Include="Views\Amenities\Edit.cshtml" />
+    <Content Include="Views\Amenities\Index.cshtml" />
+    <Content Include="Views\Prices\Create.cshtml" />
+    <Content Include="Views\Prices\Delete.cshtml" />
+    <Content Include="Views\Prices\Details.cshtml" />
+    <Content Include="Views\Prices\Edit.cshtml" />
+    <Content Include="Views\Prices\Index.cshtml" />
+    <Content Include="Views\Images\Create.cshtml" />
+    <Content Include="Views\Images\Delete.cshtml" />
+    <Content Include="Views\Images\Details.cshtml" />
+    <Content Include="Views\Images\Edit.cshtml" />
+    <Content Include="Views\Images\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>

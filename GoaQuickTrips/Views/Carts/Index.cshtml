@@ -1,0 +1,95 @@
+﻿@model IEnumerable<GoaQuickTrips.Cart>
+<style>
+    .banner {
+        margin-top: 100px;
+        padding: 30px;
+        z-index: 50;
+        background: rgba(0, 0, 0, 0.6);
+        color:white;
+        border-radius: 8px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    }
+</style>
+
+</style>
+<div class="container banner">
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Apartment</th>
+                        <th>No. Of Guests</th>
+                        <th class="text-center">Price</th>
+                        <th class="text-center">Total</th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="col-sm-8 col-md-6">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <h4 class="media-heading"><a href="#">@Html.DisplayFor(modelItem => item.Apartment.Name)</a></h4>
+                                       
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="col-sm-1 col-md-1" style="text-align: center">
+                               @Html.DisplayFor(modelItem => item.Apartment.NoOfGuests)
+                            </td>
+                            <td class="col-sm-1 col-md-1 text-center"><strong>@Html.DisplayFor(modelItem => item.OrigPrice)</strong></td>
+
+                            <td class="col-sm-1 col-md-1">
+                               
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.CartID })
+                         
+                            </td>
+                        </tr>
+                    }
+
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h5>Subtotal</h5></td>
+                        <td class="text-right"><h5><strong>$24.59</strong></h5></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h5>Estimated shipping</h5></td>
+                        <td class="text-right"><h5><strong>$6.94</strong></h5></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td><h3>Total</h3></td>
+                        <td class="text-right"><h3><strong>$31.53</strong></h3></td>
+                    </tr>
+                    <tr>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>   </td>
+                        <td>
+                            <button type="button" class="btn btn-default">
+                                <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+                            </button>
+                        </td>
+                        <td>
+                            <a Href="~/Cart/Payment" class="btn btn-success">
+                                Checkout <span class="glyphicon glyphicon-play"></span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+

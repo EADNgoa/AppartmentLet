@@ -1,0 +1,122 @@
+﻿@model GoaQuickTrips.Apartment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Apartment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rules)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rules)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NoOfGuests)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoOfGuests)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationInfo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationInfo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CancellationPolicy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CancellationPolicy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lang)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lang)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Amenity.Amenity1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amenity.Amenity1)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ApartmentID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
