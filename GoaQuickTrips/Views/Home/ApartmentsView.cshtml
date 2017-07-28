@@ -1,0 +1,97 @@
+﻿@model IEnumerable<Apartment>
+  
+    <style type="text/css">
+        table {
+            page-break-inside: auto
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-footer-group
+        }
+        .image{
+            height:150px;
+            width:300px;
+        }
+    </style>
+    <header class="section-to-print">
+        <h1 class="text-center"><b>Apartments</b></h1>
+
+    </header>
+   
+
+    @foreach (GoaQuickTrips.Apartment item in Model)
+    {
+        <div class="prod_page">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <div class="product_item_view">
+                                <img src="https://s-media-cache-ak0.pinimg.com/564x/b4/12/9a/b4129abb37e4d8e2d7bd4b79e2688a59.jpg" class="img-responsive" />
+                            </div>
+                        </div>
+                     
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <div class="product_detail_view">
+                                <div class="pro_heading">
+                                  @Html.DisplayFor(modelItem => item.Name)
+                                </div>
+
+                               
+                              
+                                <div class="comment">
+                                  No Of Guest:  @Html.DisplayFor(modelItem => item.NoOfGuests)
+                                </div>
+                               
+                                <div class="comment">
+                                 @Html.DisplayFor(modelItem => item.Description)
+                                </div>
+                                <div class="comment">
+                                  @Html.DisplayFor(modelItem => item.Notes)
+                                </div>
+                                <div class="comment">
+                                    <small> Rules:</small> @Html.DisplayFor(modelItem => item.Rules)
+                                </div>
+                                <div class="pro_rate">
+                                    250 Rs
+                                </div>
+
+                            
+                        </div>
+                    </div>
+                        @Html.ActionLink("GRab it Now", "ApartmentDetail", new { id = item.ApartmentID })
+
+                        
+
+                </div>
+            </div>
+        </div>
+</div>
+<br />
+        <br />
+    }
+
+
+<script>
+
+
+
+$(".comment").shorten({
+	"showChars" : 2,
+	"moreText"	: "See More",
+	"lessText"	: "Less",
+});
+
+
+
+
+</script>

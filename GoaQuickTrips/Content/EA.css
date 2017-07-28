@@ -1,5 +1,9 @@
 body {
-    background-color: #614530;
+    background-image: url("/Images/Background.jpg");
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
     color: white;
 }
 

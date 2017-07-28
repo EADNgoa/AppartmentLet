@@ -1,0 +1,76 @@
+﻿@model  GoaQuickTrips.Apartment
+
+
+
+
+
+<style type="text/css">
+    .ButtonClicked {
+        background-color: green;
+        color: green;
+    }
+</style>
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+
+
+<style>
+   
+html{
+    height:100%;
+}
+
+
+    .banner {
+        margin-top:250px;
+        padding: 30px;
+        z-index: 80;
+        background: rgba(0, 0, 0, 0.6);
+   
+        border-radius: 8px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    }
+</style>
+<center>
+    <div class="col-md-12 banner">
+     
+        <div class="container">
+
+
+            <table>
+                @using (Html.BeginForm((string)ViewBag.ReturnAction, "Home", FormMethod.Post))
+                {
+            
+                        <tbody>
+                            <tr>
+                                <td> <input type="date" class="form-control input-lg" name="check_in" id="check_in" placeholder="Check in"></td>
+                                <td><input type="date" class="form-control  input-lg" name="check_out" id="check_out" placeholder="Check out"></td>
+
+                                <td>
+
+                                    <select name='guest' id="guest" class="form-control  input-lg">
+                                        <option value=''>Guest</option>
+                                        <option value='1'>1+</option>
+                                        <option value='2'>2+</option>
+                                        <option value='3'>3+</option>
+                                        <option value='4'>4+</option>
+                                        <option value='5'>5+</option>
+                                        <option value='6'>6+</option>
+                                        <option value='7'>7+</option>
+                                        <option value='8'>8+</option>
+                                        <option value='9'>9+</option>
+                                        <option value='10'>10+</option>
+                                    </select>
+                                </td>
+                                <td> <input type="submit" value="Search" class="btn btn-default  input-lg" /></td>
+                            </tr>
+                        </tbody>
+
+                }
+            </table>
+
+        </div>
+</div>
+</center>
+
+

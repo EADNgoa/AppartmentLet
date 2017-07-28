@@ -1,0 +1,42 @@
+﻿@model GoaQuickTrips.Price
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Price</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.WEF)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WEF)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Apartment.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Apartment.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PriceID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
