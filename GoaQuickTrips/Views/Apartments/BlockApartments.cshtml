@@ -4,9 +4,9 @@
     ViewBag.Title = "Index";
 }
 <style>
-    .table{
-        width:100%;
-        table-layout:fixed;
+    .table {
+        width: 100%;
+        table-layout: fixed;
     }
 </style>
 
@@ -99,9 +99,8 @@
                     @Html.DisplayFor(modelItem => item.Amenity.Amenity1)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ApartmentID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ApartmentID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ApartmentID })
+                    @Html.ActionLink("Block", "Blocked", new { id = item.ApartmentID }) |
+                   
                 </td>
             </tr>
         }

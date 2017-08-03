@@ -7,9 +7,10 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using GoaQuickTrips;
+using Microsoft.AspNet.Identity;
 
 namespace QuickTrips.Areas.AdminSection.Controllers
-{
+{   [Authorize(Roles = "ADMIN")]
     public class ApartmentsController : Controller
     {
         private QuickTripsEntities db = new QuickTripsEntities();
@@ -23,6 +24,31 @@ namespace QuickTrips.Areas.AdminSection.Controllers
             var apartments = db.Apartments.Include(a => a.Amenity);
             return View(apartments.ToList());
         }
+
+        public ActionResult BlockApartments()
+        {
+
+            var apartments = db.Apartments.Include(a => a.Amenity);
+            return View(apartments.ToList());
+        }
+
+      
+        public ActionResult Blocked(int? id)
+        {
+            var UserID = User.Identity.GetUserId();
+            var apartments = db.Apartments.Find(id);
+
+            var item1 = new Booking { UserID = UserID, BookDate = DateTime.Now, StatusID = null };
+            db.Bookings.Add(item1);
+            db.SaveChanges();
+        
+            var item2 = new BookingDetail { BookingID = item1.BookingID, ApartmentID = apartments.ApartmentID, CheckIn = DateTime.Parse(Session["in"].ToString()), CheckOut = DateTime.Parse(Session["out"].ToString()), Price = null, BlockedReason = null };
+            db.BookingDetails.Add(item2);
+            db.SaveChanges();
+            return RedirectToAction("BlockApartments");
+        }
+
+  
 
         // GET: AdminSection/Apartments/Details/5
         public ActionResult Details(int? id)

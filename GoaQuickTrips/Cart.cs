@@ -21,7 +21,7 @@ namespace GoaQuickTrips
         }
     
         public int CartID { get; set; }
-        public Nullable<int> UserID { get; set; }
+        public string UserID { get; set; }
         public Nullable<int> ApartmentID { get; set; }
         public Nullable<System.DateTime> CheckIn { get; set; }
         public Nullable<System.DateTime> CheckOut { get; set; }

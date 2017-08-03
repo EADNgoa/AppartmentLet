@@ -9,23 +9,23 @@
         <EntityTypeShape EntityType="QuickTripsModel.Apartment" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
         <EntityTypeShape EntityType="QuickTripsModel.BookedCustomer" Width="1.5" PointX="5.25" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="QuickTripsModel.BookingDetail" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuickTripsModel.Booking" Width="1.5" PointX="3" PointY="16.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuickTripsModel.Cart" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="QuickTripsModel.Customer" Width="1.5" PointX="3" PointY="19.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QuickTripsModel.Image" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="QuickTripsModel.Price" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
         <EntityTypeShape EntityType="QuickTripsModel.Review" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
         <EntityTypeShape EntityType="QuickTripsModel.Status" Width="1.5" PointX="0.75" PointY="17.125" IsExpanded="true" />
         <AssociationConnector Association="QuickTripsModel.FK_Amenities_Apartments" ManuallyRouted="false" />
-        <AssociationConnector Association="QuickTripsModel.FK_Cart_Apartments" ManuallyRouted="false" />
         <AssociationConnector Association="QuickTripsModel.FK_Images_Apartments" ManuallyRouted="false" />
         <AssociationConnector Association="QuickTripsModel.FK_Prices_Apartment" ManuallyRouted="false" />
         <AssociationConnector Association="QuickTripsModel.FK_Reviews_Apartments" ManuallyRouted="false" />
-        <AssociationConnector Association="QuickTripsModel.FK_BookedCustomer_Bookings" ManuallyRouted="false" />
-        <AssociationConnector Association="QuickTripsModel.FK_BookedCustomer_Cart" ManuallyRouted="false" />
         <AssociationConnector Association="QuickTripsModel.FK_BookedCustomer_Customers" ManuallyRouted="false" />
-        <AssociationConnector Association="QuickTripsModel.FK_Bookings_Status" ManuallyRouted="false" />
         <EntityTypeShape EntityType="QuickTripsModel.Table" Width="1.5" PointX="7.375" PointY="4.75" />
+        <EntityTypeShape EntityType="QuickTripsModel.Booking" Width="1.5" PointX="3" PointY="4.375" />
+        <EntityTypeShape EntityType="QuickTripsModel.Cart" Width="1.5" PointX="3" PointY="16.125" />
+        <AssociationConnector Association="QuickTripsModel.FK_Cart_Apartments" />
+        <AssociationConnector Association="QuickTripsModel.FK_BookedCustomer_Bookings" />
+        <AssociationConnector Association="QuickTripsModel.FK_BookedCustomer_Cart" />
+        <AssociationConnector Association="QuickTripsModel.FK_Bookings_Status" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

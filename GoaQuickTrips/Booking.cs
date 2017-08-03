@@ -21,7 +21,7 @@ namespace GoaQuickTrips
         }
     
         public int BookingID { get; set; }
-        public Nullable<int> UserID { get; set; }
+        public string UserID { get; set; }
         public Nullable<System.DateTime> BookDate { get; set; }
         public Nullable<int> StatusID { get; set; }
     

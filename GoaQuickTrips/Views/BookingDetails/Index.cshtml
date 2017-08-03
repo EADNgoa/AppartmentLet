@@ -1,0 +1,69 @@
+﻿@model IEnumerable<GoaQuickTrips.BookingDetail>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BookingID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ApartmentID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CheckIn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CheckOut)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NoOfGuests)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BlockedReason)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookingID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ApartmentID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CheckIn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CheckOut)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NoOfGuests)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BlockedReason)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.BookingDetailID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.BookingDetailID }) |
+            @Html.ActionLink("Cancel Booking", "Delete", new { id=item.BookingDetailID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using GoaQuickTrips;
+using System.Web.Security;
+using Microsoft.AspNet.Identity;
 
 namespace GoaQuickTrips.Controllers
 { 
@@ -16,17 +18,17 @@ namespace GoaQuickTrips.Controllers
 
         // GET: Bookings
        
-        public ActionResult Index(int? id)
+        public ActionResult Index()
         {
-            var bookings = db.Carts.Find(id);
            
-            var item1 = new Booking { UserID = null, BookDate= DateTime.Now, StatusID=null };
-            db.Bookings.Add(item1);
-            db.SaveChanges();
-            var item2 = new BookingDetail { BookingID = item1.BookingID, ApartmentID =(int)Session["apartment"], CheckIn = DateTime.Parse(Session["in"].ToString()), CheckOut = DateTime.Parse(Session["out"].ToString()), Price=null,BlockedReason=null}; 
-            db.BookingDetails.Add(item2);
-            db.SaveChanges();
-            return View();
+            
+            var bookings= db.Carts.Where(u => u.UserID == UserID);
+           
+
+            
+          
+
+            return View(db.Bookings.ToList());
         }
 
         // GET: Bookings/Details/5
