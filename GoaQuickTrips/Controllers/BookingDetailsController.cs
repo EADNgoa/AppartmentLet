@@ -10,107 +10,115 @@ using GoaQuickTrips;
 
 namespace GoaQuickTrips.Controllers
 {
-    public class TablesController : Controller
+    [Authorize(Roles = "ADMIN")]
+    public class BookingDetailsController : Controller
     {
-        private GoaQuickTripsEntities db = new GoaQuickTripsEntities();
+        private QuickTripsEntities db = new QuickTripsEntities();
 
-        // GET: Tables
+        // GET: BookingDetails
         public ActionResult Index()
         {
-            return View(db.Table.ToList());
+            return View(db.BookingDetails.ToList());
+        }
+        
+        public ActionResult Confirm()
+        {
+
+
+            return View();
         }
 
-        // GET: Tables/Details/5
+        // GET: BookingDetails/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Table table = db.Table.Find(id);
-            if (table == null)
+            BookingDetail bookingDetail = db.BookingDetails.Find(id);
+            if (bookingDetail == null)
             {
                 return HttpNotFound();
             }
-            return View(table);
+            return View(bookingDetail);
         }
 
-        // GET: Tables/Create
+        // GET: BookingDetails/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Tables/Create
+        // POST: BookingDetails/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id")] Table table)
+        public ActionResult Create([Bind(Include = "BookingDetailID,BookingID,ApartmentID,CheckIn,CheckOut,NoOfGuests,Price,BlockedReason")] BookingDetail bookingDetail)
         {
             if (ModelState.IsValid)
             {
-                db.Table.Add(table);
+                db.BookingDetails.Add(bookingDetail);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(table);
+            return View(bookingDetail);
         }
 
-        // GET: Tables/Edit/5
+        // GET: BookingDetails/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Table table = db.Table.Find(id);
-            if (table == null)
+            BookingDetail bookingDetail = db.BookingDetails.Find(id);
+            if (bookingDetail == null)
             {
                 return HttpNotFound();
             }
-            return View(table);
+            return View(bookingDetail);
         }
 
-        // POST: Tables/Edit/5
+        // POST: BookingDetails/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id")] Table table)
+        public ActionResult Edit([Bind(Include = "BookingDetailID,BookingID,ApartmentID,CheckIn,CheckOut,NoOfGuests,Price,BlockedReason")] BookingDetail bookingDetail)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(table).State = EntityState.Modified;
+                db.Entry(bookingDetail).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(table);
+            return View(bookingDetail);
         }
 
-        // GET: Tables/Delete/5
+        // GET: BookingDetails/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Table table = db.Table.Find(id);
-            if (table == null)
+            BookingDetail bookingDetail = db.BookingDetails.Find(id);
+            if (bookingDetail == null)
             {
                 return HttpNotFound();
             }
-            return View(table);
+            return View(bookingDetail);
         }
 
-        // POST: Tables/Delete/5
+        // POST: BookingDetails/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Table table = db.Table.Find(id);
-            db.Table.Remove(table);
+            BookingDetail bookingDetail = db.BookingDetails.Find(id);
+            db.BookingDetails.Remove(bookingDetail);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

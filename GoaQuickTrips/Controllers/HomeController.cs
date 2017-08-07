@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using Microsoft.AspNet.Identity;
 
 namespace GoaQuickTrips.Controllers
 {
@@ -32,9 +35,11 @@ namespace GoaQuickTrips.Controllers
                 Session["out"] = check_out;
                 Session["Guests"] = guests;
             }
-            var apartments = db.Apartments;
-
-            return View(apartments.ToList());
+            var IN = DateTime.Parse(check_in);
+            var OUT = DateTime.Parse(check_out);
+            var bookings = db.BookingDetails.Where(i => i.CheckIn <= IN &&  i.CheckIn >= IN ||  i.CheckOut <= OUT && i.CheckOut >= IN).Select(id => id.ApartmentID);
+            var apartments = db.Apartments.Where(a => a.NoOfGuests >= guests).Where(a => !bookings.Contains(a.ApartmentID));
+           return View(apartments.ToList());
 
         }
 
@@ -61,11 +66,16 @@ namespace GoaQuickTrips.Controllers
         public ActionResult AddToCart(int? id)
         {
             var cartItem = db.Apartments.Find(id);
-            var item = new Cart { UserID = null, ApartmentID = cartItem.ApartmentID, CheckIn =DateTime.Parse(Session["in"].ToString()), CheckOut=DateTime.Parse(Session["out"].ToString()), NoOfGuests=(int)Session["guests"],OrigPrice=null };
-            Session["apartment"] = cartItem.ApartmentID;
+            var UserID = User.Identity.GetUserId();
+
+           
+            var IN = DateTime.Parse(Session["in"].ToString());
+            var OUT = DateTime.Parse(Session["out"].ToString());
+            var item = new Cart { UserID = UserID, ApartmentID = cartItem.ApartmentID, CheckIn = IN, CheckOut=OUT, NoOfGuests=(int)Session["guests"],OrigPrice=null };
+         
             db.Carts.Add(item);
             db.SaveChanges();
-            return RedirectToAction("Index", "Cart");
+            return RedirectToAction("Index", "Carts");
         }
         public ActionResult About()
         {

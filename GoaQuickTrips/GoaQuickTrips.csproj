@@ -211,6 +211,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AmenitiesController.cs" />
     <Compile Include="Controllers\ApartmentsController.cs" />
+    <Compile Include="Controllers\BookingDetailsController.cs" />
     <Compile Include="Controllers\BookingsController.cs" />
     <Compile Include="Controllers\CartsController.cs" />
     <Compile Include="Controllers\EAController.cs" />
@@ -219,27 +220,11 @@
     <Compile Include="Controllers\ImagesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PricesController.cs" />
-    <Compile Include="Controllers\TablesController.cs" />
     <Compile Include="Customer.cs">
       <DependentUpon>GQTmodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="GQTMdl.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GQTMdl.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GQTMdl.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GQTMdl.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GQTMdl.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GQTMdl.edmx</DependentUpon>
     </Compile>
     <Compile Include="GQTmodel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -296,16 +281,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="GQTMdl.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GQTMdl.edmx</DependentUpon>
-      <LastGenOutput>GQTMdl.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="GQTMdl.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GQTMdl.edmx</DependentUpon>
-      <LastGenOutput>GQTMdl.cs</LastGenOutput>
-    </Content>
     <Content Include="GQTmodel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>GQTmodel.edmx</DependentUpon>
@@ -321,13 +296,6 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <EntityDeploy Include="GQTMdl.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>GQTMdl.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="GQTMdl.edmx.diagram">
-      <DependentUpon>GQTMdl.edmx</DependentUpon>
     </Content>
     <EntityDeploy Include="GQTmodel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -347,7 +315,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -427,6 +397,13 @@
     <Content Include="Views\Images\Details.cshtml" />
     <Content Include="Views\Images\Edit.cshtml" />
     <Content Include="Views\Images\Index.cshtml" />
+    <Content Include="Views\Apartments\BlockApartments.cshtml" />
+    <Content Include="Views\BookingDetails\Create.cshtml" />
+    <Content Include="Views\BookingDetails\Delete.cshtml" />
+    <Content Include="Views\BookingDetails\Details.cshtml" />
+    <Content Include="Views\BookingDetails\Edit.cshtml" />
+    <Content Include="Views\BookingDetails\Index.cshtml" />
+    <Content Include="Views\BookingDetails\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

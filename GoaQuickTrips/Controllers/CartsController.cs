@@ -7,6 +7,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using GoaQuickTrips;
+using System.Web.Security;
+using Microsoft.AspNet.Identity;
+using System.Web.UI;
 
 namespace QuickTrips.Controllers
 {
@@ -17,9 +20,37 @@ namespace QuickTrips.Controllers
         // GET: Carts
         public ActionResult Index()
         {
-            var carts = db.Carts.Include(c => c.Apartment);
+            var UserID = User.Identity.GetUserId();
+            var carts = db.Carts.Include(c => c.Apartment).Where(u =>u.UserID == UserID);
             return View(carts.ToList());
         }
+
+        public ActionResult BookItems()
+        {
+            var UserID = User.Identity.GetUserId();
+            var bookings = db.Carts.Where(u => u.UserID == UserID);
+            foreach (var b in bookings.ToList())
+            {
+                var AlreadyBook = db.BookingDetails.Where(i => i.CheckIn <= b.CheckIn && i.CheckIn >= b.CheckIn || i.CheckOut <= b.CheckOut && i.CheckOut >= b.CheckIn && i.ApartmentID == b.ApartmentID);
+
+                if (AlreadyBook.Count() == 0)
+                {
+                    var item1 = new Booking { UserID = UserID, BookDate = DateTime.Now, StatusID = null };
+                    db.Bookings.Add(item1);
+                    db.SaveChanges();
+                    foreach (var item in bookings)
+                    {
+                        var item2 = new BookingDetail { BookingID = item1.BookingID, ApartmentID = item.ApartmentID, CheckIn = item.CheckIn, CheckOut = item.CheckOut, NoOfGuests = item.NoOfGuests, Price = null, BlockedReason = null };
+                        db.BookingDetails.Add(item2);
+                    }
+                    db.SaveChanges();
+                    db.Carts.Remove(b);
+                    db.SaveChanges();
+                }   
+            }
+            return RedirectToAction("Index");
+        }
+
         public ActionResult Payment()
         {
             return View();

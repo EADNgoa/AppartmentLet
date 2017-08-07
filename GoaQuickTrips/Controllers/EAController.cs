@@ -9,20 +9,20 @@ namespace GoaQuickTrips.Controllers
     [HandleError]
     public class EAController : Controller
     {
-        protected GoaQuickTripsEntities db;
+        protected QuickTripsEntities db;
         public EAController()
         {
-            this.db = new GoaQuickTripsEntities();
+            this.db = new QuickTripsEntities();
         }
 
         // GET: EA
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (DateTime.Now.Date > DateTime.Parse("15 Aug 2017"))
-            {                
-                filterContext.Result = new RedirectResult("~/Home/pli");
-                return;
-            }
+            //if (DateTime.Now.Date > DateTime.Parse("15 Aug 2017"))
+            //{                
+            //    filterContext.Result = new RedirectResult("~/Home/pli");
+            //    return;
+            //}
             
         }
 
