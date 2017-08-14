@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<GoaQuickTrips.Booking>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "BookedCustomer";
 }
 
-<h2>Index</h2>
+<h2>BookedCustomer</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -23,23 +23,43 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserID)
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status.Status1)
+            </td>
+            <td>
+                @Html.ActionLink("Confirm", "Confirm", new { id = item.BookingID })
+                @Html.ActionLink("Cancel", "Cancel", new { id = item.BookingID })
+             
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status.Status1)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BookingID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.BookingID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.BookingID })
-        </td>
-    </tr>
-}
+        </tr>
+        <tr>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        @foreach (var bd in item.BookingDetails)
+                        {
+                            <td>Apartment:@Html.DisplayFor(modelItem => bd.ApartmentID)</td>
+                            <td>Check in:@Html.DisplayFor(modelItem => bd.CheckIn)</td>
+                            <td>Check Out:@Html.DisplayFor(modelItem => bd.CheckOut)</td>
+                            <td>No Of guest:@Html.DisplayFor(modelItem => bd.NoOfGuests)</td>
+                            <td>Price:@Html.DisplayFor(modelItem => bd.Price)</td>
+
+
+                        }
+                    </tr>
+                </tbody>
+            </table>
+        </tr>
+    }
 
 </table>

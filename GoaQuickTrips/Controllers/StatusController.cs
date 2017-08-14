@@ -10,128 +10,109 @@ using GoaQuickTrips;
 
 namespace GoaQuickTrips.Controllers
 {
-    [Authorize(Roles = "ADMIN")]
-    public class BookingDetailsController : Controller
+    public class StatusController : Controller
     {
         private QuickTripsEntities db = new QuickTripsEntities();
 
-        // GET: BookingDetails
+        // GET: Status
         public ActionResult Index()
         {
-            return View(db.BookingDetails.ToList());
-        }
-        public ActionResult Confirm(int? id)
-        {
-            var cancel = db.Bookings.Find(id);
-            cancel.StatusID = 2;
-            db.Entry(cancel).Property(a => a.StatusID).IsModified = true;
-
-            db.SaveChanges();
-            return RedirectToAction("Index");
-
+            return View(db.Status.ToList());
         }
 
-
-        public ActionResult BlockList()
-        {
-            var BlockedList = db.BookingDetails.Where(a => a.BlockedReason != null);
-            return View(BlockedList.ToList());
-        }
-
-
-        // GET: BookingDetails/Details/5
+        // GET: Status/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BookingDetail bookingDetail = db.BookingDetails.Find(id);
-            if (bookingDetail == null)
+            Status status = db.Status.Find(id);
+            if (status == null)
             {
                 return HttpNotFound();
             }
-            return View(bookingDetail);
+            return View(status);
         }
 
-        // GET: BookingDetails/Create
+        // GET: Status/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: BookingDetails/Create
+        // POST: Status/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BookingDetailID,BookingID,ApartmentID,CheckIn,CheckOut,NoOfGuests,Price,BlockedReason")] BookingDetail bookingDetail)
+        public ActionResult Create([Bind(Include = "StatusID,Status1")] Status status)
         {
             if (ModelState.IsValid)
             {
-                db.BookingDetails.Add(bookingDetail);
+                db.Status.Add(status);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(bookingDetail);
+            return View(status);
         }
 
-        // GET: BookingDetails/Edit/5
+        // GET: Status/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BookingDetail bookingDetail = db.BookingDetails.Find(id);
-            if (bookingDetail == null)
+            Status status = db.Status.Find(id);
+            if (status == null)
             {
                 return HttpNotFound();
             }
-            return View(bookingDetail);
+            return View(status);
         }
 
-        // POST: BookingDetails/Edit/5
+        // POST: Status/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BookingDetailID,BookingID,ApartmentID,CheckIn,CheckOut,NoOfGuests,Price,BlockedReason")] BookingDetail bookingDetail)
+        public ActionResult Edit([Bind(Include = "StatusID,Status1")] Status status)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(bookingDetail).State = EntityState.Modified;
+                db.Entry(status).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(bookingDetail);
+            return View(status);
         }
 
-        // GET: BookingDetails/Delete/5
+        // GET: Status/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BookingDetail bookingDetail = db.BookingDetails.Find(id);
-            if (bookingDetail == null)
+            Status status = db.Status.Find(id);
+            if (status == null)
             {
                 return HttpNotFound();
             }
-            return View(bookingDetail);
+            return View(status);
         }
 
-        // POST: BookingDetails/Delete/5
+        // POST: Status/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            BookingDetail bookingDetail = db.BookingDetails.Find(id);
-            db.BookingDetails.Remove(bookingDetail);
+            Status status = db.Status.Find(id);
+            db.Status.Remove(status);
             db.SaveChanges();
-            return RedirectToAction("BlockList");
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

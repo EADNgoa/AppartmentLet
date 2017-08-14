@@ -31,12 +31,12 @@ namespace GoaQuickTrips
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Booking> Bookings { get; set; }
         public virtual DbSet<Cart> Carts { get; set; }
-        public virtual DbSet<BookingDetail> BookingDetails { get; set; }
         public virtual DbSet<Config> Configs { get; set; }
         public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<Amenities_Apartments> Amenities_Apartments { get; set; }
         public virtual DbSet<Apartment> Apartments { get; set; }
         public virtual DbSet<MasterAmenity> MasterAmenities { get; set; }
         public virtual DbSet<Review> Reviews { get; set; }
+        public virtual DbSet<BookingDetail> BookingDetails { get; set; }
     }
 }

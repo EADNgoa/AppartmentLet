@@ -171,6 +171,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_BookingDetails_booking">
+          <End Role="Bookings" Type="Self.Bookings" Multiplicity="0..1" />
+          <End Role="BookingDetails" Type="Self.BookingDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bookings">
+              <PropertyRef Name="BookingID" />
+            </Principal>
+            <Dependent Role="BookingDetails">
+              <PropertyRef Name="BookingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Bookings_Status">
           <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
           <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
@@ -256,6 +268,10 @@
           <AssociationSet Name="FK_BookedCustomer_Customers" Association="Self.FK_BookedCustomer_Customers">
             <End Role="Customers" EntitySet="Customers" />
             <End Role="BookedCustomer" EntitySet="BookedCustomer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BookingDetails_booking" Association="Self.FK_BookingDetails_booking">
+            <End Role="Bookings" EntitySet="Bookings" />
+            <End Role="BookingDetails" EntitySet="BookingDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_Bookings_Status" Association="Self.FK_Bookings_Status">
             <End Role="Status" EntitySet="Status" />
@@ -359,7 +375,6 @@
             <End Role="Status" EntitySet="Status" />
             <End Role="Booking" EntitySet="Bookings" />
           </AssociationSet>
-          <EntitySet Name="BookingDetails" EntityType="QuickTripsModel.BookingDetail" />
           <EntitySet Name="Configs" EntityType="QuickTripsModel.Config" />
           <EntitySet Name="Images" EntityType="QuickTripsModel.Image" />
           <EntitySet Name="Amenities_Apartments" EntityType="QuickTripsModel.Amenities_Apartments" />
@@ -382,6 +397,11 @@
             <End Role="Apartment" EntitySet="Apartments" />
             <End Role="Review" EntitySet="Reviews" />
           </AssociationSet>
+          <EntitySet Name="BookingDetails" EntityType="QuickTripsModel.BookingDetail" />
+          <AssociationSet Name="FK_BookingDetails_booking" Association="QuickTripsModel.FK_BookingDetails_booking">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="BookingDetail" EntitySet="BookingDetails" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Booking">
           <Key>
@@ -393,6 +413,7 @@
           <Property Name="StatusID" Type="Int32" />
           <NavigationProperty Name="BookedCustomers" Relationship="QuickTripsModel.FK_BookedCustomer_Bookings" FromRole="Booking" ToRole="BookedCustomer" />
           <NavigationProperty Name="Status" Relationship="QuickTripsModel.FK_Bookings_Status" FromRole="Booking" ToRole="Status" />
+          <NavigationProperty Name="BookingDetails" Relationship="QuickTripsModel.FK_BookingDetails_booking" FromRole="Booking" ToRole="BookingDetail" />
         </EntityType>
         <EntityType Name="Cart">
           <Key>
@@ -444,19 +465,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="BookingDetail">
-          <Key>
-            <PropertyRef Name="BookingDetailID" />
-          </Key>
-          <Property Name="BookingDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BookingID" Type="Int32" />
-          <Property Name="ApartmentID" Type="Int32" />
-          <Property Name="CheckIn" Type="DateTime" Precision="0" />
-          <Property Name="CheckOut" Type="DateTime" Precision="0" />
-          <Property Name="NoOfGuests" Type="Int32" />
-          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="BlockedReason" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="Config">
           <Key>
             <PropertyRef Name="ConfigID" />
@@ -571,6 +579,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="BookingDetail">
+          <Key>
+            <PropertyRef Name="BookingDetailID" />
+          </Key>
+          <Property Name="BookingDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookingID" Type="Int32" />
+          <Property Name="ApartmentID" Type="Int32" />
+          <Property Name="CheckIn" Type="DateTime" Precision="0" />
+          <Property Name="CheckOut" Type="DateTime" Precision="0" />
+          <Property Name="NoOfGuests" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BlockedReason" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Booking" Relationship="QuickTripsModel.FK_BookingDetails_booking" FromRole="BookingDetail" ToRole="Booking" />
+        </EntityType>
+        <Association Name="FK_BookingDetails_booking">
+          <End Type="QuickTripsModel.Booking" Role="Booking" Multiplicity="0..1" />
+          <End Type="QuickTripsModel.BookingDetail" Role="BookingDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingID" />
+            </Principal>
+            <Dependent Role="BookingDetail">
+              <PropertyRef Name="BookingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -640,20 +674,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BookingDetails">
-            <EntityTypeMapping TypeName="QuickTripsModel.BookingDetail">
-              <MappingFragment StoreEntitySet="BookingDetails">
-                <ScalarProperty Name="BlockedReason" ColumnName="BlockedReason" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="NoOfGuests" ColumnName="NoOfGuests" />
-                <ScalarProperty Name="CheckOut" ColumnName="CheckOut" />
-                <ScalarProperty Name="CheckIn" ColumnName="CheckIn" />
-                <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
-                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
-                <ScalarProperty Name="BookingDetailID" ColumnName="BookingDetailID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Configs">
             <EntityTypeMapping TypeName="QuickTripsModel.Config">
               <MappingFragment StoreEntitySet="Config">
@@ -716,6 +736,20 @@
                 <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ReviewID" ColumnName="ReviewID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BookingDetails">
+            <EntityTypeMapping TypeName="QuickTripsModel.BookingDetail">
+              <MappingFragment StoreEntitySet="BookingDetails">
+                <ScalarProperty Name="BlockedReason" ColumnName="BlockedReason" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="NoOfGuests" ColumnName="NoOfGuests" />
+                <ScalarProperty Name="CheckOut" ColumnName="CheckOut" />
+                <ScalarProperty Name="CheckIn" ColumnName="CheckIn" />
+                <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
+                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+                <ScalarProperty Name="BookingDetailID" ColumnName="BookingDetailID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

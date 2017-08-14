@@ -230,6 +230,7 @@
     <Compile Include="Controllers\MasterAmenitiesController.cs" />
     <Compile Include="Controllers\PricesController.cs" />
     <Compile Include="Controllers\ReviewsController.cs" />
+    <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Customer.cs">
       <DependentUpon>GQTmodel.tt</DependentUpon>
     </Compile>
@@ -432,6 +433,12 @@
     <Content Include="Views\Reviews\Details.cshtml" />
     <Content Include="Views\Reviews\Edit.cshtml" />
     <Content Include="Views\Reviews\Index.cshtml" />
+    <Content Include="Views\Home\BookedCustomer.cshtml" />
+    <Content Include="Views\Status\Create.cshtml" />
+    <Content Include="Views\Status\Delete.cshtml" />
+    <Content Include="Views\Status\Details.cshtml" />
+    <Content Include="Views\Status\Edit.cshtml" />
+    <Content Include="Views\Status\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -1,67 +1,61 @@
 ﻿@model IEnumerable<GoaQuickTrips.BookingDetail>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "BookedCustomer";
 }
 
-<h2>Index</h2>
+<h2>BookedCustomer</h2>
 
-
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.BookingID)
+            @Html.DisplayNameFor(model => model.Booking.BookingID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ApartmentID)
+            @Html.DisplayNameFor(model => model.Booking.BookDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CheckIn)
+            @Html.DisplayNameFor(model => model.Booking.StatusID)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CheckOut)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NoOfGuests)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BlockedReason)
-        </th>
-        <th></th>
+        <th>s
+ </th>
+
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookingID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ApartmentID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CheckIn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CheckOut)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NoOfGuests)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BlockedReason)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BookingDetailID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.BookingDetailID }) |
-            @Html.ActionLink("Cancel Booking", "Delete", new { id=item.BookingDetailID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Booking.UserID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Booking.BookDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Booking.StatusID)
+            </td>
+            <td>@Html.ActionLink("Confirm", "Confirm", new { id = item.BookingID }) |
+</td>
+        </tr>
+        <tr>
+            <table class="table-bordered">
+                <tr>
+                    @foreach (var  bd in item.boo)
+                {
+                        <td>Apartment:@Html.DisplayFor(modelItem => bd.ApartmentID)</td>
+                        <td>Check in:@Html.DisplayFor(modelItem => bd.CheckIn)</td>
+                        <td>Check Out:@Html.DisplayFor(modelItem => bd.CheckOut)</td>
+                        <td>No Of guest:@Html.DisplayFor(modelItem => bd.NoOfGuests)</td>
+                        <td>Price:@Html.DisplayFor(modelItem => bd.Price)</td>
+
+
+                    }
+                </tr>
+            </table>
+        </tr>
+    }
 
 </table>

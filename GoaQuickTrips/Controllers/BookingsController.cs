@@ -22,11 +22,33 @@ namespace GoaQuickTrips.Controllers
         {
 
             var UserID = User.Identity.GetUserId();
-            var bookings= db.Carts.Where(u => u.UserID == UserID);
+            var bookings= db.Bookings.Where(u => u.UserID == UserID);
       
             return View(db.Bookings.ToList());
         }
-       
+
+        public ActionResult Confirm(int? id)
+        {
+            var cancel = db.Bookings.Find(id);
+            cancel.StatusID = 2;
+            db.Entry(cancel).Property(a=>a.StatusID).IsModified =true;
+           
+            db.SaveChanges();
+            return RedirectToAction("Index");
+            
+        }
+
+        public ActionResult Cancel(int? id)
+        {
+            var cancel = db.Bookings.Find(id);
+            cancel.StatusID = 3;
+            db.Entry(cancel).Property(a => a.StatusID).IsModified = true;
+
+            db.SaveChanges();
+            return RedirectToAction("Index");
+
+        }
+
 
         // GET: Bookings/Details/5
         public ActionResult Details(int? id)

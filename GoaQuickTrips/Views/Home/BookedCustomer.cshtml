@@ -1,0 +1,56 @@
+﻿@model IEnumerable<GoaQuickTrips.Booking>
+
+@{
+    ViewBag.Title = "BookedCustomer";
+}
+
+<h2>BookedCustomer</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status.Status1)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status.Status1)
+        </td>      
+    </tr>
+    <tr>
+        <table class="table-bordered">
+            <tr>
+                @foreach (var bd in item.BookingDetails)
+                {
+                    <td>Apartment:@Html.DisplayFor(modelItem => bd.ApartmentID)</td>
+                    <td>Check in:@Html.DisplayFor(modelItem => bd.CheckIn)</td>
+                    <td>Check Out:@Html.DisplayFor(modelItem => bd.CheckOut)</td>
+                    <td>No Of guest:@Html.DisplayFor(modelItem => bd.NoOfGuests)</td>
+                    <td>Price:@Html.DisplayFor(modelItem => bd.Price)</td>
+
+
+                }
+            </tr>
+        </table>
+    </tr>
+}
+
+</table>

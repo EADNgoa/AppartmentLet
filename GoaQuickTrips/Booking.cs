@@ -18,6 +18,7 @@ namespace GoaQuickTrips
         public Booking()
         {
             this.BookedCustomers = new HashSet<BookedCustomer>();
+            this.BookingDetails = new HashSet<BookingDetail>();
         }
     
         public int BookingID { get; set; }
@@ -28,5 +29,7 @@ namespace GoaQuickTrips
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BookedCustomer> BookedCustomers { get; set; }
         public virtual Status Status { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BookingDetail> BookingDetails { get; set; }
     }
 }

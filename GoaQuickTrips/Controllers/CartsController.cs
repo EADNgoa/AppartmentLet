@@ -105,7 +105,7 @@ namespace QuickTrips.Controllers
 
                 if (AlreadyBook.Count() == 0)
                 {
-                    var item1 = new Booking { UserID = UserID, BookDate = DateTime.Now, StatusID = null };
+                    var item1 = new Booking { UserID = UserID, BookDate = DateTime.Now, StatusID = 1 };
                     db.Bookings.Add(item1);
                     db.SaveChanges();
                     foreach (var item in bookings)

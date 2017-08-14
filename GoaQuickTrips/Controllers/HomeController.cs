@@ -51,9 +51,17 @@ namespace GoaQuickTrips.Controllers
         {
 
             var UserID = User.Identity.GetUserId();
-            
-            var bookedDetails =db.Bookings.Join(db.BookingDetails,b => b.BookingID,bd=> bd.BookingID,(b,bd) => new {b.BookingID,b.UserID,b.StatusID,bd.ApartmentID,bd.CheckIn,bd.CheckOut,bd.Price,bd.NoOfGuests }).Where(i=>i.UserID ==UserID).ToList();
-            return View(bookedDetails.ToList());
+
+            //BookingViewModel bvm = new BookingViewModel();
+
+            var bkings = db.Bookings.Where(b => b.UserID == UserID).ToList();
+            //bvm.Bookingdata = bkings;
+
+
+            //bkings.ForEach(bd => boo)
+
+            //var bookedDetails =db.Bookings.Join(db.BookingDetails,b => b.BookingID,bd=> bd.BookingID,(b,bd) => new {b.BookingID,b.UserID,b.StatusID,bd.ApartmentID,bd.CheckIn,bd.CheckOut,bd.Price,bd.NoOfGuests }).Where(i=>i.UserID ==UserID).ToList();
+            return View(bkings);
        
       }
 
