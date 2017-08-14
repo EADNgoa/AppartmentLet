@@ -4,10 +4,7 @@
     ViewBag.Title = "Index";
 }
 <style>
-    .table{
-        width:100%;
-      
-    }
+    
     .pull-right {
         margin-right: 50px !important;
     }
@@ -82,13 +79,13 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
-                <td class="more">
+                <td class="truncate">
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
-                <td class="more">
+                <td class="truncate">
                     @Html.DisplayFor(modelItem => item.Rules)
                 </td>
-                <td class="more">
+                <td class="truncate">
                     @Html.DisplayFor(modelItem => item.Notes)
                 </td>
                 <td> 
@@ -126,3 +123,8 @@
 
     </table>
 </div>
+
+<script>
+  
+
+</script>

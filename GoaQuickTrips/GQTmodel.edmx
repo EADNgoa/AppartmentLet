@@ -124,7 +124,7 @@
           <Property Name="ReviewID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserID" Type="int" />
           <Property Name="ApartmentID" Type="int" />
-          <Property Name="ReviewDate" Type="int" />
+          <Property Name="ReviewDate" Type="date" />
           <Property Name="Review" Type="varchar(max)" />
           <Property Name="IsVisible" Type="bit" />
         </EntityType>
@@ -316,18 +316,6 @@
           <Property Name="Price1" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="Apartment" Relationship="QuickTripsModel.FK_Prices_Apartment" FromRole="Price" ToRole="Apartment" />
         </EntityType>
-        <EntityType Name="Review">
-          <Key>
-            <PropertyRef Name="ReviewID" />
-          </Key>
-          <Property Name="ReviewID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int32" />
-          <Property Name="ApartmentID" Type="Int32" />
-          <Property Name="ReviewDate" Type="Int32" />
-          <Property Name="Review1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="IsVisible" Type="Boolean" />
-          <NavigationProperty Name="Apartment" Relationship="QuickTripsModel.FK_Reviews_Apartments" FromRole="Review" ToRole="Apartment" />
-        </EntityType>
         <EntityType Name="Status">
           <Key>
             <PropertyRef Name="StatusID" />
@@ -352,7 +340,6 @@
           <EntitySet Name="BookedCustomers" EntityType="Self.BookedCustomer" />
           <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="Prices" EntityType="Self.Price" />
-          <EntitySet Name="Reviews" EntityType="Self.Review" />
           <EntitySet Name="Status" EntityType="Self.Status" />
           <AssociationSet Name="FK_BookedCustomer_Customers" Association="Self.FK_BookedCustomer_Customers">
             <End Role="Customers" EntitySet="Customers" />
@@ -390,6 +377,7 @@
             <End Role="Apartment" EntitySet="Apartments" />
             <End Role="Price" EntitySet="Prices" />
           </AssociationSet>
+          <EntitySet Name="Reviews" EntityType="QuickTripsModel.Review" />
           <AssociationSet Name="FK_Reviews_Apartments" Association="QuickTripsModel.FK_Reviews_Apartments">
             <End Role="Apartment" EntitySet="Apartments" />
             <End Role="Review" EntitySet="Reviews" />
@@ -559,6 +547,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Review">
+          <Key>
+            <PropertyRef Name="ReviewID" />
+          </Key>
+          <Property Name="ReviewID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="ApartmentID" Type="Int32" />
+          <Property Name="ReviewDate" Type="DateTime" Precision="0" />
+          <Property Name="Review1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsVisible" Type="Boolean" />
+          <NavigationProperty Name="Apartment" Relationship="QuickTripsModel.FK_Reviews_Apartments" FromRole="Review" ToRole="Apartment" />
+        </EntityType>
         <Association Name="FK_Reviews_Apartments">
           <End Type="QuickTripsModel.Apartment" Role="Apartment" Multiplicity="0..1" />
           <End Type="QuickTripsModel.Review" Role="Review" Multiplicity="*" />
@@ -606,18 +606,6 @@
                 <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
                 <ScalarProperty Name="WEF" ColumnName="WEF" />
                 <ScalarProperty Name="Price1" ColumnName="Price" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Reviews">
-            <EntityTypeMapping TypeName="QuickTripsModel.Review">
-              <MappingFragment StoreEntitySet="Reviews">
-                <ScalarProperty Name="ReviewID" ColumnName="ReviewID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
-                <ScalarProperty Name="ReviewDate" ColumnName="ReviewDate" />
-                <ScalarProperty Name="Review1" ColumnName="Review" />
-                <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -716,6 +704,18 @@
               <MappingFragment StoreEntitySet="MasterAmenity">
                 <ScalarProperty Name="Amenity" ColumnName="Amenity" />
                 <ScalarProperty Name="MasterID" ColumnName="MasterID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reviews">
+            <EntityTypeMapping TypeName="QuickTripsModel.Review">
+              <MappingFragment StoreEntitySet="Reviews">
+                <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
+                <ScalarProperty Name="Review1" ColumnName="Review" />
+                <ScalarProperty Name="ReviewDate" ColumnName="ReviewDate" />
+                <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ReviewID" ColumnName="ReviewID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

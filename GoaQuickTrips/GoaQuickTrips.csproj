@@ -229,6 +229,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MasterAmenitiesController.cs" />
     <Compile Include="Controllers\PricesController.cs" />
+    <Compile Include="Controllers\ReviewsController.cs" />
     <Compile Include="Customer.cs">
       <DependentUpon>GQTmodel.tt</DependentUpon>
     </Compile>
@@ -416,7 +417,6 @@
     <Content Include="Views\BookingDetails\_ViewStart.cshtml" />
     <Content Include="Views\Carts\Payment.cshtml" />
     <Content Include="Views\Apartments\AddBlockDates.cshtml" />
-    <Content Include="Views\Apartments\BlockList.cshtml" />
     <Content Include="Views\MasterAmenities\Create.cshtml" />
     <Content Include="Views\MasterAmenities\Delete.cshtml" />
     <Content Include="Views\MasterAmenities\Details.cshtml" />
@@ -427,7 +427,11 @@
     <Content Include="Views\BookingDetails\BlockList.cshtml" />
     <Content Include="Views\MasterAmenities\AddAmenity.cshtml" />
     <Content Include="Views\Images\_ViewStart.cshtml" />
-    <Content Include="Views\Home\BookedCustomer.cshtml" />
+    <Content Include="Views\Reviews\Create.cshtml" />
+    <Content Include="Views\Reviews\Delete.cshtml" />
+    <Content Include="Views\Reviews\Details.cshtml" />
+    <Content Include="Views\Reviews\Edit.cshtml" />
+    <Content Include="Views\Reviews\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

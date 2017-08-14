@@ -87,8 +87,8 @@ namespace GoaQuickTrips.Models
 
     public class BookingViewModel
     {
-        public List<Booking> Bookingdata { get; set; }
-        public List<BookingDetail> BookingDetaildata { get; set; }
+        public IEnumerable<Booking> Bookingdata { get; set; }
+        public IEnumerable<BookingDetail> BookingDetaildata { get; set; }
         [Display(Name = "User")]
         [Required]
         public int UserID;

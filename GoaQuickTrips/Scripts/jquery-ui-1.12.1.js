@@ -18705,6 +18705,7 @@ var widgetsTooltip = $.ui.tooltip;
 
     }));
 
+
  $(document).ready(function () {
                 var showChar = 150;
                 var ellipsestext = "...";
@@ -18740,4 +18741,16 @@ var widgetsTooltip = $.ui.tooltip;
                     $(this).prev().toggle();
                     return false;
                 });
-            });
+                $('.truncate').each(function () {
+                    var that = $(this),
+                        title = that.text(),
+                        chars = title.length;
+
+                    if (chars > 33) {
+                        var newTitle = title.substring(0, 100) + "...";
+                        that.text(newTitle);
+                    }
+                });
+});
+
+

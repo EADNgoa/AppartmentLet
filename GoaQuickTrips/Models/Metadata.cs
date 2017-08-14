@@ -231,16 +231,19 @@ namespace GoaQuickTrips
         [Display(Name = "Apartment Name:")]
         public int ApartmentID;
 
+
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Review Date")]
-        public DateTime ReveiewDate;
+        public DateTime ReviewDate;
 
         [Display(Name = "Review:")]
         [Required]
         [StringLength(50)]
-        public string Review;
+        public string Review1;
 
+        [Display(Name = "IS Visible:")]
+        public bool IsVisible;
     }
 
     public class BookingViewMetadata

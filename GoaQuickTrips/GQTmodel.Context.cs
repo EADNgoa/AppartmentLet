@@ -28,7 +28,6 @@ namespace GoaQuickTrips
         public virtual DbSet<BookedCustomer> BookedCustomers { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Price> Prices { get; set; }
-        public virtual DbSet<Review> Reviews { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Booking> Bookings { get; set; }
         public virtual DbSet<Cart> Carts { get; set; }
@@ -38,5 +37,6 @@ namespace GoaQuickTrips
         public virtual DbSet<Amenities_Apartments> Amenities_Apartments { get; set; }
         public virtual DbSet<Apartment> Apartments { get; set; }
         public virtual DbSet<MasterAmenity> MasterAmenities { get; set; }
+        public virtual DbSet<Review> Reviews { get; set; }
     }
 }

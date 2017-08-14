@@ -8,7 +8,6 @@
         <EntityTypeShape EntityType="QuickTripsModel.BookedCustomer" Width="1.5" PointX="5.25" PointY="6.125" IsExpanded="true" />
         <EntityTypeShape EntityType="QuickTripsModel.Customer" Width="1.5" PointX="3" PointY="19.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QuickTripsModel.Price" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuickTripsModel.Review" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
         <EntityTypeShape EntityType="QuickTripsModel.Status" Width="1.5" PointX="0.75" PointY="17.125" IsExpanded="true" />
         <AssociationConnector Association="QuickTripsModel.FK_BookedCustomer_Customers" ManuallyRouted="false" />
         <EntityTypeShape EntityType="QuickTripsModel.Booking" Width="1.5" PointX="3" PointY="4.25" />
@@ -25,6 +24,7 @@
         <AssociationConnector Association="QuickTripsModel.FK_Cart_Apartments" />
         <AssociationConnector Association="QuickTripsModel.FK_Images_Apartments" />
         <AssociationConnector Association="QuickTripsModel.FK_Prices_Apartment" />
+        <EntityTypeShape EntityType="QuickTripsModel.Review" Width="1.5" PointX="3" PointY="26.75" />
         <AssociationConnector Association="QuickTripsModel.FK_Reviews_Apartments" />
         </Diagram>
     </edmx:Diagrams>
