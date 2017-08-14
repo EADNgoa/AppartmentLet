@@ -1,0 +1,67 @@
+﻿@model IList<GoaQuickTrips.Models.BookingViewModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Booking No
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bookings.BookDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bookings.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bookingdetails.CheckIn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bookingdetails.CheckOut)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bookingdetails.NoOfGuests)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bookingdetails.Price)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model )
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bookings.BookingID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bookings.BookDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bookings.StatusID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bookingdetails.CheckIn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bookingdetails.CheckOut)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bookingdetails.NoOfGuests)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bookingdetails.Price)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Bookings.BookingID }) |
+                @Html.ActionLink("Details", "Details", new { item.Bookings.BookingID }) |
+                @Html.ActionLink("Cancel Booking", "Delete", new { item.Bookings.BookingID })
+            </td>
+        </tr>
+    }
+
+</table>

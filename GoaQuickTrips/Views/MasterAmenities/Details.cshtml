@@ -1,0 +1,26 @@
+﻿@model GoaQuickTrips.MasterAmenity
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MasterAmenity</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Amenity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amenity)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MasterID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

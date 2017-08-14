@@ -18,9 +18,9 @@
         @Html.HiddenFor(model => model.ApartmentID)
 
         <div class="btn btn-block">
-            <a href="~/Images/index"><input class="btn btn-default" type="button" value="Add Images" name="images" title="Documents that this employee has on file" /></a>
-            <a href="~/Amenities/index"><input class="btn btn-default" type="button" value="Add Amenities" name="Amenities" title="Documents that this employee has on file" /></a>
-            <a href="~/Prices/index"><input class="btn btn-default" type="button" value="Add Prices" name="Prices" title="Documents that this employee has on file" /></a>
+            <a href="~/Images/Create/@Model.ApartmentID"><input class="btn btn-default" type="button" value="Add Images" name="images" title="" /></a>
+            <a href="~/MasterAmenities/AddAmenity/@Model.ApartmentID"><input class="btn btn-default" type="button" value="Add Amenities" name="Amenities" title="" /></a>
+            <a href="~/Prices/Create/@Model.ApartmentID"><input class="btn btn-default" type="button" value="Add Prices" name="Prices" title="" /></a>
 <hr />
         </div>
         <div class="form-group">

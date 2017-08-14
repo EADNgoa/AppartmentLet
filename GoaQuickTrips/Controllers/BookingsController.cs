@@ -20,16 +20,13 @@ namespace GoaQuickTrips.Controllers
        
         public ActionResult Index()
         {
-           
-            
+
+            var UserID = User.Identity.GetUserId();
             var bookings= db.Carts.Where(u => u.UserID == UserID);
-           
-
-            
-          
-
+      
             return View(db.Bookings.ToList());
         }
+       
 
         // GET: Bookings/Details/5
         public ActionResult Details(int? id)

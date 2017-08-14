@@ -21,34 +21,46 @@ namespace QuickTrips.Areas.AdminSection.Controllers
         
         public ActionResult Index()
         {
-            var apartments = db.Apartments.Include(a => a.Amenity);
+            var apartments = db.Apartments;
             return View(apartments.ToList());
         }
 
         public ActionResult BlockApartments()
         {
 
-            var apartments = db.Apartments.Include(a => a.Amenity);
+            var apartments = db.Apartments;
             return View(apartments.ToList());
         }
 
-      
-        public ActionResult Blocked(int? id)
+        public ActionResult AddBlockDates(int? id)
+        {
+
+            ViewBag.ReturnAction = "Blocked/"+id;
+            return View();
+        }
+
+       [HttpPost]
+        public ActionResult Blocked(int? id,FormCollection fm)
         {
             var UserID = User.Identity.GetUserId();
             var apartments = db.Apartments.Find(id);
+            string checkin = DateTime.Parse(fm["check_in"]).ToString("yyyy/MM/dd");
+            string checkout = DateTime.Parse(fm["check_out"]).ToString("yyyy/MM/dd");
+            string breason = fm["breason"];
+            var IN = DateTime.Parse(checkin);
+            var OUT = DateTime.Parse(checkout);
 
             var item1 = new Booking { UserID = UserID, BookDate = DateTime.Now, StatusID = null };
             db.Bookings.Add(item1);
             db.SaveChanges();
-        
-            var item2 = new BookingDetail { BookingID = item1.BookingID, ApartmentID = apartments.ApartmentID, CheckIn = DateTime.Parse(Session["in"].ToString()), CheckOut = DateTime.Parse(Session["out"].ToString()), Price = null, BlockedReason = null };
+            var item2 = new BookingDetail { BookingID = item1.BookingID, ApartmentID = apartments.ApartmentID, CheckIn = IN, CheckOut = OUT, Price = null, BlockedReason = breason };
             db.BookingDetails.Add(item2);
+            
             db.SaveChanges();
             return RedirectToAction("BlockApartments");
         }
 
-  
+     
 
         // GET: AdminSection/Apartments/Details/5
         public ActionResult Details(int? id)
@@ -68,7 +80,6 @@ namespace QuickTrips.Areas.AdminSection.Controllers
         // GET: AdminSection/Apartments/Create
         public ActionResult Create()
         {
-            ViewBag.ApartmentID = new SelectList(db.Amenities, "AmenityID", "Amenity1");
             return View();
         }
 
@@ -86,7 +97,6 @@ namespace QuickTrips.Areas.AdminSection.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ApartmentID = new SelectList(db.Amenities, "AmenityID", "Amenity1", apartment.ApartmentID);
             return View(apartment);
         }
 
@@ -102,7 +112,6 @@ namespace QuickTrips.Areas.AdminSection.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ApartmentID = new SelectList(db.Amenities, "AmenityID", "Amenity1", apartment.ApartmentID);
             return View(apartment);
         }
 
@@ -119,7 +128,6 @@ namespace QuickTrips.Areas.AdminSection.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ApartmentID = new SelectList(db.Amenities, "AmenityID", "Amenity1", apartment.ApartmentID);
             return View(apartment);
         }
 

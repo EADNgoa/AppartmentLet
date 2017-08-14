@@ -49,6 +49,12 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -185,7 +191,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Amenity.cs">
+    <Compile Include="Amenities_Apartments.cs">
       <DependentUpon>GQTmodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Apartment.cs">
@@ -208,8 +214,10 @@
     <Compile Include="Cart.cs">
       <DependentUpon>GQTmodel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Config.cs">
+      <DependentUpon>GQTmodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AmenitiesController.cs" />
     <Compile Include="Controllers\ApartmentsController.cs" />
     <Compile Include="Controllers\BookingDetailsController.cs" />
     <Compile Include="Controllers\BookingsController.cs" />
@@ -219,6 +227,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImagesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MasterAmenitiesController.cs" />
     <Compile Include="Controllers\PricesController.cs" />
     <Compile Include="Customer.cs">
       <DependentUpon>GQTmodel.tt</DependentUpon>
@@ -244,6 +253,9 @@
     <Compile Include="Image.cs">
       <DependentUpon>GQTmodel.tt</DependentUpon>
     </Compile>
+    <Compile Include="MasterAmenity.cs">
+      <DependentUpon>GQTmodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -261,9 +273,6 @@
     <Compile Include="Status.cs">
       <DependentUpon>GQTmodel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Table.cs">
-      <DependentUpon>GQTmodel.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\GoaQuickTrips.mdf" />
@@ -272,7 +281,9 @@
     </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\datepicker.css" />
     <Content Include="Content\EA.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Custom\BBS.ico" />
     <Content Include="Custom\EAwell.jpg" />
     <Content Include="Custom\Emblem.png" />
@@ -308,6 +319,10 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\jquery-ui.min.css" />
+    <Content Include="Scripts\jquery-ui-1.12.1.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -359,7 +374,7 @@
     <Content Include="Views\Tables\Details.cshtml" />
     <Content Include="Views\Tables\Edit.cshtml" />
     <Content Include="Views\Tables\Index.cshtml" />
-    <Content Include="Views\Carts\Payment.cshtml" />
+    <Content Include="Views\Carts\AddCustomer.cshtml" />
     <Content Include="Views\Carts\Delete.cshtml" />
     <Content Include="Views\Carts\Details.cshtml" />
     <Content Include="Views\Carts\Edit.cshtml" />
@@ -369,7 +384,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\ApartmentsView.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\SearchApartments.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Apartments\Create.cshtml" />
     <Content Include="Views\Apartments\Delete.cshtml" />
     <Content Include="Views\Apartments\Details.cshtml" />
@@ -382,11 +397,6 @@
     <Content Include="Views\Bookings\Details.cshtml" />
     <Content Include="Views\Bookings\Edit.cshtml" />
     <Content Include="Views\Bookings\Index.cshtml" />
-    <Content Include="Views\Amenities\Create.cshtml" />
-    <Content Include="Views\Amenities\Delete.cshtml" />
-    <Content Include="Views\Amenities\Details.cshtml" />
-    <Content Include="Views\Amenities\Edit.cshtml" />
-    <Content Include="Views\Amenities\Index.cshtml" />
     <Content Include="Views\Prices\Create.cshtml" />
     <Content Include="Views\Prices\Delete.cshtml" />
     <Content Include="Views\Prices\Details.cshtml" />
@@ -404,6 +414,20 @@
     <Content Include="Views\BookingDetails\Edit.cshtml" />
     <Content Include="Views\BookingDetails\Index.cshtml" />
     <Content Include="Views\BookingDetails\_ViewStart.cshtml" />
+    <Content Include="Views\Carts\Payment.cshtml" />
+    <Content Include="Views\Apartments\AddBlockDates.cshtml" />
+    <Content Include="Views\Apartments\BlockList.cshtml" />
+    <Content Include="Views\MasterAmenities\Create.cshtml" />
+    <Content Include="Views\MasterAmenities\Delete.cshtml" />
+    <Content Include="Views\MasterAmenities\Details.cshtml" />
+    <Content Include="Views\MasterAmenities\Edit.cshtml" />
+    <Content Include="Views\MasterAmenities\Index.cshtml" />
+    <Content Include="Views\MasterAmenities\_ViewStart.cshtml" />
+    <Content Include="Views\Apartments\AddAmenity.cshtml" />
+    <Content Include="Views\BookingDetails\BlockList.cshtml" />
+    <Content Include="Views\MasterAmenities\AddAmenity.cshtml" />
+    <Content Include="Views\Images\_ViewStart.cshtml" />
+    <Content Include="Views\Home\BookedCustomer.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

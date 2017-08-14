@@ -4,10 +4,7 @@
     ViewBag.Title = "Index";
 }
 <style>
-    .table {
-        width: 100%;
-        table-layout: fixed;
-    }
+
 </style>
 
 <h2>Index</h2>
@@ -15,44 +12,42 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+               Description
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Rules)
+               Rules
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Notes)
+              Notes
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NoOfGuests)
+               No Of Guests
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                Address
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+               Email
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Phone)
+             Phone
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LocationInfo)
+               Location Info:
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CancellationPolicy)
+               Cancellation Policy
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Lat)
+               Lat
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Lang)
+                Lang
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amenity.Amenity1)
-            </th>
+         
             <th></th>
         </tr>
 
@@ -95,11 +90,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Lang)
                 </td>
+              
                 <td>
-                    @Html.DisplayFor(modelItem => item.Amenity.Amenity1)
-                </td>
-                <td>
-                    @Html.ActionLink("Block", "Blocked", new { id = item.ApartmentID }) |
+                    @Html.ActionLink("Block", "AddBlockDates", new { id = item.ApartmentID }) |
                    
                 </td>
             </tr>

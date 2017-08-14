@@ -10,112 +10,136 @@ using GoaQuickTrips;
 
 namespace GoaQuickTrips.Controllers
 {
-    public class AmenitiesController : Controller
+    public class MasterAmenitiesController : Controller
     {
         private QuickTripsEntities db = new QuickTripsEntities();
 
-        // GET: Amenities
+        // GET: MasterAmenities
         public ActionResult Index()
         {
-            var amenities = db.Amenities.Include(a => a.Apartment);
-            return View(amenities.ToList());
+            return View(db.MasterAmenities.ToList());
+        }
+        public ActionResult AutoCompleteAmenity(string term)
+        {
+            var filteredItems = db.MasterAmenities.Where(c => c.Amenity.Contains(term)).Select(c => new { id = c.MasterID, value = c.Amenity });
+
+            return Json(filteredItems, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Amenities/Details/5
+      
+        public ActionResult AddAmenity(int id)
+        {
+            ViewBag.ApartmentID = id;
+            ViewBag.ReturnAction = "LoadAmenity";
+            return View();
+        }
+
+        public ActionResult LoadAmenity(FormCollection fm)
+        {
+            int amenity =int.Parse( fm["Amenity"]);
+            int apartmentid = int.Parse(fm["ApartmentID"]);
+           // var amenityid = db.MasterAmenities.Where(a => a.Amenity == amenity).Select(i => i.MasterID).FirstOrDefault();
+            var item = new Amenities_Apartments { ApartmentID = apartmentid, AmenityID =amenity };
+            db.Amenities_Apartments.Add(item);
+            db.SaveChanges();
+
+            return View("AddAmenity");  
+        }
+
+
+
+
+        // GET: MasterAmenities/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Amenity amenity = db.Amenities.Find(id);
-            if (amenity == null)
+            MasterAmenity masterAmenity = db.MasterAmenities.Find(id);
+            if (masterAmenity == null)
             {
                 return HttpNotFound();
             }
-            return View(amenity);
+            return View(masterAmenity);
         }
 
-        // GET: Amenities/Create
+        // GET: MasterAmenities/Create
         public ActionResult Create()
         {
-            ViewBag.AmenityID = new SelectList(db.Apartments, "ApartmentID", "Name");
             return View();
         }
 
-        // POST: Amenities/Create
+        // POST: MasterAmenities/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AmenityID,ApartmentID,Amenity1")] Amenity amenity)
+        public ActionResult Create([Bind(Include = "MasterID,Amenity")] MasterAmenity masterAmenity)
         {
             if (ModelState.IsValid)
             {
-                db.Amenities.Add(amenity);
+                db.MasterAmenities.Add(masterAmenity);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AmenityID = new SelectList(db.Apartments, "ApartmentID", "Name", amenity.AmenityID);
-            return View(amenity);
+            return View(masterAmenity);
         }
 
-        // GET: Amenities/Edit/5
+        // GET: MasterAmenities/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Amenity amenity = db.Amenities.Find(id);
-            if (amenity == null)
+            MasterAmenity masterAmenity = db.MasterAmenities.Find(id);
+            if (masterAmenity == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.AmenityID = new SelectList(db.Apartments, "ApartmentID", "Name", amenity.AmenityID);
-            return View(amenity);
+            return View(masterAmenity);
         }
 
-        // POST: Amenities/Edit/5
+        // POST: MasterAmenities/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AmenityID,ApartmentID,Amenity1")] Amenity amenity)
+        public ActionResult Edit([Bind(Include = "MasterID,Amenity")] MasterAmenity masterAmenity)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(amenity).State = EntityState.Modified;
+                db.Entry(masterAmenity).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.AmenityID = new SelectList(db.Apartments, "ApartmentID", "Name", amenity.AmenityID);
-            return View(amenity);
+            return View(masterAmenity);
         }
 
-        // GET: Amenities/Delete/5
+        // GET: MasterAmenities/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Amenity amenity = db.Amenities.Find(id);
-            if (amenity == null)
+            MasterAmenity masterAmenity = db.MasterAmenities.Find(id);
+            if (masterAmenity == null)
             {
                 return HttpNotFound();
             }
-            return View(amenity);
+            return View(masterAmenity);
         }
 
-        // POST: Amenities/Delete/5
+        // POST: MasterAmenities/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Amenity amenity = db.Amenities.Find(id);
-            db.Amenities.Remove(amenity);
+            MasterAmenity masterAmenity = db.MasterAmenities.Find(id);
+            db.MasterAmenities.Remove(masterAmenity);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

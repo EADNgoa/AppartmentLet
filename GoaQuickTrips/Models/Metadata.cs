@@ -7,6 +7,252 @@ using System.Web;
 
 namespace GoaQuickTrips
 {
+
+    public class ConfigMetadata
+    {
+        [Display(Name = "Rows Per Page")]
+        [Required]
+        public int RowsPerPage;
+    }
+    public class ApartmentMetadata
+    {
+        [Display(Name = "Apartment Name:")]
+        [Required]
+        [StringLength(50)]
+        public string Name;
+
+        [Display(Name = "Description:")]
+        [Required]
+        public string Description;
+
+        [Display(Name ="Rules:")]
+        [Required]
+        public string Rules;
+
+        [Display(Name ="Notes:")]
+        [Required]
+        public string Notes;
+
+        [Display(Name = "No of Guests:")]
+        [Required]
+        [Range(1, 10)]
+        public int NoOfGuests;
+
+        [Display(Name = "Address:")]
+        [Required]
+        [StringLength(250)]
+        public string Address;
+
+        [Display(Name = "Email:")]
+        [Required]
+        [StringLength(50)]
+        public string Email;
+
+        [Display(Name ="Phone:")]
+        [Required]
+     
+        public string Phone;
+
+        [Display(Name ="Location Info:")]
+        [Required]
+        public string LocationInfo;
+
+        [Display(Name = "Cancellation Policy")]
+        [Required]
+        [StringLength(100)]
+        public string CancellationPolicy;
+
+        [Display(Name = "Lat")]
+        [Required]
+        [StringLength(100)]
+        public string Lat;
+
+        [Display(Name = "Lang")]
+        [Required]
+        [StringLength(100)]
+        public string Lang;
+    }
+    public class BookedCustomerMetadata
+    {
+        [Display(Name = "Cart")]
+        public int CartID;
+
+        [Display(Name = "Booking No")]
+        public int BookingID;
+
+        [Display(Name = "Customer Name")]
+        public int CustomerID;
+
+    }
+
+    public class BookingDetailsMetadata
+    {
+        [Display(Name = "Booking No:")]
+        [Required]
+        public int BookingID;
+
+        [Display(Name = "Apartment Name:")]
+     
+        public int ApartmentID;
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Check IN:")]
+       
+        public DateTime CheckIn;
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Check Out:")]
+        [Required]
+        public DateTime CheckOut;
+
+        [Display(Name = "No Of Guests:")]
+       
+        public int NoOfGuests;
+
+        [Display(Name = "Price:")]
+       
+        [Range(0.0, Double.MaxValue)]
+        public Decimal Price;
+
+        [Display(Name = "Blocked Reason:")]
+    
+        [StringLength(30)]
+        public string BlockedReason;
+    }
+
+    public class BookingsMetadata
+    {
+        [Display(Name = "User")]
+        [Required]
+        public int UserID;
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name ="Booking Date")]
+        public DateTime BookDate;
+
+        [Display(Name = "Status")]
+        public int StatusID;
+    }
+
+    public class CartMetadata
+    {
+        [Display(Name = "User")]
+        public int UserID;
+
+        [Display(Name = "Apartment Name")]
+        public int ApartmentID;
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Check IN")]
+        public DateTime CheckIn;
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Check OUT")]
+        public DateTime CheckOut;
+
+        [Display(Name = "No Of Guests")]
+        [Range(0,10)]
+        public int NoOfGuests;
+
+        [Display(Name = "Price1")]
+        [Range(0.0, Double.MaxValue)]
+        public Decimal OrigPrice;
+
+    }
+
+    public class CustomersMetadata
+    {
+
+        [Display(Name = "First Name:")]
+        [Required]
+        [StringLength(50)]
+        public string FName;
+
+        [Display(Name = "Sur Name:")]
+        [Required]
+        [StringLength(50)]
+        public string SName;
+
+        [Display(Name = "Email:")]
+        [Required]
+        [StringLength(60)]
+        public string Email;
+
+        [Display(Name = "Phone:")]
+        [Required]
+      
+        public string Phone;
+
+        [Display(Name ="ID Proof:")]
+        public string IDpicture;
+
+    }
+
+    public class ImagesMetadata
+    {
+        [Display(Name = "Apartment Name:")]
+        public int ApartmentID;
+
+        [Display(Name = "Image Name:")]
+        [Required]
+        [StringLength(50)]
+        public string Name;
+
+        [Display(Name = "Upload:")]
+        [Required]
+        [StringLength(50)]
+        public HttpPostedFileBase Path;
+    }
+
+    public class PricesMetadata
+    {
+        [Display(Name = "Apartment Name:")]
+        public int ApartmentID;
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "With Effect From:")]
+        public DateTime WEF;
+
+        [Display(Name = "Price:")]
+        [Range(0.0, Double.MaxValue)]
+        public Decimal Price1;
+    }
+
+    public class ReviewsMetadata
+    {
+        [Display(Name = "User:")]
+        public int UserID;
+        [Display(Name = "Apartment Name:")]
+        public int ApartmentID;
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Review Date")]
+        public DateTime ReveiewDate;
+
+        [Display(Name = "Review:")]
+        [Required]
+        [StringLength(50)]
+        public string Review;
+
+    }
+
+    public class BookingViewMetadata
+    {
+      
+
+    }
+
+
+
+
+
     //public class ConfigMetadata
     //{
     //    [Display(Name = "Bonus Percentage")]
@@ -191,7 +437,7 @@ namespace GoaQuickTrips
 
 
     //    [DataType(DataType.Date)]
-    //    [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
+    //   [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
     //    [Display(Name = "Loan Date")]
     //    public DateTime LoanDate;
 
@@ -301,6 +547,6 @@ namespace GoaQuickTrips
     //    [Display(Name = "Reason")]
     //    public String AdjRemark;
     //}
-        
+
 
 }

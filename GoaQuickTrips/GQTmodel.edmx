@@ -5,13 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="QuickTripsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Amenities">
+        <EntityType Name="Amenities_Apartments">
           <Key>
             <PropertyRef Name="AmenityID" />
+            <PropertyRef Name="ApartmentID" />
           </Key>
-          <Property Name="AmenityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ApartmentID" Type="int" />
-          <Property Name="Amenity" Type="varchar" MaxLength="50" />
+          <Property Name="AmenityID" Type="int" Nullable="false" />
+          <Property Name="ApartmentID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Apartments">
           <Key>
@@ -24,8 +24,8 @@
           <Property Name="Notes" Type="varchar(max)" />
           <Property Name="NoOfGuests" Type="int" />
           <Property Name="Address" Type="varchar" MaxLength="250" />
-          <Property Name="Email" Type="nchar" MaxLength="50" />
-          <Property Name="Phone" Type="nchar" MaxLength="15" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Phone" Type="varchar" MaxLength="15" />
           <Property Name="LocationInfo" Type="varchar(max)" />
           <Property Name="CancellationPolicy" Type="varchar" MaxLength="100" />
           <Property Name="Lat" Type="varchar" MaxLength="20" />
@@ -74,6 +74,13 @@
           <Property Name="NoOfGuests" Type="int" />
           <Property Name="OrigPrice" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
+        <EntityType Name="Config">
+          <Key>
+            <PropertyRef Name="ConfigID" />
+          </Key>
+          <Property Name="ConfigID" Type="int" Nullable="false" />
+          <Property Name="RowsPerPage" Type="int" />
+        </EntityType>
         <EntityType Name="Customers">
           <Key>
             <PropertyRef Name="CustomerID" />
@@ -91,8 +98,15 @@
           </Key>
           <Property Name="ImageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ApartmentID" Type="int" />
-          <Property Name="Name" Type="varchar" MaxLength="30" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
           <Property Name="Path" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MasterAmenity">
+          <Key>
+            <PropertyRef Name="MasterID" />
+          </Key>
+          <Property Name="MasterID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Amenity" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Prices">
           <Key>
@@ -121,24 +135,6 @@
           <Property Name="StatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Status" Type="varchar" MaxLength="20" />
         </EntityType>
-        <EntityType Name="Table">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_Amenities_Apartments">
-          <End Role="Apartments" Type="Self.Apartments" Multiplicity="1" />
-          <End Role="Amenities" Type="Self.Amenities" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Apartments">
-              <PropertyRef Name="ApartmentID" />
-            </Principal>
-            <Dependent Role="Amenities">
-              <PropertyRef Name="AmenityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_BookedCustomer_Bookings">
           <End Role="Bookings" Type="Self.Bookings" Multiplicity="0..1" />
           <End Role="BookedCustomer" Type="Self.BookedCustomer" Multiplicity="*" />
@@ -236,22 +232,19 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="QuickTripsModelStoreContainer">
-          <EntitySet Name="Amenities" EntityType="Self.Amenities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Amenities_Apartments" EntityType="Self.Amenities_Apartments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Apartments" EntityType="Self.Apartments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BookedCustomer" EntityType="Self.BookedCustomer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BookingDetails" EntityType="Self.BookingDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bookings" EntityType="Self.Bookings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Config" EntityType="Self.Config" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MasterAmenity" EntityType="Self.MasterAmenity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Prices" EntityType="Self.Prices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Table" EntityType="Self.Table" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Amenities_Apartments" Association="Self.FK_Amenities_Apartments">
-            <End Role="Apartments" EntitySet="Apartments" />
-            <End Role="Amenities" EntitySet="Amenities" />
-          </AssociationSet>
           <AssociationSet Name="FK_BookedCustomer_Bookings" Association="Self.FK_BookedCustomer_Bookings">
             <End Role="Bookings" EntitySet="Bookings" />
             <End Role="BookedCustomer" EntitySet="BookedCustomer" />
@@ -289,38 +282,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QuickTripsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Amenity">
-          <Key>
-            <PropertyRef Name="AmenityID" />
-          </Key>
-          <Property Name="AmenityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ApartmentID" Type="Int32" />
-          <Property Name="Amenity1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Apartment" Relationship="Self.FK_Amenities_Apartments" FromRole="Amenities" ToRole="Apartments" />
-        </EntityType>
-        <EntityType Name="Apartment">
-          <Key>
-            <PropertyRef Name="ApartmentID" />
-          </Key>
-          <Property Name="ApartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Rules" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="NoOfGuests" Type="Int32" />
-          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="Phone" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="LocationInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="CancellationPolicy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Lat" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Lang" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Amenity" Relationship="Self.FK_Amenities_Apartments" FromRole="Apartments" ToRole="Amenities" />
-          <NavigationProperty Name="Images" Relationship="Self.FK_Images_Apartments" FromRole="Apartments" ToRole="Images" />
-          <NavigationProperty Name="Prices" Relationship="Self.FK_Prices_Apartment" FromRole="Apartments" ToRole="Prices" />
-          <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_Apartments" FromRole="Apartments" ToRole="Reviews" />
-          <NavigationProperty Name="Carts" Relationship="QuickTripsModel.FK_Cart_Apartments" FromRole="Apartment" ToRole="Cart" />
-        </EntityType>
         <EntityType Name="BookedCustomer">
           <Key>
             <PropertyRef Name="BCID" />
@@ -332,19 +293,6 @@
           <NavigationProperty Name="Customer" Relationship="Self.FK_BookedCustomer_Customers" FromRole="BookedCustomer" ToRole="Customers" />
           <NavigationProperty Name="Booking" Relationship="QuickTripsModel.FK_BookedCustomer_Bookings" FromRole="BookedCustomer" ToRole="Booking" />
           <NavigationProperty Name="Cart" Relationship="QuickTripsModel.FK_BookedCustomer_Cart" FromRole="BookedCustomer" ToRole="Cart" />
-        </EntityType>
-        <EntityType Name="BookingDetail">
-          <Key>
-            <PropertyRef Name="BookingDetailID" />
-          </Key>
-          <Property Name="BookingDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BookingID" Type="Int32" />
-          <Property Name="ApartmentID" Type="Int32" />
-          <Property Name="CheckIn" Type="DateTime" Precision="0" />
-          <Property Name="CheckOut" Type="DateTime" Precision="0" />
-          <Property Name="NoOfGuests" Type="Int32" />
-          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="BlockedReason" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -358,16 +306,6 @@
           <Property Name="IDpicture" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="BookedCustomers" Relationship="Self.FK_BookedCustomer_Customers" FromRole="Customers" ToRole="BookedCustomer" />
         </EntityType>
-        <EntityType Name="Image">
-          <Key>
-            <PropertyRef Name="ImageId" />
-          </Key>
-          <Property Name="ImageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ApartmentID" Type="Int32" />
-          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Path" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Apartment" Relationship="Self.FK_Images_Apartments" FromRole="Images" ToRole="Apartments" />
-        </EntityType>
         <EntityType Name="Price">
           <Key>
             <PropertyRef Name="PriceID" />
@@ -376,7 +314,7 @@
           <Property Name="ApartmentID" Type="Int32" />
           <Property Name="WEF" Type="DateTime" Precision="0" />
           <Property Name="Price1" Type="Decimal" Precision="18" Scale="2" />
-          <NavigationProperty Name="Apartment" Relationship="Self.FK_Prices_Apartment" FromRole="Prices" ToRole="Apartments" />
+          <NavigationProperty Name="Apartment" Relationship="QuickTripsModel.FK_Prices_Apartment" FromRole="Price" ToRole="Apartment" />
         </EntityType>
         <EntityType Name="Review">
           <Key>
@@ -388,7 +326,7 @@
           <Property Name="ReviewDate" Type="Int32" />
           <Property Name="Review1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IsVisible" Type="Boolean" />
-          <NavigationProperty Name="Apartment" Relationship="Self.FK_Reviews_Apartments" FromRole="Reviews" ToRole="Apartments" />
+          <NavigationProperty Name="Apartment" Relationship="QuickTripsModel.FK_Reviews_Apartments" FromRole="Review" ToRole="Apartment" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -398,54 +336,6 @@
           <Property Name="Status1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Bookings" Relationship="QuickTripsModel.FK_Bookings_Status" FromRole="Status" ToRole="Booking" />
         </EntityType>
-        <Association Name="FK_Amenities_Apartments">
-          <End Role="Apartments" Type="Self.Apartment" Multiplicity="1" />
-          <End Role="Amenities" Type="Self.Amenity" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Apartments">
-              <PropertyRef Name="ApartmentID" />
-            </Principal>
-            <Dependent Role="Amenities">
-              <PropertyRef Name="AmenityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Images_Apartments">
-          <End Role="Apartments" Type="Self.Apartment" Multiplicity="0..1" />
-          <End Role="Images" Type="Self.Image" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Apartments">
-              <PropertyRef Name="ApartmentID" />
-            </Principal>
-            <Dependent Role="Images">
-              <PropertyRef Name="ApartmentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Prices_Apartment">
-          <End Role="Apartments" Type="Self.Apartment" Multiplicity="0..1" />
-          <End Role="Prices" Type="Self.Price" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Apartments">
-              <PropertyRef Name="ApartmentID" />
-            </Principal>
-            <Dependent Role="Prices">
-              <PropertyRef Name="ApartmentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Reviews_Apartments">
-          <End Role="Apartments" Type="Self.Apartment" Multiplicity="0..1" />
-          <End Role="Reviews" Type="Self.Review" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Apartments">
-              <PropertyRef Name="ApartmentID" />
-            </Principal>
-            <Dependent Role="Reviews">
-              <PropertyRef Name="ApartmentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_BookedCustomer_Customers">
           <End Role="Customers" Type="Self.Customer" Multiplicity="0..1" />
           <End Role="BookedCustomer" Type="Self.BookedCustomer" Multiplicity="*" />
@@ -459,42 +349,17 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="QuickTripsEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Amenities" EntityType="Self.Amenity" />
-          <EntitySet Name="Apartments" EntityType="Self.Apartment" />
           <EntitySet Name="BookedCustomers" EntityType="Self.BookedCustomer" />
-          <EntitySet Name="BookingDetails" EntityType="Self.BookingDetail" />
           <EntitySet Name="Customers" EntityType="Self.Customer" />
-          <EntitySet Name="Images" EntityType="Self.Image" />
           <EntitySet Name="Prices" EntityType="Self.Price" />
           <EntitySet Name="Reviews" EntityType="Self.Review" />
           <EntitySet Name="Status" EntityType="Self.Status" />
-          <AssociationSet Name="FK_Amenities_Apartments" Association="Self.FK_Amenities_Apartments">
-            <End Role="Apartments" EntitySet="Apartments" />
-            <End Role="Amenities" EntitySet="Amenities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Images_Apartments" Association="Self.FK_Images_Apartments">
-            <End Role="Apartments" EntitySet="Apartments" />
-            <End Role="Images" EntitySet="Images" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Prices_Apartment" Association="Self.FK_Prices_Apartment">
-            <End Role="Apartments" EntitySet="Apartments" />
-            <End Role="Prices" EntitySet="Prices" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Reviews_Apartments" Association="Self.FK_Reviews_Apartments">
-            <End Role="Apartments" EntitySet="Apartments" />
-            <End Role="Reviews" EntitySet="Reviews" />
-          </AssociationSet>
           <AssociationSet Name="FK_BookedCustomer_Customers" Association="Self.FK_BookedCustomer_Customers">
             <End Role="Customers" EntitySet="Customers" />
             <End Role="BookedCustomer" EntitySet="BookedCustomers" />
           </AssociationSet>
-          <EntitySet Name="Tables" EntityType="QuickTripsModel.Table" />
           <EntitySet Name="Bookings" EntityType="QuickTripsModel.Booking" />
           <EntitySet Name="Carts" EntityType="QuickTripsModel.Cart" />
-          <AssociationSet Name="FK_Cart_Apartments" Association="QuickTripsModel.FK_Cart_Apartments">
-            <End Role="Apartment" EntitySet="Apartments" />
-            <End Role="Cart" EntitySet="Carts" />
-          </AssociationSet>
           <AssociationSet Name="FK_BookedCustomer_Bookings" Association="QuickTripsModel.FK_BookedCustomer_Bookings">
             <End Role="Booking" EntitySet="Bookings" />
             <End Role="BookedCustomer" EntitySet="BookedCustomers" />
@@ -507,13 +372,29 @@
             <End Role="Status" EntitySet="Status" />
             <End Role="Booking" EntitySet="Bookings" />
           </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="Table">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-        </EntityType>
+          <EntitySet Name="BookingDetails" EntityType="QuickTripsModel.BookingDetail" />
+          <EntitySet Name="Configs" EntityType="QuickTripsModel.Config" />
+          <EntitySet Name="Images" EntityType="QuickTripsModel.Image" />
+          <EntitySet Name="Amenities_Apartments" EntityType="QuickTripsModel.Amenities_Apartments" />
+          <EntitySet Name="Apartments" EntityType="QuickTripsModel.Apartment" />
+          <EntitySet Name="MasterAmenities" EntityType="QuickTripsModel.MasterAmenity" />
+          <AssociationSet Name="FK_Cart_Apartments" Association="QuickTripsModel.FK_Cart_Apartments">
+            <End Role="Apartment" EntitySet="Apartments" />
+            <End Role="Cart" EntitySet="Carts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Images_Apartments" Association="QuickTripsModel.FK_Images_Apartments">
+            <End Role="Apartment" EntitySet="Apartments" />
+            <End Role="Image" EntitySet="Images" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Prices_Apartment" Association="QuickTripsModel.FK_Prices_Apartment">
+            <End Role="Apartment" EntitySet="Apartments" />
+            <End Role="Price" EntitySet="Prices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reviews_Apartments" Association="QuickTripsModel.FK_Reviews_Apartments">
+            <End Role="Apartment" EntitySet="Apartments" />
+            <End Role="Review" EntitySet="Reviews" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Booking">
           <Key>
             <PropertyRef Name="BookingID" />
@@ -536,21 +417,9 @@
           <Property Name="CheckOut" Type="DateTime" Precision="0" />
           <Property Name="NoOfGuests" Type="Int32" />
           <Property Name="OrigPrice" Type="Decimal" Precision="18" Scale="2" />
-          <NavigationProperty Name="Apartment" Relationship="QuickTripsModel.FK_Cart_Apartments" FromRole="Cart" ToRole="Apartment" />
           <NavigationProperty Name="BookedCustomers" Relationship="QuickTripsModel.FK_BookedCustomer_Cart" FromRole="Cart" ToRole="BookedCustomer" />
+          <NavigationProperty Name="Apartment" Relationship="QuickTripsModel.FK_Cart_Apartments" FromRole="Cart" ToRole="Apartment" />
         </EntityType>
-        <Association Name="FK_Cart_Apartments">
-          <End Type="QuickTripsModel.Apartment" Role="Apartment" Multiplicity="0..1" />
-          <End Type="QuickTripsModel.Cart" Role="Cart" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Apartment">
-              <PropertyRef Name="ApartmentID" />
-            </Principal>
-            <Dependent Role="Cart">
-              <PropertyRef Name="ApartmentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_BookedCustomer_Bookings">
           <End Type="QuickTripsModel.Booking" Role="Booking" Multiplicity="0..1" />
           <End Type="QuickTripsModel.BookedCustomer" Role="BookedCustomer" Multiplicity="*" />
@@ -587,40 +456,127 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="BookingDetail">
+          <Key>
+            <PropertyRef Name="BookingDetailID" />
+          </Key>
+          <Property Name="BookingDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookingID" Type="Int32" />
+          <Property Name="ApartmentID" Type="Int32" />
+          <Property Name="CheckIn" Type="DateTime" Precision="0" />
+          <Property Name="CheckOut" Type="DateTime" Precision="0" />
+          <Property Name="NoOfGuests" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BlockedReason" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Config">
+          <Key>
+            <PropertyRef Name="ConfigID" />
+          </Key>
+          <Property Name="ConfigID" Type="Int32" Nullable="false" />
+          <Property Name="RowsPerPage" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ApartmentID" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Path" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Apartment" Relationship="QuickTripsModel.FK_Images_Apartments" FromRole="Image" ToRole="Apartment" />
+        </EntityType>
+        <EntityType Name="Amenities_Apartments">
+          <Key>
+            <PropertyRef Name="AmenityID" />
+            <PropertyRef Name="ApartmentID" />
+          </Key>
+          <Property Name="AmenityID" Type="Int32" Nullable="false" />
+          <Property Name="ApartmentID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Apartment">
+          <Key>
+            <PropertyRef Name="ApartmentID" />
+          </Key>
+          <Property Name="ApartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Rules" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="NoOfGuests" Type="Int32" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="LocationInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CancellationPolicy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Lat" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Lang" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Carts" Relationship="QuickTripsModel.FK_Cart_Apartments" FromRole="Apartment" ToRole="Cart" />
+          <NavigationProperty Name="Images" Relationship="QuickTripsModel.FK_Images_Apartments" FromRole="Apartment" ToRole="Image" />
+          <NavigationProperty Name="Prices" Relationship="QuickTripsModel.FK_Prices_Apartment" FromRole="Apartment" ToRole="Price" />
+          <NavigationProperty Name="Reviews" Relationship="QuickTripsModel.FK_Reviews_Apartments" FromRole="Apartment" ToRole="Review" />
+        </EntityType>
+        <EntityType Name="MasterAmenity">
+          <Key>
+            <PropertyRef Name="MasterID" />
+          </Key>
+          <Property Name="MasterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Amenity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Cart_Apartments">
+          <End Type="QuickTripsModel.Apartment" Role="Apartment" Multiplicity="0..1" />
+          <End Type="QuickTripsModel.Cart" Role="Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apartment">
+              <PropertyRef Name="ApartmentID" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="ApartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Images_Apartments">
+          <End Type="QuickTripsModel.Apartment" Role="Apartment" Multiplicity="0..1" />
+          <End Type="QuickTripsModel.Image" Role="Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apartment">
+              <PropertyRef Name="ApartmentID" />
+            </Principal>
+            <Dependent Role="Image">
+              <PropertyRef Name="ApartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Prices_Apartment">
+          <End Type="QuickTripsModel.Apartment" Role="Apartment" Multiplicity="0..1" />
+          <End Type="QuickTripsModel.Price" Role="Price" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apartment">
+              <PropertyRef Name="ApartmentID" />
+            </Principal>
+            <Dependent Role="Price">
+              <PropertyRef Name="ApartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reviews_Apartments">
+          <End Type="QuickTripsModel.Apartment" Role="Apartment" Multiplicity="0..1" />
+          <End Type="QuickTripsModel.Review" Role="Review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apartment">
+              <PropertyRef Name="ApartmentID" />
+            </Principal>
+            <Dependent Role="Review">
+              <PropertyRef Name="ApartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="QuickTripsModelStoreContainer" CdmEntityContainer="QuickTripsEntities">
-          <EntitySetMapping Name="Amenities">
-            <EntityTypeMapping TypeName="QuickTripsModel.Amenity">
-              <MappingFragment StoreEntitySet="Amenities">
-                <ScalarProperty Name="AmenityID" ColumnName="AmenityID" />
-                <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
-                <ScalarProperty Name="Amenity1" ColumnName="Amenity" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Apartments">
-            <EntityTypeMapping TypeName="QuickTripsModel.Apartment">
-              <MappingFragment StoreEntitySet="Apartments">
-                <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Rules" ColumnName="Rules" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="NoOfGuests" ColumnName="NoOfGuests" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="LocationInfo" ColumnName="LocationInfo" />
-                <ScalarProperty Name="CancellationPolicy" ColumnName="CancellationPolicy" />
-                <ScalarProperty Name="Lat" ColumnName="Lat" />
-                <ScalarProperty Name="Lang" ColumnName="Lang" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="BookedCustomers">
             <EntityTypeMapping TypeName="QuickTripsModel.BookedCustomer">
               <MappingFragment StoreEntitySet="BookedCustomer">
@@ -628,20 +584,6 @@
                 <ScalarProperty Name="CartID" ColumnName="CartID" />
                 <ScalarProperty Name="BookingID" ColumnName="BookingID" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BookingDetails">
-            <EntityTypeMapping TypeName="QuickTripsModel.BookingDetail">
-              <MappingFragment StoreEntitySet="BookingDetails">
-                <ScalarProperty Name="BookingDetailID" ColumnName="BookingDetailID" />
-                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
-                <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
-                <ScalarProperty Name="CheckIn" ColumnName="CheckIn" />
-                <ScalarProperty Name="CheckOut" ColumnName="CheckOut" />
-                <ScalarProperty Name="NoOfGuests" ColumnName="NoOfGuests" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="BlockedReason" ColumnName="BlockedReason" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -654,16 +596,6 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="IDpicture" ColumnName="IDpicture" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Images">
-            <EntityTypeMapping TypeName="QuickTripsModel.Image">
-              <MappingFragment StoreEntitySet="Images">
-                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
-                <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Path" ColumnName="Path" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -697,13 +629,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tables">
-            <EntityTypeMapping TypeName="QuickTripsModel.Table">
-              <MappingFragment StoreEntitySet="Table">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Bookings">
             <EntityTypeMapping TypeName="QuickTripsModel.Booking">
               <MappingFragment StoreEntitySet="Bookings">
@@ -727,7 +652,74 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="BookingDetails">
+            <EntityTypeMapping TypeName="QuickTripsModel.BookingDetail">
+              <MappingFragment StoreEntitySet="BookingDetails">
+                <ScalarProperty Name="BlockedReason" ColumnName="BlockedReason" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="NoOfGuests" ColumnName="NoOfGuests" />
+                <ScalarProperty Name="CheckOut" ColumnName="CheckOut" />
+                <ScalarProperty Name="CheckIn" ColumnName="CheckIn" />
+                <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
+                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+                <ScalarProperty Name="BookingDetailID" ColumnName="BookingDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Configs">
+            <EntityTypeMapping TypeName="QuickTripsModel.Config">
+              <MappingFragment StoreEntitySet="Config">
+                <ScalarProperty Name="RowsPerPage" ColumnName="RowsPerPage" />
+                <ScalarProperty Name="ConfigID" ColumnName="ConfigID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="QuickTripsModel.Image">
+              <MappingFragment StoreEntitySet="Images">
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Amenities_Apartments">
+            <EntityTypeMapping TypeName="QuickTripsModel.Amenities_Apartments">
+              <MappingFragment StoreEntitySet="Amenities_Apartments">
+                <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
+                <ScalarProperty Name="AmenityID" ColumnName="AmenityID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Apartments">
+            <EntityTypeMapping TypeName="QuickTripsModel.Apartment">
+              <MappingFragment StoreEntitySet="Apartments">
+                <ScalarProperty Name="Lang" ColumnName="Lang" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="CancellationPolicy" ColumnName="CancellationPolicy" />
+                <ScalarProperty Name="LocationInfo" ColumnName="LocationInfo" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="NoOfGuests" ColumnName="NoOfGuests" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Rules" ColumnName="Rules" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MasterAmenities">
+            <EntityTypeMapping TypeName="QuickTripsModel.MasterAmenity">
+              <MappingFragment StoreEntitySet="MasterAmenity">
+                <ScalarProperty Name="Amenity" ColumnName="Amenity" />
+                <ScalarProperty Name="MasterID" ColumnName="MasterID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

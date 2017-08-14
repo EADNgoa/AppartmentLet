@@ -37,9 +37,9 @@ namespace GoaQuickTrips.Controllers
         }
 
         // GET: Images/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.ApartmentID = new SelectList(db.Apartments, "ApartmentID", "Name");
+            ViewBag.ApartmentID = id;
             return View();
         }
 
@@ -48,13 +48,33 @@ namespace GoaQuickTrips.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ImageId,ApartmentID,Name,Path")] Image image)
+        public ActionResult Create([Bind(Include = "ImageId,ApartmentID,Name,UploadedFile")] AptImg image)
         {
             if (ModelState.IsValid)
             {
-                db.Images.Add(image);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (image.UploadedFile != null)
+                {
+                    string fn = image.UploadedFile.FileName.Substring(image.UploadedFile.FileName.LastIndexOf('\\') + 1);
+                    fn = image.ApartmentID + "_" + fn;
+                    //string SavePath = System.IO.Path.Combine(Server.MapPath("~/" + db.Config.FirstOrDefault().ImageSavePath), fn);
+                    //empDocs.UploadedFile.SaveAs(SavePath);
+
+                    System.Drawing.Bitmap upimg = new System.Drawing.Bitmap(image.UploadedFile.InputStream);
+                    System.Drawing.Bitmap svimg = MyExtensions.CropUnwantedBackground(upimg);
+                    svimg.Save(System.IO.Path.Combine(Server.MapPath("~/Images"), fn));
+
+                    Image img = new Image
+                    {
+                        ApartmentID = image.ApartmentID,
+                        Name = image.Name,
+                        Path = fn
+
+                    };
+
+                    db.Images.Add(img);
+                    db.SaveChanges();
+                    return RedirectToAction("Create", new { ApartmentID = image.ApartmentID });
+                }
             }
 
             ViewBag.ApartmentID = new SelectList(db.Apartments, "ApartmentID", "Name", image.ApartmentID);
