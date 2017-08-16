@@ -6,8 +6,8 @@
 }
 <style>
     #map{
-        height:150px;
-        width:300px;
+        height:350px;
+        width:80%;
         
     }
 </style>
@@ -103,9 +103,9 @@
             </div>
         </div>
         <div class="form-group">
-           <label class="control-label col-md-2" >Location</label>          
+           <label class="control-label col-md-2" >Click to set Location</label>          
             <div class="col-md-10">
-                <div id="map"></div>
+                <div id="map" width="80%" ></div>
             </div>
         </div>
        
@@ -145,31 +145,53 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 <script>
+    var markersArray = [];                
   
-            function initMap()
-            {
-                var options =
-                    {
-                    Zoom: 10,
-                    Center: {lat:15.2993, lng:74.1240}
-                }
+    function initMap() {
+        var myLatLng = { lat: 15.498626410761135, lng: 73.82881432771683 };
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 10,
+            center: myLatLng
+        });
 
-                var map = new google.maps.Map(document.getElementById('map'), options);
 
-                google.maps.event.addListener(map, 'click', function(event) {
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: 'Set Location!'
+        });
 
-                    addMarker({ coords: event.latlng});
-                });
+        markersArray.push(marker);
 
-               
-                function addMarker(coords) {
-                    var marker = new google.maps.Marker({
-                        position: coords,
-                        map: map
-                    });
-            }
+        map.addListener('click', function (e) {
+            placeMarkerAndPanTo(e.latLng, map);
+        });
 
     }
+    
+
+    function clearOverlays() {
+        for (var i = 0; i < markersArray.length; i++) {
+            markersArray[i].setMap(null);
+        }
+        markersArray.length = 0;
+    }
+
+    function placeMarkerAndPanTo(latLng, map) {
+        clearOverlays();
+
+        var marker = new google.maps.Marker({
+            position: latLng,
+            map: map
+        });
+        markersArray.push(marker);
+        map.panTo(latLng);
+        $('#Lang').val(latLng.lng);
+        $('#Lat').val(latLng.lat);
+    }
+
+
+    
   
 
 </script>

@@ -1,8 +1,19 @@
 ﻿@model GoaQuickTrips.Apartment
 
+<style>
+    #map {
+        height: 350px;
+        width: 80%;
+    }
+</style>
+
+
+
 @{
     ViewBag.Title = "Edit";
 }
+
+
 
 <h2>Edit</h2>
 
@@ -104,6 +115,13 @@
         </div>
 
         <div class="form-group">
+           <label class="control-label col-md-2" >Click to set Location</label>          
+            <div class="col-md-10">
+                <div id="map" width="80%" ></div>
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.Lat, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Lat, new { htmlAttributes = new { @class = "form-control" } })
@@ -133,4 +151,57 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+<script>
+    var markersArray = [];
+
+    function initMap() {
+        var myLatLng = { lat: parseFloat($('#Lat').val()), lng: parseFloat($('#Lang').val()) };
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 14,
+            center: myLatLng
+        });
+
+
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: 'Set Location!'
+        });
+
+        markersArray.push(marker);
+
+        map.addListener('click', function (e) {
+            placeMarkerAndPanTo(e.latLng, map);
+        });
+
+    }
+
+
+    function clearOverlays() {
+        for (var i = 0; i < markersArray.length; i++) {
+            markersArray[i].setMap(null);
+        }
+        markersArray.length = 0;
+    }
+
+    function placeMarkerAndPanTo(latLng, map) {
+        clearOverlays();
+
+        var marker = new google.maps.Marker({
+            position: latLng,
+            map: map
+        });
+        markersArray.push(marker);
+        map.panTo(latLng);
+        $('#Lang').val(latLng.lng);
+        $('#Lat').val(latLng.lat);
+    }
+    
+</script>
+
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAC6Yyjmk9tLMPEe6ID2rmzwcYPCHKYrZU&callback=initMap">
+</script>
 }
