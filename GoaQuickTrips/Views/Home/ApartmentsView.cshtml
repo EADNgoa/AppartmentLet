@@ -1,97 +1,242 @@
-﻿@model IEnumerable<Apartment>
-  
-    <style type="text/css">
-        table {
-            page-break-inside: auto
-        }
+﻿@model PagedList.IPagedList<GoaQuickTrips.Apartment>
+@using PagedList.Mvc;
 
-        tr {
-            page-break-inside: avoid;
-            page-break-after: auto
-        }
-
-        thead {
-            display: table-header-group
-        }
-
-        tfoot {
-            display: table-footer-group
-        }
-        .image{
-            height:150px;
-            width:300px;
-        }
-    </style>
-    <header class="section-to-print">
-        <h1 class="text-center"><b>Apartments</b></h1>
-
-    </header>
-   
-
-    @foreach (GoaQuickTrips.Apartment item in Model)
-    {
-        <div class="prod_page">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 col-xs-12 col-sm-12">
-                        <div class="col-md-4 col-sm-4 col-xs-12">
-                            <div class="product_item_view">
-                                <img src="https://s-media-cache-ak0.pinimg.com/564x/b4/12/9a/b4129abb37e4d8e2d7bd4b79e2688a59.jpg" class="img-responsive" />
-                            </div>
-                        </div>
-                     
-                        <div class="col-md-8 col-sm-8 col-xs-12">
-                            <div class="product_detail_view">
-                                <div class="pro_heading">
-                                  @Html.DisplayFor(modelItem => item.Name)
-                                </div>
-
-                               
-                              
-                                <div class="comment">
-                                  No Of Guest:  @Html.DisplayFor(modelItem => item.NoOfGuests)
-                                </div>
-                               
-                                <div class="comment">
-                                 @Html.DisplayFor(modelItem => item.Description)
-                                </div>
-                                <div class="comment">
-                                  @Html.DisplayFor(modelItem => item.Notes)
-                                </div>
-                                <div class="comment">
-                                    <small> Rules:</small> @Html.DisplayFor(modelItem => item.Rules)
-                                </div>
-                                <div class="pro_rate">
-                                    250 Rs
-                                </div>
-
-                            
-                        </div>
-                    </div>
-                        @Html.ActionLink("GRab it Now", "ApartmentDetail", new { id = item.ApartmentID })
-
-                        
-
-                </div>
-            </div>
-        </div>
-</div>
-<br />
-        <br />
+<style type="text/css">
+    .pull-right{
+        margin-right:50px !important;
+    }
+    a {
+       
     }
 
+        a:visited {
+            color: #0254EB
+        }
 
-<script>
+        a.morelink {
+            text-decoration: none;
+            outline: none;
+        }
+
+    .morecontent span {
+        display: none;
+    }
+
+    .comment {
+        width: 400px;
+        background-color:aliceblue;
+        margin: 10px;
+    }
+
+    #map {
+        height: 150px;
+        width: 200px;
+        border:2px;
+        border-color:darkblue;
+
+    }
+    table {
+        page-break-inside: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+
+    .image {
+        height: 150px;
+        width: 300px;
+    }
+    .profile-sidebar {
+        margin-left:0px !important;
+        padding: 20px 0 10px 0;
+        background: #fff;
+        border-radius: 5px;
+    }
+    .profile-content {
+        padding: 20px;
+        background: #fff;
+        min-height: 460px;
+        color: black;
+        border-radius: 5px;
+        border-color:dimgrey;
+     
+    }
+
+    .prod_page{
+        border:2px;
+        border-color:cadetblue;
+    }
+
+</style>
+<header>
+
+</header>
+<br />
+<br />
+<div class="container">
+    <div class="row profile">
+        <div class="col-md-3">
+            <div class="profile-sidebar">
+                <center>
+                    <div id="map">
+
+                    </div>
+                    <br />
+                  
+                    <table>
+                        @using (Html.BeginForm((string)ViewBag.ReturnAction, "Home", FormMethod.Post))
+                        {
+
+                            <tbody>
+                                <tr>
+                                    <td> <input type="date" class="form-control input-md" name="check_in" id="check_in" placeholder="Check in"></td>
+                                </tr>
+                                <tr><td><input type="date" class="form-control  input-md" name="check_out" id="check_out" placeholder="Check out"></td></tr>
+                                <tr>
+                                    <td>
+
+                                        <select name='guest' id="guest" class="form-control  input-md">
+                                            <option value=''>Guest</option>
+                                            <option value='1'>1+</option>
+                                            <option value='2'>2+</option>
+                                            <option value='3'>3+</option>
+                                            <option value='4'>4+</option>
+                                            <option value='5'>5+</option>
+                                            <option value='6'>6+</option>
+                                            <option value='7'>7+</option>
+                                            <option value='8'>8+</option>
+                                            <option value='9'>9+</option>
+                                            <option value='10'>10+</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td> <input type="submit" value="Search" class="btn btn-default input-sm" /></td>
+                                </tr>
+                            </tbody>
+
+                        }
+                    </table>
+                   
+                </center>
+                
+
+
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="profile-content">
+
+                @foreach (GoaQuickTrips.Apartment item in Model)
+                {
+                    <div class="prod_page">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12 col-xs-12 col-sm-12">
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <div class="product_item_view">
+                                            <img src="https://s-media-cache-ak0.pinimg.com/564x/b4/12/9a/b4129abb37e4d8e2d7bd4b79e2688a59.jpg" class="img-responsive" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <div class="product_detail_view">
+                                            <div class="pro_heading">
+                                              <b><big>@Html.DisplayFor(modelItem => item.Name)</big></b>
+                                            </div>
 
 
 
-$(".comment").shorten({
-	"showChars" : 2,
-	"moreText"	: "See More",
-	"lessText"	: "Less",
-});
+                                            <div class="comment">
+                                                No Of Guest:  @Html.DisplayFor(modelItem => item.NoOfGuests)
+                                            </div>
+
+                                            <div class="more comment">
+                                                Description: @Html.DisplayFor(modelItem => item.Description)
+                                            </div>
+                                            <div class="more comment">
+                                                 Notes: @Html.DisplayFor(modelItem => item.Notes)
+                                            </div>
+                                            <div class="more comment">
+                                                Rules: @Html.DisplayFor(modelItem => item.Rules)
+                                            </div>
+                                            <div class="pro_rate">
+                                                250 Rs
+                                               
+                                            </div>
+                                            <div class="pull-right">
+                                                @Html.ActionLink("Grab it Now", "ApartmentDetail", new { id = item.ApartmentID })
+                                            </div>
+                                          
+                                        </div>
+                                    </div>
+                                  
 
 
 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                }
+                 <center>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
+        @Html.PagedListPager(Model, page => Url.Action("ApartmentsView",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, ApartmentID = ViewBag.ApartmentID }))
+    </center>
+
+            </div>
+        </div>
+
+        </div>
+   
+</div>
+
+
+
+        <script>
+           
+    function initMap() {
+        var options =
+            {
+                Zoom: 10,
+                Center: { lat: 15.2993, lng: 74.1240 }
+            }
+
+        var map = new google.maps.Map(document.getElementById('map'), options);
+
+        google.maps.event.addListener(map, 'click', function (event) {
+
+            addMarker({ coords: event.latlng });
+        });
+
+
+        function addMarker(coords) {
+            var marker = new google.maps.Marker({
+                position: coords,
+                map: map
+            });
+        }
+
+            }
+
+
+
+           
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAC6Yyjmk9tLMPEe6ID2rmzwcYPCHKYrZU&callback=initMap">
 </script>

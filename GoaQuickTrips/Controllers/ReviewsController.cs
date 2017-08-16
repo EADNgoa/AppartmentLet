@@ -10,112 +10,112 @@ using GoaQuickTrips;
 
 namespace GoaQuickTrips.Controllers
 {
-    public class AmenitiesController : Controller
+    public class ReviewsController : Controller
     {
         private QuickTripsEntities db = new QuickTripsEntities();
 
-        // GET: Amenities
+        // GET: Reviews
         public ActionResult Index()
         {
-            var amenities = db.Amenities.Include(a => a.Apartment);
-            return View(amenities.ToList());
+            var reviews = db.Reviews.Include(r => r.Apartment);
+            return View(reviews.ToList());
         }
 
-        // GET: Amenities/Details/5
+        // GET: Reviews/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Amenity amenity = db.Amenities.Find(id);
-            if (amenity == null)
+            Review review = db.Reviews.Find(id);
+            if (review == null)
             {
                 return HttpNotFound();
             }
-            return View(amenity);
+            return View(review);
         }
 
-        // GET: Amenities/Create
+        // GET: Reviews/Create
         public ActionResult Create()
         {
-            ViewBag.AmenityID = new SelectList(db.Apartments, "ApartmentID", "Name");
+            ViewBag.ApartmentID = new SelectList(db.Apartments, "ApartmentID", "Name");
             return View();
         }
 
-        // POST: Amenities/Create
+        // POST: Reviews/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AmenityID,ApartmentID,Amenity1")] Amenity amenity)
+        public ActionResult Create([Bind(Include = "ReviewID,UserID,ApartmentID,ReviewDate,Review1,IsVisible")] Review review)
         {
             if (ModelState.IsValid)
             {
-                db.Amenities.Add(amenity);
+                db.Reviews.Add(review);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AmenityID = new SelectList(db.Apartments, "ApartmentID", "Name", amenity.AmenityID);
-            return View(amenity);
+            ViewBag.ApartmentID = new SelectList(db.Apartments, "ApartmentID", "Name", review.ApartmentID);
+            return View(review);
         }
 
-        // GET: Amenities/Edit/5
+        // GET: Reviews/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Amenity amenity = db.Amenities.Find(id);
-            if (amenity == null)
+            Review review = db.Reviews.Find(id);
+            if (review == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.AmenityID = new SelectList(db.Apartments, "ApartmentID", "Name", amenity.AmenityID);
-            return View(amenity);
+            ViewBag.ApartmentID = new SelectList(db.Apartments, "ApartmentID", "Name", review.ApartmentID);
+            return View(review);
         }
 
-        // POST: Amenities/Edit/5
+        // POST: Reviews/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AmenityID,ApartmentID,Amenity1")] Amenity amenity)
+        public ActionResult Edit([Bind(Include = "ReviewID,UserID,ApartmentID,ReviewDate,Review1,IsVisible")] Review review)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(amenity).State = EntityState.Modified;
+                db.Entry(review).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.AmenityID = new SelectList(db.Apartments, "ApartmentID", "Name", amenity.AmenityID);
-            return View(amenity);
+            ViewBag.ApartmentID = new SelectList(db.Apartments, "ApartmentID", "Name", review.ApartmentID);
+            return View(review);
         }
 
-        // GET: Amenities/Delete/5
+        // GET: Reviews/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Amenity amenity = db.Amenities.Find(id);
-            if (amenity == null)
+            Review review = db.Reviews.Find(id);
+            if (review == null)
             {
                 return HttpNotFound();
             }
-            return View(amenity);
+            return View(review);
         }
 
-        // POST: Amenities/Delete/5
+        // POST: Reviews/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Amenity amenity = db.Amenities.Find(id);
-            db.Amenities.Remove(amenity);
+            Review review = db.Reviews.Find(id);
+            db.Reviews.Remove(review);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

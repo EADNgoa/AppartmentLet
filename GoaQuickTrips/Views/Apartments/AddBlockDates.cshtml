@@ -1,0 +1,24 @@
+﻿<div class="container">
+    <br />
+    <br>
+    <h2>Block</h2>
+    <table class="table-responsive">
+        @using (Html.BeginForm((string)ViewBag.ReturnAction, "Apartments", FormMethod.Post))
+        {
+
+            <tbody>
+                <tr>
+                  <td >Check IN:</td><td class="col-md-8"> <input type="date" class="form-control input-lg" name="check_in" id="check_in" placeholder="Check in"></td>
+                </tr>
+                <tr><td >Check Out:</td><td class="col-md-8"><input type="date" class="form-control  input-lg" name="check_out" id="check_out" placeholder="Check out"></td></tr>
+                <tr><td>Reason:</td><td  class="col-md-8"><textarea class="form-control  input-lg" name="breason" id="check_out" placeholder="breason"></textarea></td></tr>
+
+                <tr>
+                    <td></td><td><input type="submit" value="Block" class="btn btn-default input-md" /></td>
+                </tr>
+            </tbody>
+
+        }
+    </table>
+</div>
+

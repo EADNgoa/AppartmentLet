@@ -22,5 +22,7 @@ namespace GoaQuickTrips
         public Nullable<int> NoOfGuests { get; set; }
         public Nullable<decimal> Price { get; set; }
         public string BlockedReason { get; set; }
+    
+        public virtual Booking Booking { get; set; }
     }
 }

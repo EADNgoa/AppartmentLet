@@ -1,0 +1,107 @@
+﻿
+
+    <div id="message" class="container form-group"></div>
+ 
+    <script>
+
+          
+            var msg = document.getElementById('message');
+          
+            var f = document.createElement("form");
+            f.setAttribute('method', "post");
+            f.setAttribute('action', "AddBookedCustomer");
+            var br = document.createElement("br");
+            var br2 = document.createElement("br");
+            var br3 = document.createElement("br");
+            var br4 = document.createElement("br");
+            var br5 = document.createElement("br");
+
+            var il = document.createElement("label");
+           
+
+            il.innerHTML = "Firstname:";
+
+
+            var ip3 = document.createElement("input");
+            ip3.setAttribute('type', "text");
+           
+            ip3.setAttribute('class', "form-control");
+
+            var ig = document.createElement("label");
+           
+            ig.innerHTML = "Surname:";
+
+
+            var g = document.createElement("input");
+            g.setAttribute('type', "text");
+          
+            g.setAttribute('class', "form-control");
+
+            var ie = document.createElement("label");
+            ie.setAttribute('For', "Email");
+            ie.innerHTML = "Email:";
+
+            var e = document.createElement("input");
+            e.setAttribute('type', "Email");
+            e.setAttribute('class', "form-control");
+
+            var ip = document.createElement("label");
+            ip.setAttribute('For', "phone");
+            ip.innerHTML = "Mobile No:";
+
+            var p = document.createElement("input");
+            p.setAttribute('type', "text");
+            
+            p.setAttribute('class', "form-control");
+
+            var iu = document.createElement("label");
+          
+            iu.innerHTML = "ID Picture:";
+            var u = document.createElement("input");
+            u.setAttribute('type', "File");
+          
+            u.setAttribute('class', "");
+
+            var s = document.createElement("input");
+            s.setAttribute('type', "submit");
+            s.setAttribute('value', "Submit");
+            s.setAttribute('class', "btn-success");
+
+        
+            for (i = 0; i <@Session["MAXguests"] ; i++) {
+                  
+                il.setAttribute('For', 'fname'+ [i]);
+                f.appendChild(il.cloneNode(true));
+                ip3.setAttribute('name', 'fname' + [i]);
+                f.appendChild(ip3.cloneNode(true));
+                f.appendChild(br.cloneNode(true));
+                ig.setAttribute('For', 'sname'+[i]);
+                f.appendChild(ig.cloneNode(true));
+                g.setAttribute('name', 'sname'+[i]);
+                f.appendChild(g.cloneNode(true));
+                f.appendChild(br2.cloneNode(true));
+                ie.setAttribute('For', 'email'+[i]);
+                f.appendChild(ie.cloneNode(true));
+                e.setAttribute('name', 'email'+[i]);
+                f.appendChild(e.cloneNode(true));
+                f.appendChild(br3.cloneNode(true));
+                ip.setAttribute('For', 'phone'+[i]);
+                f.appendChild(ip.cloneNode(true));
+                p.setAttribute('name', 'phone'+[i]);
+                f.appendChild(p.cloneNode(true));
+                f.appendChild(br4.cloneNode(true));
+                iu.setAttribute('For', 'idpicture'+[i]);
+                f.appendChild(iu.cloneNode(true));
+                u.setAttribute('name', 'idpicture'+[i]);
+                f.appendChild(u.cloneNode(true));
+                f.appendChild(br5.cloneNode(true));
+            }
+            f.appendChild(s);  
+            msg.innerHTML = "";
+            msg.appendChild(f);
+
+            
+            
+
+    </script>
+    

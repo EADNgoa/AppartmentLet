@@ -12,12 +12,9 @@ namespace GoaQuickTrips
     using System;
     using System.Collections.Generic;
     
-    public partial class Amenity
+    public partial class Config
     {
-        public int AmenityID { get; set; }
-        public Nullable<int> ApartmentID { get; set; }
-        public string Amenity1 { get; set; }
-    
-        public virtual Apartment Apartment { get; set; }
+        public int ConfigID { get; set; }
+        public Nullable<int> RowsPerPage { get; set; }
     }
 }

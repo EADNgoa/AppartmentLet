@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+
 //using System.Web.Mvc; for dynamic roles
 //using Microsoft.AspNet.Identity;for dynamic roles
 //using GoaQuickTrips.Models;for dynamic roles
@@ -10,10 +11,69 @@ using System.Web;
 
 namespace GoaQuickTrips
 {
-    //[MetadataType(typeof(ConfigMetadata))]
-    //public partial class Config
-    //{
-    //}
+    [MetadataType(typeof(ApartmentMetadata))]
+    public partial class Apartment
+    {
+
+    }
+
+    [MetadataType(typeof(BookedCustomerMetadata))]
+    public partial class BookedCustomer
+    {
+    }
+    [MetadataType(typeof(BookingDetailsMetadata))]
+    public partial class BookingDetail
+    {
+    }
+
+    [MetadataType(typeof(BookingsMetadata))]
+    public partial class Booking
+    {
+    }
+
+    [MetadataType(typeof(CartMetadata))]
+    public partial class Cart
+    {
+
+    }
+
+    [MetadataType(typeof(CustomersMetadata))]
+    public partial class Customer
+    {
+    }
+
+    [MetadataType(typeof(ImagesMetadata))]
+    public partial class Images
+    {
+    }
+
+    [MetadataType(typeof(PricesMetadata))]
+    public partial class Price
+    {
+    }
+
+    [MetadataType(typeof(ReviewsMetadata))]
+    public partial class Review
+    {
+    }
+    [MetadataType(typeof(ConfigMetadata))]
+    public partial class Config
+    {
+    }
+
+ 
+
+
+    public partial class AptImg
+    {
+
+        public int ImageId { get; set; }
+        public int ApartmentID { get; set; }
+        public string Name { get; set; }
+        public HttpPostedFileBase UploadedFile { get; set; }
+
+    }
+
 
     //[MetadataType(typeof(EmpTypeMetadata))]
     //public partial class EmpTypes
@@ -104,7 +164,7 @@ namespace GoaQuickTrips
     //    [Display(Name = "Drivers Lic. Expiry Date")]
     //    [RequiredIf(CompareToInt =1)] //EmpTypeID 1 has to be driver
     //    public Nullable<System.DateTime> DrivLicExp { get; set; }
-        
+
     //}
 
     ///// <summary>
@@ -203,7 +263,7 @@ namespace GoaQuickTrips
     //{
     //    public int EmpID { get; set; }
     //    public DateTime Dayt { get; set; }
-        
+
     //    public bool IsLeave { get; set; }
     //}
 
@@ -242,7 +302,7 @@ namespace GoaQuickTrips
     //                return ValidationResult.Success;
     //            comparer = " less than or equal to ";
     //        }
-            
+
     //        return new ValidationResult(ErrorMessage ?? "Make sure your date is " + comparer + CompareDate.ToString("dd-MMM-yyyy"));
     //    }
 
@@ -251,7 +311,7 @@ namespace GoaQuickTrips
     //public class RequiredIfAttribute : ValidationAttribute
     //{
     //    public int CompareToInt { get; set; }
-        
+
 
     //    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     //    {

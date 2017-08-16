@@ -17,7 +17,7 @@ namespace GoaQuickTrips
         public int ReviewID { get; set; }
         public Nullable<int> UserID { get; set; }
         public Nullable<int> ApartmentID { get; set; }
-        public Nullable<int> ReviewDate { get; set; }
+        public Nullable<System.DateTime> ReviewDate { get; set; }
         public string Review1 { get; set; }
         public Nullable<bool> IsVisible { get; set; }
     

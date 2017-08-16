@@ -20,13 +20,24 @@ namespace GoaQuickTrips.Controllers
         {
             return View(db.BookingDetails.ToList());
         }
-        
-        public ActionResult Confirm()
+        public ActionResult Confirm(int? id)
         {
+            var cancel = db.Bookings.Find(id);
+            cancel.StatusID = 2;
+            db.Entry(cancel).Property(a => a.StatusID).IsModified = true;
 
+            db.SaveChanges();
+            return RedirectToAction("Index");
 
-            return View();
         }
+
+
+        public ActionResult BlockList()
+        {
+            var BlockedList = db.BookingDetails.Where(a => a.BlockedReason != null);
+            return View(BlockedList.ToList());
+        }
+
 
         // GET: BookingDetails/Details/5
         public ActionResult Details(int? id)
@@ -120,7 +131,7 @@ namespace GoaQuickTrips.Controllers
             BookingDetail bookingDetail = db.BookingDetails.Find(id);
             db.BookingDetails.Remove(bookingDetail);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("BlockList");
         }
 
         protected override void Dispose(bool disposing)

@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using System;
 
 namespace GoaQuickTrips.Models
 {
@@ -83,4 +84,47 @@ namespace GoaQuickTrips.Models
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
     }
+
+    public class BookingViewModel
+    {
+        public IEnumerable<Booking> Bookingdata { get; set; }
+        public IEnumerable<BookingDetail> BookingDetaildata { get; set; }
+        [Display(Name = "User")]
+        [Required]
+        public int UserID;
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Booking Date")]
+        public DateTime BookDate;
+
+        [Display(Name = "Status")]
+        public int StatusID;
+
+        [Display(Name = "Apartment Name:")]
+        public int ApartmentID;
+
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Check IN:")]
+
+        public DateTime CheckIn;
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Check Out:")]
+        [Required]
+        public DateTime CheckOut;
+
+        [Display(Name = "No Of Guests:")]
+
+        public int NoOfGuests;
+
+        [Display(Name = "Price:")]
+
+        [Range(0.0, Double.MaxValue)]
+        public Decimal Price;
+    }
+
 }

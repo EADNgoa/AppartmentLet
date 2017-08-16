@@ -28,8 +28,8 @@ namespace GoaQuickTrips
         public Nullable<int> NoOfGuests { get; set; }
         public Nullable<decimal> OrigPrice { get; set; }
     
-        public virtual Apartment Apartment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BookedCustomer> BookedCustomers { get; set; }
+        public virtual Apartment Apartment { get; set; }
     }
 }
