@@ -6,9 +6,7 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table">
     <tr>
         <th>
@@ -52,7 +50,7 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.BookingDetailID }) |
                 @Html.ActionLink("Details", "Details", new { id = item.BookingDetailID }) |
-                @Html.ActionLink("Cancel Booking", "Delete", new { id = item.BookingDetailID })
+                @Html.ActionLink("Unblock", "Delete", new { id = item.BookingDetailID })
             </td>
         </tr>
     }

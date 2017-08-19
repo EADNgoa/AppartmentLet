@@ -6,9 +6,7 @@
 
 <h2>BookedCustomer</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table">
     <tr>
         <th>
@@ -43,22 +41,25 @@
         </td>
         </tr>
         <tr>
-            <table class="table">
-                <tbody>
-                    <tr>
+            <td>
+                <table class="table-bordered">
+                    <tbody>
+
                         @foreach (var bd in item.BookingDetails)
                         {
-                            <td>Apartment:@Html.DisplayFor(modelItem => bd.ApartmentID)</td>
-                            <td>Check in:@Html.DisplayFor(modelItem => bd.CheckIn)</td>
-                            <td>Check Out:@Html.DisplayFor(modelItem => bd.CheckOut)</td>
-                            <td>No Of guest:@Html.DisplayFor(modelItem => bd.NoOfGuests)</td>
-                            <td>Price:@Html.DisplayFor(modelItem => bd.Price)</td>
+                            <tr>
+                                <td>Apartment:@Html.DisplayFor(modelItem => bd.ApartmentID)</td>
+                                <td>Check in:@Html.DisplayFor(modelItem => bd.CheckIn)</td>
+                                <td>Check Out:@Html.DisplayFor(modelItem => bd.CheckOut)</td>
+                                <td>No Of guest:@Html.DisplayFor(modelItem => bd.NoOfGuests)</td>
+                                <td>Price:@Html.DisplayFor(modelItem => bd.Price)</td>
 
-
+                            </tr>
                         }
-                    </tr>
-                </tbody>
-            </table>
+
+                    </tbody>
+                </table>
+            </td>
         </tr>
     }
 

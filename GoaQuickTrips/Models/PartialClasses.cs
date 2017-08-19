@@ -61,18 +61,33 @@ namespace GoaQuickTrips
     {
     }
 
- 
+    [MetadataType(typeof(ReviewDetailMetadata))]
+    public partial class ReviewDetail
+    {
+    }
+
+
 
 
     public partial class AptImg
     {
 
-        public int ImageId { get; set; }
+        public int ImageId {get; set; }
+        public int ApartmentID {get; set; }
+        public string Name {get; set;}
+        public HttpPostedFileBase UploadedFile {get; set;}
+
+    }
+
+    public partial class IdPicture
+    {
+        
         public int ApartmentID { get; set; }
-        public string Name { get; set; }
+        
         public HttpPostedFileBase UploadedFile { get; set; }
 
     }
+
 
 
     //[MetadataType(typeof(EmpTypeMetadata))]

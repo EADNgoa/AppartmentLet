@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using GoaQuickTrips;
+using GoaQuickTrips.Models;
 
 namespace GoaQuickTrips.Controllers
 {
@@ -26,24 +26,41 @@ namespace GoaQuickTrips.Controllers
             return Json(filteredItems, JsonRequestBehavior.AllowGet);
         }
 
-      
-        public ActionResult AddAmenity(int id)
+        public ActionResult AssignedAmenity(AmenityViewModel amenity)
         {
-            ViewBag.ApartmentID = id;
-            ViewBag.ReturnAction = "LoadAmenity";
+            
+
+
             return View();
         }
 
-        public ActionResult LoadAmenity(FormCollection fm)
+      
+        public ActionResult AddAmenity(int? id)
+        {
+            ViewBag.ApartmentID = id;
+
+            var apt = db.Apartments.Find(id);
+
+            ViewBag.ReturnAction = "LoadAmenity";
+            ViewBag.Amenity = apt.MasterAmenities;
+
+            return View();
+        }
+
+        public ActionResult LoadAmenity(FormCollection fm, int? id)
         {
             int amenity =int.Parse( fm["Amenity"]);
             int apartmentid = int.Parse(fm["ApartmentID"]);
-           // var amenityid = db.MasterAmenities.Where(a => a.Amenity == amenity).Select(i => i.MasterID).FirstOrDefault();
-            var item = new Amenities_Apartments { ApartmentID = apartmentid, AmenityID =amenity };
-            db.Amenities_Apartments.Add(item);
-            db.SaveChanges();
+            ViewBag.ApartmentID = apartmentid;
+            
+            var appt= db.Apartments.Find(apartmentid);
+            var amty = new MasterAmenity { MasterID = amenity };
+            db.MasterAmenities.Attach(amty);
+            appt.MasterAmenities.Add(amty);
+            
+            int res = db.SaveChanges();
 
-            return View("AddAmenity");  
+            return  RedirectToAction("AddAmenity",new{ id = apartmentid});  
         }
 
 

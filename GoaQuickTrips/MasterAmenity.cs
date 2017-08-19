@@ -14,7 +14,16 @@ namespace GoaQuickTrips
     
     public partial class MasterAmenity
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public MasterAmenity()
+        {
+            this.Apartments = new HashSet<Apartment>();
+        }
+    
         public int MasterID { get; set; }
         public string Amenity { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Apartment> Apartments { get; set; }
     }
 }

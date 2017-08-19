@@ -126,5 +126,10 @@ namespace GoaQuickTrips.Models
         [Range(0.0, Double.MaxValue)]
         public Decimal Price;
     }
+    public class AmenityViewModel
+    {
+        public IEnumerable<MasterAmenity> Amenitydata { get; set; }
+        public IEnumerable<Apartment> AmenityDetaildata { get; set; }
+    }
 
 }

@@ -10,6 +10,10 @@
         width:80%;
         
     }
+    textarea{
+        width:300px;
+        height:80px;
+    }
 </style>
 
 <h2>Create</h2>
@@ -34,7 +38,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control input-lg" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -42,7 +46,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Rules, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Rules, new { htmlAttributes = new { @class = "form-control " } })
+                @Html.TextAreaFor(model => model.Rules, new { htmlAttributes = new { @class = "form-control input-lg " } })
                 @Html.ValidationMessageFor(model => model.Rules, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -50,7 +54,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Notes, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.Notes, new { htmlAttributes = new { @class = "form-control input-lg" } })
                 @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -90,7 +94,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.LocationInfo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.LocationInfo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.LocationInfo, new { htmlAttributes = new { @class = "form-control input-lg" } })
                 @Html.ValidationMessageFor(model => model.LocationInfo, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -98,7 +102,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CancellationPolicy, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CancellationPolicy, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.CancellationPolicy, new { htmlAttributes = new { @class = "form-control input-lg" } })
                 @Html.ValidationMessageFor(model => model.CancellationPolicy, "", new { @class = "text-danger" })
             </div>
         </div>

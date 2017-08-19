@@ -22,6 +22,20 @@ namespace QuickTrips.Controllers
         public ActionResult Index()
         {
             var UserID = User.Identity.GetUserId();
+
+            if (Session["id"] != null)
+            {
+                int id = (int)Session["id"];
+
+                var cartItem = db.Apartments.Find(id);
+
+
+                var IN = DateTime.Parse(Session["in"].ToString());
+                var OUT = DateTime.Parse(Session["out"].ToString());
+                var item = new Cart { UserID = UserID, ApartmentID = cartItem.ApartmentID, CheckIn = IN, CheckOut = OUT, NoOfGuests = (int)Session["guests"], OrigPrice = null };
+                db.Carts.Add(item);
+                db.SaveChanges();
+            }
             var carts = db.Carts.Include(c => c.Apartment).Where(u =>u.UserID == UserID);
             return View(carts.ToList());
         }
@@ -94,7 +108,7 @@ namespace QuickTrips.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
   
-        public ActionResult AddBookedCustomer(FormCollection fm)
+        public ActionResult AddBookedCustomer(FormCollection fm, [Bind(Include = "ApartmentID,UploadedFile")] IdPicture image)
 
         {
             var UserID = User.Identity.GetUserId();
@@ -115,22 +129,26 @@ namespace QuickTrips.Controllers
                     }
                     db.SaveChanges();
                     var crt = db.Carts.Where(a => a.UserID == UserID).Max(i => i.NoOfGuests);
-
                     for (int i = 0; i < crt; i++)
                     {
-                        var fname = fm["fname" + i];
-                        var sname = fm["sname" + i];
-                        var email = fm["email" + i];
-                        var phone = fm["phone" + i];
-                        var idpicture = fm["idpicture" + i];
-                        var item3 = new Customer { FName = fname, SName = sname, Email = email, Phone = phone, IDpicture = idpicture };
-                        db.Customers.Add(item3);
-                        db.SaveChanges();
-                        var item4 = new BookedCustomer { CartID = null, BookingID = null, CustomerID = item3.CustomerID };
-                        db.BookedCustomers.Add(item4);
-                        db.SaveChanges();
+                       
+                        
 
-                    }
+
+                            var fname = fm["fname" + i];
+                            var sname = fm["sname" + i];
+                            var email = fm["email" + i];
+                            var phone = fm["phone" + i];
+                           
+                            var item3 = new Customer { FName = fname, SName = sname, Email = email, Phone = phone, IDpicture = null };
+                            db.Customers.Add(item3);
+                            db.SaveChanges();
+                            var item4 = new BookedCustomer { CartID = null, BookingID = null, CustomerID = item3.CustomerID };
+                            db.BookedCustomers.Add(item4);
+                            db.SaveChanges();
+
+                        }
+                    
 
                     db.Carts.Remove(b);
                     db.SaveChanges();

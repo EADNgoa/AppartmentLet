@@ -14,13 +14,21 @@ namespace GoaQuickTrips
     
     public partial class Review
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Review()
+        {
+            this.ReviewDetails = new HashSet<ReviewDetail>();
+        }
+    
         public int ReviewID { get; set; }
-        public Nullable<int> UserID { get; set; }
+        public string UserID { get; set; }
         public Nullable<int> ApartmentID { get; set; }
         public Nullable<System.DateTime> ReviewDate { get; set; }
         public string Review1 { get; set; }
         public Nullable<bool> IsVisible { get; set; }
     
         public virtual Apartment Apartment { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReviewDetail> ReviewDetails { get; set; }
     }
 }

@@ -5,9 +5,7 @@
     .pull-right{
         margin-right:50px !important;
     }
-    a {
-       
-    }
+    
 
         a:visited {
             color: #0254EB
@@ -22,11 +20,7 @@
         display: none;
     }
 
-    .comment {
-        width: 400px;
-        background-color:aliceblue;
-        margin: 10px;
-    }
+ 
 
     #map {
         height: 150px;
@@ -57,19 +51,22 @@
         width: 300px;
     }
     .profile-sidebar {
-        margin-left:0px !important;
-        padding: 20px 0 10px 0;
-        background: #fff;
-        border-radius: 5px;
+        color: white;
+        margin-top: 20px;
+        padding: 30px;
+        z-index: 80;
+        background: rgba(0, 0, 0, 0.9);
+        border-radius: 8px;
     }
     .profile-content {
-        padding: 20px;
-        background: #fff;
-        min-height: 460px;
-        color: black;
-        border-radius: 5px;
-        border-color:dimgrey;
-     
+        color: white;
+        margin-top: 20px;
+        padding: 30px;
+        z-index: 80;
+        background: rgba(0, 0, 0, 0.9);
+        border-radius: 8px;
+       // -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+       // box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
     }
 
     .prod_page{
@@ -137,15 +134,14 @@
         <div class="col-md-9">
             <div class="profile-content">
 
-                @foreach (GoaQuickTrips.Apartment item in Model)
-                {
-                    <div class="prod_page">
+             @foreach (GoaQuickTrips.Apartment item in Model)
+             { <div class="prod_page">
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12 col-xs-12 col-sm-12">
                                     <div class="col-md-4 col-sm-4 col-xs-12">
                                         <div class="product_item_view">
-                                            <img src="https://s-media-cache-ak0.pinimg.com/564x/b4/12/9a/b4129abb37e4d8e2d7bd4b79e2688a59.jpg" class="img-responsive" />
+                                            <img src="/Images/@item.Images.First().Path" class="img-responsive" />
                                         </div>
                                     </div>
 
@@ -157,21 +153,21 @@
 
 
 
-                                            <div class="comment">
+                                            <div class="">
                                                 No Of Guest:  @Html.DisplayFor(modelItem => item.NoOfGuests)
                                             </div>
 
-                                            <div class="more comment">
+                                            <div class="more">
                                                 Description: @Html.DisplayFor(modelItem => item.Description)
                                             </div>
-                                            <div class="more comment">
+                                            <div class="more">
                                                  Notes: @Html.DisplayFor(modelItem => item.Notes)
                                             </div>
-                                            <div class="more comment">
+                                            <div class="more">
                                                 Rules: @Html.DisplayFor(modelItem => item.Rules)
                                             </div>
                                             <div class="pro_rate">
-                                                250 Rs
+                                              @Html.DisplayFor(modelItem => item.Prices)
                                                
                                             </div>
                                             <div class="pull-right">

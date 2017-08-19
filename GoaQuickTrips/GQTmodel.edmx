@@ -117,12 +117,23 @@
           <Property Name="WEF" Type="date" />
           <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
+        <EntityType Name="ReviewDetails">
+          <Key>
+            <PropertyRef Name="ReviewDetailID" />
+          </Key>
+          <Property Name="ReviewDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReviewID" Type="int" />
+          <Property Name="UserID" Type="nvarchar(max)" />
+          <Property Name="ReviewDate" Type="datetime" />
+          <Property Name="Reply" Type="varchar(max)" />
+          <Property Name="ISvisible" Type="bit" />
+        </EntityType>
         <EntityType Name="Reviews">
           <Key>
             <PropertyRef Name="ReviewID" />
           </Key>
           <Property Name="ReviewID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserID" Type="int" />
+          <Property Name="UserID" Type="nvarchar(max)" />
           <Property Name="ApartmentID" Type="int" />
           <Property Name="ReviewDate" Type="date" />
           <Property Name="Review" Type="varchar(max)" />
@@ -135,6 +146,30 @@
           <Property Name="StatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Status" Type="varchar" MaxLength="20" />
         </EntityType>
+        <Association Name="FK_Amenities_Apartments_Amenity">
+          <End Role="MasterAmenity" Type="Self.MasterAmenity" Multiplicity="1" />
+          <End Role="Amenities_Apartments" Type="Self.Amenities_Apartments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MasterAmenity">
+              <PropertyRef Name="MasterID" />
+            </Principal>
+            <Dependent Role="Amenities_Apartments">
+              <PropertyRef Name="AmenityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Amenities_Apartments_Apartments">
+          <End Role="Apartments" Type="Self.Apartments" Multiplicity="1" />
+          <End Role="Amenities_Apartments" Type="Self.Amenities_Apartments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apartments">
+              <PropertyRef Name="ApartmentID" />
+            </Principal>
+            <Dependent Role="Amenities_Apartments">
+              <PropertyRef Name="ApartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_BookedCustomer_Bookings">
           <End Role="Bookings" Type="Self.Bookings" Multiplicity="0..1" />
           <End Role="BookedCustomer" Type="Self.BookedCustomer" Multiplicity="*" />
@@ -231,6 +266,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ReviewDetails_ToReview">
+          <End Role="Reviews" Type="Self.Reviews" Multiplicity="0..1" />
+          <End Role="ReviewDetails" Type="Self.ReviewDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reviews">
+              <PropertyRef Name="ReviewID" />
+            </Principal>
+            <Dependent Role="ReviewDetails">
+              <PropertyRef Name="ReviewID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Reviews_Apartments">
           <End Role="Apartments" Type="Self.Apartments" Multiplicity="0..1" />
           <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
@@ -255,8 +302,17 @@
           <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MasterAmenity" EntityType="Self.MasterAmenity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Prices" EntityType="Self.Prices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReviewDetails" EntityType="Self.ReviewDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Amenities_Apartments_Amenity" Association="Self.FK_Amenities_Apartments_Amenity">
+            <End Role="MasterAmenity" EntitySet="MasterAmenity" />
+            <End Role="Amenities_Apartments" EntitySet="Amenities_Apartments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Amenities_Apartments_Apartments" Association="Self.FK_Amenities_Apartments_Apartments">
+            <End Role="Apartments" EntitySet="Apartments" />
+            <End Role="Amenities_Apartments" EntitySet="Amenities_Apartments" />
+          </AssociationSet>
           <AssociationSet Name="FK_BookedCustomer_Bookings" Association="Self.FK_BookedCustomer_Bookings">
             <End Role="Bookings" EntitySet="Bookings" />
             <End Role="BookedCustomer" EntitySet="BookedCustomer" />
@@ -288,6 +344,10 @@
           <AssociationSet Name="FK_Prices_Apartment" Association="Self.FK_Prices_Apartment">
             <End Role="Apartments" EntitySet="Apartments" />
             <End Role="Prices" EntitySet="Prices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReviewDetails_ToReview" Association="Self.FK_ReviewDetails_ToReview">
+            <End Role="Reviews" EntitySet="Reviews" />
+            <End Role="ReviewDetails" EntitySet="ReviewDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_Reviews_Apartments" Association="Self.FK_Reviews_Apartments">
             <End Role="Apartments" EntitySet="Apartments" />
@@ -377,9 +437,7 @@
           </AssociationSet>
           <EntitySet Name="Configs" EntityType="QuickTripsModel.Config" />
           <EntitySet Name="Images" EntityType="QuickTripsModel.Image" />
-          <EntitySet Name="Amenities_Apartments" EntityType="QuickTripsModel.Amenities_Apartments" />
           <EntitySet Name="Apartments" EntityType="QuickTripsModel.Apartment" />
-          <EntitySet Name="MasterAmenities" EntityType="QuickTripsModel.MasterAmenity" />
           <AssociationSet Name="FK_Cart_Apartments" Association="QuickTripsModel.FK_Cart_Apartments">
             <End Role="Apartment" EntitySet="Apartments" />
             <End Role="Cart" EntitySet="Carts" />
@@ -392,15 +450,25 @@
             <End Role="Apartment" EntitySet="Apartments" />
             <End Role="Price" EntitySet="Prices" />
           </AssociationSet>
+          <EntitySet Name="BookingDetails" EntityType="QuickTripsModel.BookingDetail" />
+          <AssociationSet Name="FK_BookingDetails_booking" Association="QuickTripsModel.FK_BookingDetails_booking">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="BookingDetail" EntitySet="BookingDetails" />
+          </AssociationSet>
           <EntitySet Name="Reviews" EntityType="QuickTripsModel.Review" />
           <AssociationSet Name="FK_Reviews_Apartments" Association="QuickTripsModel.FK_Reviews_Apartments">
             <End Role="Apartment" EntitySet="Apartments" />
             <End Role="Review" EntitySet="Reviews" />
           </AssociationSet>
-          <EntitySet Name="BookingDetails" EntityType="QuickTripsModel.BookingDetail" />
-          <AssociationSet Name="FK_BookingDetails_booking" Association="QuickTripsModel.FK_BookingDetails_booking">
-            <End Role="Booking" EntitySet="Bookings" />
-            <End Role="BookingDetail" EntitySet="BookingDetails" />
+          <EntitySet Name="ReviewDetails" EntityType="QuickTripsModel.ReviewDetail" />
+          <AssociationSet Name="FK_ReviewDetails_ToReview" Association="QuickTripsModel.FK_ReviewDetails_ToReview">
+            <End Role="Review" EntitySet="Reviews" />
+            <End Role="ReviewDetail" EntitySet="ReviewDetails" />
+          </AssociationSet>
+          <EntitySet Name="MasterAmenities" EntityType="QuickTripsModel.MasterAmenity" />
+          <AssociationSet Name="Amenities_Apartments" Association="QuickTripsModel.Amenities_Apartments">
+            <End Role="MasterAmenity" EntitySet="MasterAmenities" />
+            <End Role="Apartment" EntitySet="Apartments" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Booking">
@@ -482,14 +550,6 @@
           <Property Name="Path" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Apartment" Relationship="QuickTripsModel.FK_Images_Apartments" FromRole="Image" ToRole="Apartment" />
         </EntityType>
-        <EntityType Name="Amenities_Apartments">
-          <Key>
-            <PropertyRef Name="AmenityID" />
-            <PropertyRef Name="ApartmentID" />
-          </Key>
-          <Property Name="AmenityID" Type="Int32" Nullable="false" />
-          <Property Name="ApartmentID" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="Apartment">
           <Key>
             <PropertyRef Name="ApartmentID" />
@@ -511,13 +571,7 @@
           <NavigationProperty Name="Images" Relationship="QuickTripsModel.FK_Images_Apartments" FromRole="Apartment" ToRole="Image" />
           <NavigationProperty Name="Prices" Relationship="QuickTripsModel.FK_Prices_Apartment" FromRole="Apartment" ToRole="Price" />
           <NavigationProperty Name="Reviews" Relationship="QuickTripsModel.FK_Reviews_Apartments" FromRole="Apartment" ToRole="Review" />
-        </EntityType>
-        <EntityType Name="MasterAmenity">
-          <Key>
-            <PropertyRef Name="MasterID" />
-          </Key>
-          <Property Name="MasterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Amenity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MasterAmenities" Relationship="QuickTripsModel.Amenities_Apartments" FromRole="Apartment" ToRole="MasterAmenity" />
         </EntityType>
         <Association Name="FK_Cart_Apartments">
           <End Type="QuickTripsModel.Apartment" Role="Apartment" Multiplicity="0..1" />
@@ -555,30 +609,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Review">
-          <Key>
-            <PropertyRef Name="ReviewID" />
-          </Key>
-          <Property Name="ReviewID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int32" />
-          <Property Name="ApartmentID" Type="Int32" />
-          <Property Name="ReviewDate" Type="DateTime" Precision="0" />
-          <Property Name="Review1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="IsVisible" Type="Boolean" />
-          <NavigationProperty Name="Apartment" Relationship="QuickTripsModel.FK_Reviews_Apartments" FromRole="Review" ToRole="Apartment" />
-        </EntityType>
-        <Association Name="FK_Reviews_Apartments">
-          <End Type="QuickTripsModel.Apartment" Role="Apartment" Multiplicity="0..1" />
-          <End Type="QuickTripsModel.Review" Role="Review" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Apartment">
-              <PropertyRef Name="ApartmentID" />
-            </Principal>
-            <Dependent Role="Review">
-              <PropertyRef Name="ApartmentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="BookingDetail">
           <Key>
             <PropertyRef Name="BookingDetailID" />
@@ -604,6 +634,67 @@
               <PropertyRef Name="BookingID" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Review">
+          <Key>
+            <PropertyRef Name="ReviewID" />
+          </Key>
+          <Property Name="ReviewID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ApartmentID" Type="Int32" />
+          <Property Name="ReviewDate" Type="DateTime" Precision="0" />
+          <Property Name="Review1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsVisible" Type="Boolean" />
+          <NavigationProperty Name="Apartment" Relationship="QuickTripsModel.FK_Reviews_Apartments" FromRole="Review" ToRole="Apartment" />
+          <NavigationProperty Name="ReviewDetails" Relationship="QuickTripsModel.FK_ReviewDetails_ToReview" FromRole="Review" ToRole="ReviewDetail" />
+        </EntityType>
+        <Association Name="FK_Reviews_Apartments">
+          <End Type="QuickTripsModel.Apartment" Role="Apartment" Multiplicity="0..1" />
+          <End Type="QuickTripsModel.Review" Role="Review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apartment">
+              <PropertyRef Name="ApartmentID" />
+            </Principal>
+            <Dependent Role="Review">
+              <PropertyRef Name="ApartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ReviewDetail">
+          <Key>
+            <PropertyRef Name="ReviewDetailID" />
+          </Key>
+          <Property Name="ReviewDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReviewID" Type="Int32" />
+          <Property Name="UserID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReviewDate" Type="DateTime" Precision="3" />
+          <Property Name="Reply" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ISvisible" Type="Boolean" />
+          <NavigationProperty Name="Review" Relationship="QuickTripsModel.FK_ReviewDetails_ToReview" FromRole="ReviewDetail" ToRole="Review" />
+        </EntityType>
+        <Association Name="FK_ReviewDetails_ToReview">
+          <End Type="QuickTripsModel.Review" Role="Review" Multiplicity="0..1" />
+          <End Type="QuickTripsModel.ReviewDetail" Role="ReviewDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Review">
+              <PropertyRef Name="ReviewID" />
+            </Principal>
+            <Dependent Role="ReviewDetail">
+              <PropertyRef Name="ReviewID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MasterAmenity">
+          <Key>
+            <PropertyRef Name="MasterID" />
+          </Key>
+          <Property Name="MasterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Amenity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Apartments" Relationship="QuickTripsModel.Amenities_Apartments" FromRole="MasterAmenity" ToRole="Apartment" />
+        </EntityType>
+        <Association Name="Amenities_Apartments">
+          <End Type="QuickTripsModel.MasterAmenity" Role="MasterAmenity" Multiplicity="*" />
+          <End Type="QuickTripsModel.Apartment" Role="Apartment" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -692,14 +783,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Amenities_Apartments">
-            <EntityTypeMapping TypeName="QuickTripsModel.Amenities_Apartments">
-              <MappingFragment StoreEntitySet="Amenities_Apartments">
-                <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
-                <ScalarProperty Name="AmenityID" ColumnName="AmenityID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Apartments">
             <EntityTypeMapping TypeName="QuickTripsModel.Apartment">
               <MappingFragment StoreEntitySet="Apartments">
@@ -719,11 +802,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="MasterAmenities">
-            <EntityTypeMapping TypeName="QuickTripsModel.MasterAmenity">
-              <MappingFragment StoreEntitySet="MasterAmenity">
-                <ScalarProperty Name="Amenity" ColumnName="Amenity" />
-                <ScalarProperty Name="MasterID" ColumnName="MasterID" />
+          <EntitySetMapping Name="BookingDetails">
+            <EntityTypeMapping TypeName="QuickTripsModel.BookingDetail">
+              <MappingFragment StoreEntitySet="BookingDetails">
+                <ScalarProperty Name="BlockedReason" ColumnName="BlockedReason" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="NoOfGuests" ColumnName="NoOfGuests" />
+                <ScalarProperty Name="CheckOut" ColumnName="CheckOut" />
+                <ScalarProperty Name="CheckIn" ColumnName="CheckIn" />
+                <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
+                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+                <ScalarProperty Name="BookingDetailID" ColumnName="BookingDetailID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -739,20 +828,34 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BookingDetails">
-            <EntityTypeMapping TypeName="QuickTripsModel.BookingDetail">
-              <MappingFragment StoreEntitySet="BookingDetails">
-                <ScalarProperty Name="BlockedReason" ColumnName="BlockedReason" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="NoOfGuests" ColumnName="NoOfGuests" />
-                <ScalarProperty Name="CheckOut" ColumnName="CheckOut" />
-                <ScalarProperty Name="CheckIn" ColumnName="CheckIn" />
-                <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
-                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
-                <ScalarProperty Name="BookingDetailID" ColumnName="BookingDetailID" />
+          <EntitySetMapping Name="ReviewDetails">
+            <EntityTypeMapping TypeName="QuickTripsModel.ReviewDetail">
+              <MappingFragment StoreEntitySet="ReviewDetails">
+                <ScalarProperty Name="ISvisible" ColumnName="ISvisible" />
+                <ScalarProperty Name="Reply" ColumnName="Reply" />
+                <ScalarProperty Name="ReviewDate" ColumnName="ReviewDate" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ReviewID" ColumnName="ReviewID" />
+                <ScalarProperty Name="ReviewDetailID" ColumnName="ReviewDetailID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="MasterAmenities">
+            <EntityTypeMapping TypeName="QuickTripsModel.MasterAmenity">
+              <MappingFragment StoreEntitySet="MasterAmenity">
+                <ScalarProperty Name="Amenity" ColumnName="Amenity" />
+                <ScalarProperty Name="MasterID" ColumnName="MasterID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Amenities_Apartments" TypeName="QuickTripsModel.Amenities_Apartments" StoreEntitySet="Amenities_Apartments">
+            <EndProperty Name="Apartment">
+              <ScalarProperty Name="ApartmentID" ColumnName="ApartmentID" />
+            </EndProperty>
+            <EndProperty Name="MasterAmenity">
+              <ScalarProperty Name="MasterID" ColumnName="AmenityID" />
+            </EndProperty>
+          </AssociationSetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

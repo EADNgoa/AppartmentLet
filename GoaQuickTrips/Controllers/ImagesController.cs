@@ -15,9 +15,10 @@ namespace GoaQuickTrips.Controllers
         private QuickTripsEntities db = new QuickTripsEntities();
 
         // GET: Images
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            var images = db.Images.Include(i => i.Apartment);
+            var images = db.Images.Include(i => i.Apartment).Where(a=>a.ApartmentID == id);
+            ViewBag.ApartmentID = id;
             return View(images.ToList());
         }
 
@@ -137,7 +138,7 @@ namespace GoaQuickTrips.Controllers
             Image image = db.Images.Find(id);
             db.Images.Remove(image);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { image.ApartmentID });
         }
 
         protected override void Dispose(bool disposing)

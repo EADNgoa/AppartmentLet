@@ -12,9 +12,15 @@ namespace GoaQuickTrips
     using System;
     using System.Collections.Generic;
     
-    public partial class Amenities_Apartments
+    public partial class ReviewDetail
     {
-        public int AmenityID { get; set; }
-        public int ApartmentID { get; set; }
+        public int ReviewDetailID { get; set; }
+        public Nullable<int> ReviewID { get; set; }
+        public string UserID { get; set; }
+        public Nullable<System.DateTime> ReviewDate { get; set; }
+        public string Reply { get; set; }
+        public Nullable<bool> ISvisible { get; set; }
+    
+        public virtual Review Review { get; set; }
     }
 }

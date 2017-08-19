@@ -5,7 +5,9 @@
 }
 
 <h2>@ViewBag.Title</h2>
-
+<p>
+    @Html.ActionLink("Create New", "Create", new { id = (int)ViewBag.ApartmentID })
+</p>
 
 <table class="table">
     <tr>
@@ -34,7 +36,6 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PriceID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PriceID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.PriceID })
         </td>
     </tr>

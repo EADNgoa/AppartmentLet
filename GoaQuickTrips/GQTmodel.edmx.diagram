@@ -17,16 +17,18 @@
         <AssociationConnector Association="QuickTripsModel.FK_Bookings_Status" />
         <EntityTypeShape EntityType="QuickTripsModel.Config" Width="1.5" PointX="3.375" PointY="0.75" />
         <EntityTypeShape EntityType="QuickTripsModel.Image" Width="1.5" PointX="3" PointY="23.625" />
-        <EntityTypeShape EntityType="QuickTripsModel.Amenities_Apartments" Width="1.5" PointX="8.375" PointY="0.75" />
         <EntityTypeShape EntityType="QuickTripsModel.Apartment" Width="1.5" PointX="0.75" PointY="14.75" />
-        <EntityTypeShape EntityType="QuickTripsModel.MasterAmenity" Width="1.5" PointX="8.375" PointY="3.75" />
         <AssociationConnector Association="QuickTripsModel.FK_Cart_Apartments" />
         <AssociationConnector Association="QuickTripsModel.FK_Images_Apartments" />
         <AssociationConnector Association="QuickTripsModel.FK_Prices_Apartment" />
-        <EntityTypeShape EntityType="QuickTripsModel.Review" Width="1.5" PointX="3" PointY="26.75" />
-        <AssociationConnector Association="QuickTripsModel.FK_Reviews_Apartments" />
         <EntityTypeShape EntityType="QuickTripsModel.BookingDetail" Width="1.5" PointX="5.25" PointY="10" />
         <AssociationConnector Association="QuickTripsModel.FK_BookingDetails_booking" />
+        <EntityTypeShape EntityType="QuickTripsModel.Review" Width="1.5" PointX="3.375" PointY="26.75" />
+        <AssociationConnector Association="QuickTripsModel.FK_Reviews_Apartments" />
+        <EntityTypeShape EntityType="QuickTripsModel.ReviewDetail" Width="1.5" PointX="5.625" PointY="26.875" />
+        <AssociationConnector Association="QuickTripsModel.FK_ReviewDetails_ToReview" />
+        <EntityTypeShape EntityType="QuickTripsModel.MasterAmenity" Width="1.5" PointX="0.75" PointY="12.25" />
+        <AssociationConnector Association="QuickTripsModel.Amenities_Apartments" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
