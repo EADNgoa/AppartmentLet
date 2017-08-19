@@ -16,7 +16,7 @@ namespace GoaQuickTrips.Controllers
         private QuickTripsEntities db = new QuickTripsEntities();
 
         // GET: Reviews
-       
+        [Authorize(Roles = "ADMIN")]
         public ActionResult Index()
         {
             var reviews = db.Reviews;
@@ -25,6 +25,8 @@ namespace GoaQuickTrips.Controllers
 
 
         // GET: Reviews/Details/5
+        [Authorize(Roles = "USER")]
+
         public ActionResult Details(int? id)
         {
             if (id == null)
