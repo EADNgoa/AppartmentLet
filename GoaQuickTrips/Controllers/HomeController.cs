@@ -83,6 +83,7 @@ namespace GoaQuickTrips.Controllers
             
         public ActionResult AddToCart(int? id)
         {
+            Session["id"] = id;
             var cartItem = db.Apartments.Find(id);
             var UserID = User.Identity.GetUserId();
 

@@ -15,9 +15,11 @@ namespace GoaQuickTrips.Controllers
         private QuickTripsEntities db = new QuickTripsEntities();
 
         // GET: Prices
-        public ActionResult Index(int? ApartmentID)
+        public ActionResult Index(int? id)
         {
-            var prices = db.Prices.Include(p => p.Apartment).Where(a=>a.ApartmentID == ApartmentID);
+            ViewBag.ApartmentID = id;
+
+            var prices = db.Prices.Include(p => p.Apartment).Where(a=>a.ApartmentID == id);
             return View(prices.ToList());
         }
 
@@ -73,7 +75,7 @@ namespace GoaQuickTrips.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ApartmentID = new SelectList(db.Apartments, "ApartmentID", "Name", price.ApartmentID);
+            ViewBag.ApartmentID = price.ApartmentID;
             return View(price);
         }
 
@@ -82,15 +84,15 @@ namespace GoaQuickTrips.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PriceID,ApartmentID,WEF,Price")] Price price)
+        public ActionResult Edit([Bind(Include = "PriceID,ApartmentID,WEF,Price1")] Price price)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(price).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = price.ApartmentID});
             }
-            ViewBag.ApartmentID = new SelectList(db.Apartments, "ApartmentID", "Name", price.ApartmentID);
+            ViewBag.ApartmentID = price.ApartmentID;
             return View(price);
         }
 

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GoaQuickTrips.Review>
+﻿@model IEnumerable<GoaQuickTrips.ReviewDetail>
 
 @{
     ViewBag.Title = "Index";
@@ -18,14 +18,12 @@
             @Html.DisplayNameFor(model => model.ReviewDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Review1)
+            @Html.DisplayNameFor(model => model.Reply)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IsVisible)
+            @Html.DisplayNameFor(model => model.ISvisible)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Apartment.Name)
-        </th>
+ 
         <th></th>
     </tr>
 
@@ -38,18 +36,16 @@
             @Html.DisplayFor(modelItem => item.ReviewDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Review1)
+            @Html.DisplayFor(modelItem => item.Reply)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.IsVisible)
+            @Html.DisplayFor(modelItem => item.ISvisible)
         </td>
+        
         <td>
-            @Html.DisplayFor(modelItem => item.Apartment.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ReviewID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ReviewID }) |
-            <a href="~/ReviewDetails/Create/@item.ReviewID">Reply</a>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ReviewDetailID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ReviewDetailID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ReviewDetailID })
         </td>
     </tr>
 }

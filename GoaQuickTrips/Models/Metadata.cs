@@ -245,6 +245,25 @@ namespace GoaQuickTrips
         [Display(Name = "IS Visible:")]
         public bool IsVisible;
     }
+    public class ReviewDetailMetadata
+    {
+        [Display(Name = "User:")]
+        public int UserID;
+     
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MMM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Review Date")]
+        public DateTime ReviewDate;
+
+        [Display(Name = "Review:")]
+        [Required]
+        [StringLength(50)]
+        public string Reply;
+
+        [Display(Name = "IS Visible:")]
+        public bool ISvisible;
+    }
 
     public class BookingViewMetadata
     {

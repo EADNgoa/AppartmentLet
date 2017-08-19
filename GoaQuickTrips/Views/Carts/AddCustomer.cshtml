@@ -1,6 +1,8 @@
 ﻿
+<h4>Please Enter Custome Details:-</h4>
+    <div id="message" class="container form-group">
 
-    <div id="message" class="container form-group"></div>
+    </div>
  
     <script>
 
@@ -9,6 +11,7 @@
           
             var f = document.createElement("form");
             f.setAttribute('method', "post");
+            f.setAttribute('enctype', "multipart/form-data");
             f.setAttribute('action', "AddBookedCustomer");
             var br = document.createElement("br");
             var br2 = document.createElement("br");
@@ -54,13 +57,7 @@
             
             p.setAttribute('class', "form-control");
 
-            var iu = document.createElement("label");
-          
-            iu.innerHTML = "ID Picture:";
-            var u = document.createElement("input");
-            u.setAttribute('type', "File");
-          
-            u.setAttribute('class', "");
+         
 
             var s = document.createElement("input");
             s.setAttribute('type', "submit");
@@ -90,10 +87,7 @@
                 p.setAttribute('name', 'phone'+[i]);
                 f.appendChild(p.cloneNode(true));
                 f.appendChild(br4.cloneNode(true));
-                iu.setAttribute('For', 'idpicture'+[i]);
-                f.appendChild(iu.cloneNode(true));
-                u.setAttribute('name', 'idpicture'+[i]);
-                f.appendChild(u.cloneNode(true));
+               
                 f.appendChild(br5.cloneNode(true));
             }
             f.appendChild(s);  

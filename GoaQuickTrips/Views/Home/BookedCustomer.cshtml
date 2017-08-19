@@ -3,12 +3,20 @@
 @{
     ViewBag.Title = "BookedCustomer";
 }
-
+<style>
+    .body-content {
+        color: white;
+        margin-top: 20px;
+        padding: 30px;
+        z-index: 10;
+        background: rgba(0, 0, 0, 0.9);
+        border-radius: 8px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    }
+</style>
 <h2>BookedCustomer</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -33,23 +41,28 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Status.Status1)
-        </td>      
+        </td> 
+     
     </tr>
     <tr>
-        <table class="table-bordered">
-            <tr>
+        <td>
+            <table class="table-bordered">
                 @foreach (var bd in item.BookingDetails)
                 {
-                    <td>Apartment:@Html.DisplayFor(modelItem => bd.ApartmentID)</td>
-                    <td>Check in:@Html.DisplayFor(modelItem => bd.CheckIn)</td>
-                    <td>Check Out:@Html.DisplayFor(modelItem => bd.CheckOut)</td>
-                    <td>No Of guest:@Html.DisplayFor(modelItem => bd.NoOfGuests)</td>
-                    <td>Price:@Html.DisplayFor(modelItem => bd.Price)</td>
-
+                    <tr>
+                        <td>Apartment:@Html.DisplayFor(modelItem => bd.ApartmentID)</td>
+                        <td>Check in:@Html.DisplayFor(modelItem => bd.CheckIn)</td>
+                        <td>Check Out:@Html.DisplayFor(modelItem => bd.CheckOut)</td>
+                        <td>No Of guest:@Html.DisplayFor(modelItem => bd.NoOfGuests)</td>
+                        <td>Price:@Html.DisplayFor(modelItem => bd.Price)</td>
+                        <td>
+                            <a href="~/Reviews/Create/@bd.ApartmentID">Give Feedback</a>
+                        </td>
+                    </tr>
 
                 }
-            </tr>
-        </table>
+            </table>
+        </td>
     </tr>
 }
 

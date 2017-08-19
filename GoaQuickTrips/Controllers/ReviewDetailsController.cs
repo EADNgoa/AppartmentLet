@@ -11,120 +11,122 @@ using Microsoft.AspNet.Identity;
 
 namespace GoaQuickTrips.Controllers
 {
-    public class ReviewsController : Controller
+    public class ReviewDetailsController : Controller
     {
         private QuickTripsEntities db = new QuickTripsEntities();
 
-        // GET: Reviews
-       
+        // GET: ReviewDetails
         public ActionResult Index()
         {
-            var reviews = db.Reviews;
-            return View(reviews.ToList());
+            var reviewDetails = db.ReviewDetails; ;
+            return View(reviewDetails.ToList());
         }
 
-
-        // GET: Reviews/Details/5
+        // GET: ReviewDetails/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Review review = db.Reviews.Find(id);
-            if (review == null)
+            ReviewDetail reviewDetail = db.ReviewDetails.Find(id);
+            if (reviewDetail == null)
             {
                 return HttpNotFound();
             }
-            return View(review);
+            return View(reviewDetail);
         }
 
-        // GET: Reviews/Create
+        // GET: ReviewDetails/Create
         public ActionResult Create(int? id)
         {
-            ViewBag.ApartmentID = id;
+
+            ViewBag.ReviewID = id;
+            Session["rid"] = id;
             return View();
         }
 
-        // POST: Reviews/Create
+        // POST: ReviewDetails/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ReviewID,UserID,ApartmentID,ReviewDate,Review1,IsVisible")] Review review)
+        public ActionResult Create([Bind(Include = "ReviewDetailID,ReviewID,UserID,ReviewDate,Reply,ISvisible")] ReviewDetail reviewDetail)
         {
             var UserID = User.Identity.GetUserId();
 
+    
+
             if (ModelState.IsValid)
             {
-                ViewBag.ApartmentID = review.ApartmentID;
-                review.UserID = UserID;
-                review.ReviewDate = DateTime.Now;
-                review.IsVisible = true;
-                db.Reviews.Add(review);
+                reviewDetail.ReviewID = (int)Session["rid"];
+                reviewDetail.UserID = UserID;
+                reviewDetail.ReviewDate = DateTime.Now;
+                reviewDetail.ISvisible = true;
+                db.ReviewDetails.Add(reviewDetail);
                 db.SaveChanges();
-                return View();
+                return RedirectToAction("Index");
             }
 
-          
-            return View(review);
+            ViewBag.ReviewID = new SelectList(db.Reviews, "ReviewID", "UserID", reviewDetail.ReviewID);
+            return View(reviewDetail);
         }
 
-        // GET: Reviews/Edit/5
+        // GET: ReviewDetails/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Review review = db.Reviews.Find(id);
-            if (review == null)
+            ReviewDetail reviewDetail = db.ReviewDetails.Find(id);
+            if (reviewDetail == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ApartmentID = new SelectList(db.Apartments, "ApartmentID", "Name", review.ApartmentID);
-            return View(review);
+            ViewBag.ReviewID = new SelectList(db.Reviews, "ReviewID", "UserID", reviewDetail.ReviewID);
+            return View(reviewDetail);
         }
 
-        // POST: Reviews/Edit/5
+        // POST: ReviewDetails/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ReviewID,UserID,ApartmentID,ReviewDate,Review1,IsVisible")] Review review)
+        public ActionResult Edit([Bind(Include = "ReviewDetailID,ReviewID,UserID,ReviewDate,Reply,ISvisible")] ReviewDetail reviewDetail)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(review).State = EntityState.Modified;
+                db.Entry(reviewDetail).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ApartmentID = new SelectList(db.Apartments, "ApartmentID", "Name", review.ApartmentID);
-            return View(review);
+            ViewBag.ReviewID = new SelectList(db.Reviews, "ReviewID", "UserID", reviewDetail.ReviewID);
+            return View(reviewDetail);
         }
 
-        // GET: Reviews/Delete/5
+        // GET: ReviewDetails/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Review review = db.Reviews.Find(id);
-            if (review == null)
+            ReviewDetail reviewDetail = db.ReviewDetails.Find(id);
+            if (reviewDetail == null)
             {
                 return HttpNotFound();
             }
-            return View(review);
+            return View(reviewDetail);
         }
 
-        // POST: Reviews/Delete/5
+        // POST: ReviewDetails/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Review review = db.Reviews.Find(id);
-            db.Reviews.Remove(review);
+            ReviewDetail reviewDetail = db.ReviewDetails.Find(id);
+            db.ReviewDetails.Remove(reviewDetail);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

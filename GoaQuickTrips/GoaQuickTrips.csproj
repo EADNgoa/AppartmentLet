@@ -191,9 +191,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Amenities_Apartments.cs">
-      <DependentUpon>GQTmodel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Apartment.cs">
       <DependentUpon>GQTmodel.tt</DependentUpon>
     </Compile>
@@ -229,6 +226,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MasterAmenitiesController.cs" />
     <Compile Include="Controllers\PricesController.cs" />
+    <Compile Include="Controllers\ReviewDetailsController.cs" />
     <Compile Include="Controllers\ReviewsController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Customer.cs">
@@ -269,6 +267,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Review.cs">
+      <DependentUpon>GQTmodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReviewDetail.cs">
       <DependentUpon>GQTmodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
@@ -428,17 +429,23 @@
     <Content Include="Views\BookingDetails\BlockList.cshtml" />
     <Content Include="Views\MasterAmenities\AddAmenity.cshtml" />
     <Content Include="Views\Images\_ViewStart.cshtml" />
-    <Content Include="Views\Reviews\Create.cshtml" />
-    <Content Include="Views\Reviews\Delete.cshtml" />
-    <Content Include="Views\Reviews\Details.cshtml" />
-    <Content Include="Views\Reviews\Edit.cshtml" />
-    <Content Include="Views\Reviews\Index.cshtml" />
     <Content Include="Views\Home\BookedCustomer.cshtml" />
     <Content Include="Views\Status\Create.cshtml" />
     <Content Include="Views\Status\Delete.cshtml" />
     <Content Include="Views\Status\Details.cshtml" />
     <Content Include="Views\Status\Edit.cshtml" />
     <Content Include="Views\Status\Index.cshtml" />
+    <Content Include="Views\Bookings\_ViewStart.cshtml" />
+    <Content Include="Views\Reviews\Create.cshtml" />
+    <Content Include="Views\Reviews\Delete.cshtml" />
+    <Content Include="Views\Reviews\Details.cshtml" />
+    <Content Include="Views\Reviews\Edit.cshtml" />
+    <Content Include="Views\Reviews\Index.cshtml" />
+    <Content Include="Views\ReviewDetails\Create.cshtml" />
+    <Content Include="Views\ReviewDetails\Delete.cshtml" />
+    <Content Include="Views\ReviewDetails\Details.cshtml" />
+    <Content Include="Views\ReviewDetails\Edit.cshtml" />
+    <Content Include="Views\ReviewDetails\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

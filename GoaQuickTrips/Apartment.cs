@@ -21,6 +21,7 @@ namespace GoaQuickTrips
             this.Images = new HashSet<Image>();
             this.Prices = new HashSet<Price>();
             this.Reviews = new HashSet<Review>();
+            this.MasterAmenities = new HashSet<MasterAmenity>();
         }
     
         public int ApartmentID { get; set; }
@@ -45,5 +46,7 @@ namespace GoaQuickTrips
         public virtual ICollection<Price> Prices { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Review> Reviews { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MasterAmenity> MasterAmenities { get; set; }
     }
 }
