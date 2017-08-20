@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using GoaQuickTrips;
 using Microsoft.AspNet.Identity;
+using PagedList;
 
 namespace QuickTrips.Areas.AdminSection.Controllers
 {   [Authorize(Roles = "ADMIN")]
@@ -19,10 +20,13 @@ namespace QuickTrips.Areas.AdminSection.Controllers
 
         // GET: AdminSection/Apartments
         
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             var apartments = db.Apartments;
-            return View(apartments.ToList());
+            int pageSize =10;
+            int pageNumber = (page ?? 1);
+            return View(apartments.OrderBy(l => l.ApartmentID).ToPagedList(pageNumber, pageSize));
+         
         }
 
         public ActionResult BlockApartments()

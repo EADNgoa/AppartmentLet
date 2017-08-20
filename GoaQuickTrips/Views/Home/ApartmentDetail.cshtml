@@ -272,8 +272,8 @@
 </style>
 
 <h2>Details</h2>
-<div class="container section-details">
-    <section class="section-white">
+<div class="container profile-content">
+    <section class="">
 
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
@@ -309,7 +309,7 @@
         </div>
 
     </section>
-    <div class="section-white">
+    <div class="">
 
         <hr />
 
@@ -411,9 +411,23 @@
             </dd>
 
 
+            <dt>Amenities:</dt>
+            @foreach (var item in Model.MasterAmenities)
+            {
+               
+                    <dd>
+                        @item.Amenity
+                    </dd>
+                
+            }
 
         </dl>
-        <p>
+       
+
+            
+      
+    
+        <p class=" pull-right">
             @Html.ActionLink("Àdd To Cart", "AddToCart", new { id = Model.ApartmentID }) |
             @Html.ActionLink("Back to List", "Index")
         </p>

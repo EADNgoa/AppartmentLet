@@ -121,8 +121,9 @@ namespace QuickTrips.Controllers
                 {
                     var item1 = new Booking { UserID = UserID, BookDate = DateTime.Now, StatusID = 1 };
                     db.Bookings.Add(item1);
-                    Session["bookingid"] = item1.BookingID;
+                   
                     db.SaveChanges();
+                    Session["bookingid"] = item1.BookingID;
                     foreach (var item in bookings)
                     {
                         var item2 = new BookingDetail { BookingID = item1.BookingID, ApartmentID = item.ApartmentID, CheckIn = item.CheckIn, CheckOut = item.CheckOut, NoOfGuests = item.NoOfGuests, Price = null, BlockedReason = null };
@@ -144,7 +145,7 @@ namespace QuickTrips.Controllers
                             var item3 = new Customer { FName = fname, SName = sname, Email = email, Phone = phone, IDpicture = null };
                             db.Customers.Add(item3);
                             db.SaveChanges();
-                            var item4 = new BookedCustomer { CartID =(int) Session["carid"], BookingID = (int)Session["bookingid"], CustomerID = item3.CustomerID };
+                            var item4 = new BookedCustomer { CartID =bookings.FirstOrDefault().CartID, BookingID = (int)Session["bookingid"], CustomerID = item3.CustomerID };
                             db.BookedCustomers.Add(item4);
                             db.SaveChanges();
 
