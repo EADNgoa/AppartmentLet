@@ -25,8 +25,7 @@ namespace GoaQuickTrips.Controllers
 
 
         // GET: Reviews/Details/5
-        [Authorize(Roles = "USER")]
-
+        [Authorize(Roles = "ADMIN,USER")]
         public ActionResult Details(int? id)
         {
             if (id == null)
