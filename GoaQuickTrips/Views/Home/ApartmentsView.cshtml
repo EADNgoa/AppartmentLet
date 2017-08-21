@@ -89,31 +89,32 @@
 
                     </div>
                     <br />
-                  
+                    <input type="hidden" id="encodedString" name="encodedString" value="@ViewBag.encodedString" />
                     <table>
                         @using (Html.BeginForm((string)ViewBag.ReturnAction, "Home", FormMethod.Post))
                         {
 
                             <tbody>
                                 <tr>
-                                    <td> <input type="date" class="form-control input-md" name="check_in" id="check_in" placeholder="Check in"></td>
+                                    <td> <input type="date" class="form-control input-md" name="check_in" id="check_in" placeholder="@Session["in"].ToString()" value="@Session["in"].ToString()"></td>
                                 </tr>
-                                <tr><td><input type="date" class="form-control  input-md" name="check_out" id="check_out" placeholder="Check out"></td></tr>
+                                <tr><td><input type="date" class="form-control  input-md" name="check_out" id="check_out" placeholder="@Session["out"].ToString()" value="@Session["out"].ToString()"></td></tr>
                                 <tr>
                                     <td>
 
                                         <select name='guest' id="guest" class="form-control  input-md">
-                                            <option value=''>Guest</option>
-                                            <option value='1'>1+</option>
-                                            <option value='2'>2+</option>
-                                            <option value='3'>3+</option>
-                                            <option value='4'>4+</option>
-                                            <option value='5'>5+</option>
-                                            <option value='6'>6+</option>
-                                            <option value='7'>7+</option>
-                                            <option value='8'>8+</option>
-                                            <option value='9'>9+</option>
-                                            <option value='10'>10+</option>
+                                        @for(int i= 1; i<11;i++)
+                                        {
+                                            if (i == int.Parse(@Session["Guests"].ToString()))
+                                            {
+                                                <option selected="selected" value='@i'>@i person(s)</option> 
+                                            }
+                                            else
+                                            {
+                                                <option value='@i'>@i person(s)</option>
+                                            }
+                                        }
+                                           
                                         </select>
                                     </td>
                                 </tr>
@@ -148,30 +149,27 @@
                                     <div class="col-md-8 col-sm-8 col-xs-12">
                                         <div class="product_detail_view">
                                             <div class="pro_heading">
-                                              <b><big>@Html.DisplayFor(modelItem => item.Name)</big></b>
+                                              <b><h3>@Html.DisplayFor(modelItem => item.Name) at just Rs. 
+                                                  @(item.Prices.OrderByDescending(p => p.WEF).FirstOrDefault(p => (DateTime)p.WEF <= DateTime.Parse(Session["in"].ToString())).Price1)
+                                                  </h3></b>
                                             </div>
-
-
-
                                             <div class="">
                                                 No Of Guest:  @Html.DisplayFor(modelItem => item.NoOfGuests)
                                             </div>
 
                                             <div class="more">
-                                                Description: @Html.DisplayFor(modelItem => item.Description)
+                                                @Html.DisplayFor(modelItem => item.Description)
                                             </div>
                                             <div class="more">
-                                                 Notes: @Html.DisplayFor(modelItem => item.Notes)
+                                                 <strong>Notes:</strong> @Html.DisplayFor(modelItem => item.Notes)
                                             </div>
                                             <div class="more">
-                                                Rules: @Html.DisplayFor(modelItem => item.Rules)
+                                                <strong>Rules:</strong> @Html.DisplayFor(modelItem => item.Rules)
                                             </div>
-                                            <div class="pro_rate">
-                                              @Html.DisplayFor(modelItem => item.Prices)
-                                               
-                                            </div>
-                                            <div class="pull-right">
-                                                @Html.ActionLink("Grab it Now", "ApartmentDetail", new { id = item.ApartmentID })
+                                            
+                                            <div>
+                                                @Html.ActionLink("Grab it Now", "ApartmentDetail", new { id = item.ApartmentID }, new { @class= "ButtonA pull-right" })
+                                                @*@Html.ActionLink("Learn More", "ApartmentDetail", new { id = item.ApartmentID }, new { @class = "ButtonA" })*@
                                             </div>
                                           
                                         </div>
@@ -201,38 +199,82 @@
    
 </div>
 
+<script 
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAC6Yyjmk9tLMPEe6ID2rmzwcYPCHKYrZU">
+</script>
 
 
         <script>
-           
-    function initMap() {
-        var options =
-            {
-                Zoom: 10,
-                Center: { lat: 15.2993, lng: 74.1240 }
-            }
+            $("document").ready(function ($) {
 
-        var map = new google.maps.Map(document.getElementById('map'), options);
+                //Initialize the Google Maps
+                var geocoder;
+                var map;
+                var markersArray = [];
+                var infos = [];
 
-        google.maps.event.addListener(map, 'click', function (event) {
+                geocoder = new google.maps.Geocoder();
+                var myOptions = {
+                    zoom: 9,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                }
+                //Load the Map into the map_canvas div
+                var map = new google.maps.Map(document.getElementById("map"), myOptions);
 
-            addMarker({ coords: event.latlng });
-        });
 
+                //Initialize a variable that the auto-size the map to whatever you are plotting
+                var bounds = new google.maps.LatLngBounds();
+                //Initialize the encoded string       
+                var encodedString;
+                //Initialize the array that will hold the contents of the split string
+                var stringArray = [];
+                //Get the value of the encoded string from the hidden input
+                encodedString = document.getElementById("encodedString").value;
+                //Split the encoded string into an array the separates each location
+                stringArray = encodedString.split("****");
 
-        function addMarker(coords) {
-            var marker = new google.maps.Marker({
-                position: coords,
-                map: map
+                var x;
+                for (x = 0; x < stringArray.length; x = x + 1) {
+                    var addressDetails = [];
+                    var marker;
+                    //Separate each field
+                    addressDetails = stringArray[x].split("&&&");
+                    //Load the lat, long data
+                    var lat = new google.maps.LatLng(addressDetails[1], addressDetails[2]);
+                    //Create a new marker and info window
+                    marker = new google.maps.Marker({
+                        map: map,
+                        position: lat,
+                        
+                        //Content is what will show up in the info window
+                        content: addressDetails[0]
+                    });
+                    //Pushing the markers into an array so that it's easier to manage them
+                    markersArray.push(marker);
+                    google.maps.event.addListener(marker, 'click', function () {
+                        closeInfos();
+                        var info = new google.maps.InfoWindow({ content: this.content });
+
+                        //On click the map will load the info window
+                        info.open(map, this);
+                        infos[0] = info;
+                    });
+
+                    
+                    //Extends the boundaries of the map to include this new location
+                    bounds.extend(lat);
+                }
+                //Takes all the lat, longs in the bounds variable and autosizes the map
+                map.fitBounds(bounds);
+
+                //Manages the info windows
+                function closeInfos() {
+                    if (infos.length > 0) {
+                        infos[0].set("marker", null);
+                        infos[0].close();
+                        infos.length = 0;
+                    }
+                }
+
             });
-        }
-
-            }
-
-
-
-           
-</script>
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAC6Yyjmk9tLMPEe6ID2rmzwcYPCHKYrZU&callback=initMap">
 </script>

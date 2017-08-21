@@ -27,7 +27,7 @@
           <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="Phone" Type="varchar" MaxLength="15" />
           <Property Name="LocationInfo" Type="varchar(max)" />
-          <Property Name="CancellationPolicy" Type="varchar" MaxLength="100" />
+          <Property Name="CancellationPolicy" Type="varchar(max)" />
           <Property Name="Lat" Type="varchar" MaxLength="20" />
           <Property Name="Lang" Type="varchar" MaxLength="20" />
         </EntityType>
@@ -218,6 +218,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_BookingDetails_ToApartments">
+          <End Role="Apartments" Type="Self.Apartments" Multiplicity="0..1" />
+          <End Role="BookingDetails" Type="Self.BookingDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apartments">
+              <PropertyRef Name="ApartmentID" />
+            </Principal>
+            <Dependent Role="BookingDetails">
+              <PropertyRef Name="ApartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Bookings_Status">
           <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
           <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
@@ -327,6 +339,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_BookingDetails_booking" Association="Self.FK_BookingDetails_booking">
             <End Role="Bookings" EntitySet="Bookings" />
+            <End Role="BookingDetails" EntitySet="BookingDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BookingDetails_ToApartments" Association="Self.FK_BookingDetails_ToApartments">
+            <End Role="Apartments" EntitySet="Apartments" />
             <End Role="BookingDetails" EntitySet="BookingDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_Bookings_Status" Association="Self.FK_Bookings_Status">
@@ -470,6 +486,10 @@
             <End Role="MasterAmenity" EntitySet="MasterAmenities" />
             <End Role="Apartment" EntitySet="Apartments" />
           </AssociationSet>
+          <AssociationSet Name="FK_BookingDetails_ToApartments" Association="QuickTripsModel.FK_BookingDetails_ToApartments">
+            <End Role="Apartment" EntitySet="Apartments" />
+            <End Role="BookingDetail" EntitySet="BookingDetails" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Booking">
           <Key>
@@ -564,7 +584,7 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="LocationInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="CancellationPolicy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CancellationPolicy" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Lat" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Lang" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Carts" Relationship="QuickTripsModel.FK_Cart_Apartments" FromRole="Apartment" ToRole="Cart" />
@@ -572,6 +592,7 @@
           <NavigationProperty Name="Prices" Relationship="QuickTripsModel.FK_Prices_Apartment" FromRole="Apartment" ToRole="Price" />
           <NavigationProperty Name="Reviews" Relationship="QuickTripsModel.FK_Reviews_Apartments" FromRole="Apartment" ToRole="Review" />
           <NavigationProperty Name="MasterAmenities" Relationship="QuickTripsModel.Amenities_Apartments" FromRole="Apartment" ToRole="MasterAmenity" />
+          <NavigationProperty Name="BookingDetails" Relationship="QuickTripsModel.FK_BookingDetails_ToApartments" FromRole="Apartment" ToRole="BookingDetail" />
         </EntityType>
         <Association Name="FK_Cart_Apartments">
           <End Type="QuickTripsModel.Apartment" Role="Apartment" Multiplicity="0..1" />
@@ -622,6 +643,7 @@
           <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="BlockedReason" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Booking" Relationship="QuickTripsModel.FK_BookingDetails_booking" FromRole="BookingDetail" ToRole="Booking" />
+          <NavigationProperty Name="Apartment" Relationship="QuickTripsModel.FK_BookingDetails_ToApartments" FromRole="BookingDetail" ToRole="Apartment" />
         </EntityType>
         <Association Name="FK_BookingDetails_booking">
           <End Type="QuickTripsModel.Booking" Role="Booking" Multiplicity="0..1" />
@@ -695,6 +717,18 @@
         <Association Name="Amenities_Apartments">
           <End Type="QuickTripsModel.MasterAmenity" Role="MasterAmenity" Multiplicity="*" />
           <End Type="QuickTripsModel.Apartment" Role="Apartment" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_BookingDetails_ToApartments">
+          <End Type="QuickTripsModel.Apartment" Role="Apartment" Multiplicity="0..1" />
+          <End Type="QuickTripsModel.BookingDetail" Role="BookingDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apartment">
+              <PropertyRef Name="ApartmentID" />
+            </Principal>
+            <Dependent Role="BookingDetail">
+              <PropertyRef Name="ApartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>

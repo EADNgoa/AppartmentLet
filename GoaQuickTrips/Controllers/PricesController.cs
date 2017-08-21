@@ -56,7 +56,7 @@ namespace GoaQuickTrips.Controllers
             {
                 db.Prices.Add(price);
                 db.SaveChanges();
-                return RedirectToAction("Index", new { ApartmentID = price.ApartmentID });
+                return RedirectToAction("Index", new { id = price.ApartmentID });
             }
             var errors = ModelState.Values.SelectMany(v => v.Errors);
             ViewBag.ApartmentID = new SelectList(db.Apartments, "ApartmentID", "Name", price.ApartmentID);

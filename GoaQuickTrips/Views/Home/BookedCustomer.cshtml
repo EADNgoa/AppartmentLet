@@ -14,42 +14,91 @@
         -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
         box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
     }
+    .Aptimg {
+        width: 70px;
+        height: 70px;
+    }
 </style>
 <h2>BookedCustomer</h2>
 
 <table class="table">
     <tr>
+        
         <th>
-            @Html.DisplayNameFor(model => model.UserID)
+            <strong>@Html.DisplayNameFor(model => model.BookDate)</strong>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BookDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status.Status1)
+            <strong>Booking Status</strong>
         </th>
         <th></th>
     </tr>
-
-@foreach (var item in Model) {
+    @{ decimal total = 0; }
+@foreach (var Bk in Model) {
+    total = 0;
     <tr>
+        
         <td>
-            @Html.DisplayFor(modelItem => item.UserID)
+            @Html.DisplayFor(modelItem => Bk.BookDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.BookDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status.Status1)
+            @Html.DisplayFor(modelItem => Bk.Status.Status1)
         </td> 
+        <td class="col-sm-1 col-md-1">
+            @Html.ActionLink(" ", "CancelBooking", new { id = Bk.BookingID }, new { @class = "fa fa-times-circle" })
+        </td>
      
     </tr>
     <tr>
         <td>
             <table class="table-bordered">
-                @foreach (var bd in item.BookingDetails)
+                <tr>
+                    <th></th>
+                    <th>Apartment</th>
+                    <th>Guests</th>
+                    <th class="text-right">Price</th>
+                    <th class="text-right">From</th>
+                    <th class="text-right">To</th>
+                    <th class="text-right">Total</th>
+                    <th> </th>
+                    
+                </tr>
+                @foreach (var item in Bk.BookingDetails)
                 {
                     <tr>
+                        <td>
+                            <div class="media">
+                                <div class="media-body">
+                                    <h4 class="media-heading"><img class="Aptimg" src="/Images/@item.Apartment.Images.First().Path" /></h4>
+                                    <span>@item.Apartment.Images.First().Name</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <h4 class="media-heading">@item.Apartment.Name</h4>
+                        </td>
+                        <td class="col-sm-1 col-md-1" style="text-align: center">
+                            @Html.DisplayFor(modelItem => item.NoOfGuests)
+                        </td>
+                        <td class="col-sm-1 col-md-1 text-right">
+                            <strong>@Html.DisplayFor(modelItem => item.Price )</strong>
+                        </td>
+                        <td class="text-right">
+                            @Html.DisplayFor(modelItem => item.CheckIn)
+                        </td>
+                        <td class="text-right">
+                            @Html.DisplayFor(modelItem => item.CheckOut)
+                        </td>
+                        <td class="text-right">
+                            Rs. @(item.NoOfNights * item.Price)
+                        </td>
+                        <td>
+                            <a href="~/Reviews/Create/@item.ApartmentID">Give Feedback</a>
+                        </td>
+                        @{   total += (decimal)(item.Price * item.NoOfNights); }                        
+
+                    </tr>
+
+                    @*<tr>
                         <td>Apartment:@Html.DisplayFor(modelItem => bd.ApartmentID)</td>
                         <td>Check in:@Html.DisplayFor(modelItem => bd.CheckIn)</td>
                         <td>Check Out:@Html.DisplayFor(modelItem => bd.CheckOut)</td>
@@ -58,7 +107,7 @@
                         <td>
                             <a href="~/Reviews/Create/@bd.ApartmentID">Give Feedback</a>
                         </td>
-                    </tr>
+                    </tr>*@
 
                 }
             </table>

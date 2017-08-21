@@ -29,6 +29,7 @@
         <AssociationConnector Association="QuickTripsModel.FK_ReviewDetails_ToReview" />
         <EntityTypeShape EntityType="QuickTripsModel.MasterAmenity" Width="1.5" PointX="0.75" PointY="12.25" />
         <AssociationConnector Association="QuickTripsModel.Amenities_Apartments" />
+        <AssociationConnector Association="QuickTripsModel.FK_BookingDetails_ToApartments" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

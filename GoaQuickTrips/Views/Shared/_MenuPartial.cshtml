@@ -1,36 +1,39 @@
-﻿
+﻿<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="container-fluid" style="margin-right: 10px; margin-left:300px;">
+    <div class="navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*@Html.ActionLink("Quick Trips", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
 
-<div class="navbar-inverse  navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            @Html.ActionLink("Quick Trips", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-               
 
-                <li>
-                    <a href="~/Carts/Index">Cart</a>
-                   
-                </li>
+                    <li>
+                        <a href="~/Carts/Index"><i class="fa fa-shopping-cart"> CART</i></a> 
 
-                <li>
-                    <a href="~/Apartments/index">Admin</a>
-                </li>
-                <li>
-                    <a href="~/Home/BookedCustomer">Booking<span class="caret"></span></a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-ellipsis-v"> &nbsp; </i></a>
+                    </li>
 
-                </li>
-                
-             
+                    <li>
+                        <a href="~/Home/BookedCustomer"><i class="fa fa-calendar"> MY BOOKINGS </i></a>
+                    </li>
+                    <li>
+                        @*<a href="~/Apartments/index">Admin</a>*@
+                    </li>
 
-                    </ul>
-            @Html.Partial("_LoginPartial")
+
+
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
         </div>
     </div>
 </div>

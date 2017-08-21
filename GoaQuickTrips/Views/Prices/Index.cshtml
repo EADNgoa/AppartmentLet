@@ -6,7 +6,9 @@
 
 <h2>@ViewBag.Title</h2>
 <p>
-    @Html.ActionLink("Create New", "Create", new { id = (int)ViewBag.ApartmentID })
+    @Html.ActionLink("Create New", "Create", new { id = (int)ViewBag.ApartmentID })|
+    <a href="/Apartments/Edit/@ViewBag.ApartmentID">Back</a>
+
 </p>
 
 <table class="table">
@@ -35,8 +37,7 @@
             @Html.DisplayFor(modelItem => item.Apartment.Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PriceID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PriceID })
+            @Html.ActionLink("Edit", "Edit", new { id=item.PriceID })            
         </td>
     </tr>
 }

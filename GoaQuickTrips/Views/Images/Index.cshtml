@@ -1,13 +1,14 @@
 ﻿@model IEnumerable<GoaQuickTrips.Image>
 
 @{
-    ViewBag.Title = "Apartmnts";
+    ViewBag.Title = "Apartment Images";
 }
 
 <h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create", new { id = (int)ViewBag.ApartmentID })
+    @Html.ActionLink("Create New", "Create", new { id = (int)ViewBag.ApartmentID }) | 
+        <a href="/Apartments/Edit/@ViewBag.ApartmentID">Back</a>
 </p>
 <table class="table">
     <tr>
@@ -19,7 +20,6 @@
         </th>
         
         <th></th>
-        <a href="~/Views/Images/Index.cshtml">~/Views/Images/Index.cshtml</a>
     </tr>
 
 @foreach (var item in Model) {
@@ -31,8 +31,7 @@
             @Html.DisplayFor(modelItem => item.Path)
         </td>
     
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ImageId }) |
+        <td>           
             @Html.ActionLink("Delete", "Delete", new { id=item.ImageId })
         </td>
     </tr>

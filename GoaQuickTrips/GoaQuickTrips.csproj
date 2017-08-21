@@ -220,7 +220,6 @@
     <Compile Include="Controllers\BookingsController.cs" />
     <Compile Include="Controllers\CartsController.cs" />
     <Compile Include="Controllers\EAController.cs" />
-    <Compile Include="Controllers\AdminHomeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImagesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -446,6 +445,7 @@
     <Content Include="Views\ReviewDetails\Details.cshtml" />
     <Content Include="Views\ReviewDetails\Edit.cshtml" />
     <Content Include="Views\ReviewDetails\Index.cshtml" />
+    <Content Include="Views\Prices\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

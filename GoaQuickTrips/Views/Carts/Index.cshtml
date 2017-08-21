@@ -4,13 +4,13 @@
         margin-top: 100px;
         padding: 30px;
         z-index: 50;
-        background: rgba(0, 0, 0, 0.6);
-        color:white;
+        background: rgba(116, 129, 131, 0.8);
+        color: white;
         border-radius: 8px;
         -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
         box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
     }
-    img{
+    .Aptimg{
         width:70px;
         height:70px;
     }
@@ -20,13 +20,16 @@
 <div class="container banner">
     <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1">
-            <table class="table table-hover">
+            <table class="table">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Apartment</th>
-                        <th>No. Of Guests</th>
-                        <th class="text-center">Price</th>
-                        <th class="text-center">Total</th>
+                        <th>Guests</th>
+                        <th class="text-right">Price</th>
+                        <th class="text-right">From</th>
+                        <th class="text-right">To</th>
+                        <th class="text-right">Total</th>
                         <th> </th>
                     </tr>
                 </thead>
@@ -35,23 +38,35 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td class="col-sm-8 col-md-6">
+                            <td>
                                 <div class="media">
                                     <div class="media-body">
-                                        <h4 class="media-heading"><img src="/Images/@item.Apartment.Images.First().Path"/>@item.Apartment.Name</h4>
+                                        <h4 class="media-heading"><img class="Aptimg" src="/Images/@item.Apartment.Images.First().Path"/></h4>
                                        <span>@item.Apartment.Images.First().Name</span>
                                     </div>
                                 </div>
                             </td>
-                            <td class="col-sm-1 col-md-1" style="text-align: center">
-                               @Html.DisplayFor(modelItem => item.Apartment.NoOfGuests)
+                            <td>
+                                <h4 class="media-heading">@item.Apartment.Name</h4>
                             </td>
-                            <td class="col-sm-1 col-md-1 text-center"><strong>@Html.DisplayFor(modelItem => item.OrigPrice)</strong></td>
-                         @{   total += (decimal)item.OrigPrice; }
-                            <td class="col-sm-1 col-md-1">
-                               
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.CartID })
-                         
+                            <td class="col-sm-1 col-md-1" style="text-align: center">
+                               @Html.DisplayFor(modelItem => item.NoOfGuests)
+                            </td>
+                            <td class="col-sm-1 col-md-1 text-right">
+                                <strong>@Html.DisplayFor(modelItem => item.OrigPrice)</strong>
+                            </td>
+                            <td class="text-right">
+                                @Html.DisplayFor(modelItem => item.CheckIn)
+                            </td>
+                            <td class="text-right">
+                                @Html.DisplayFor(modelItem => item.CheckOut)
+                            </td>
+                            <td class="text-right">
+                                Rs. @(item.NoOfNights * item.OrigPrice)
+                            </td>
+                                @{   total += (decimal)(item.OrigPrice*item.NoOfNights); }
+                            <td class="col-sm-1 col-md-1">                               
+                                    @Html.ActionLink(" ", "Delete", new { id = item.CartID }, new { @class = "fa fa-times-circle" })                         
                             </td>
                         </tr>
                     }
@@ -61,21 +76,27 @@
                         <td>   </td>
                         <td>   </td>
                         <td>   </td>
-                        
-                        <td class="text-right"><h3><strong> @total</strong></h3></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-right"><h3><strong>Rs. @total</strong></h3></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>   </td>
                         <td>   </td>
                         <td>   </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td>
-                            <button type="button" class="btn btn-default">
-                                <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
-                            </button>
+                            <a Href="~/Home/Index" class="btn btn-success">
+                                Add more <span class="fa fa-shopping-basket"></span>
+                            </a>                            
                         </td>
                         <td>
                             <a Href="~/Carts/AddCustomer" class="btn btn-success">
-                                Checkout <span class="glyphicon glyphicon-play"></span>
+                                Checkout <span class="fa fa-check-square-o"></span>
                             </a>
                         </td>
                     </tr>
