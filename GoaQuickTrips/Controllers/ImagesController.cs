@@ -57,12 +57,12 @@ namespace GoaQuickTrips.Controllers
                 {
                     string fn = image.UploadedFile.FileName.Substring(image.UploadedFile.FileName.LastIndexOf('\\') + 1);
                     fn = image.ApartmentID + "_" + fn;
-                    //string SavePath = System.IO.Path.Combine(Server.MapPath("~/" + db.Config.FirstOrDefault().ImageSavePath), fn);
-                    //empDocs.UploadedFile.SaveAs(SavePath);
+                    string SavePath = System.IO.Path.Combine(Server.MapPath("~/Images"), fn);
+                    image.UploadedFile.SaveAs(SavePath);
 
-                    System.Drawing.Bitmap upimg = new System.Drawing.Bitmap(image.UploadedFile.InputStream);
-                    System.Drawing.Bitmap svimg = MyExtensions.CropUnwantedBackground(upimg);
-                    svimg.Save(System.IO.Path.Combine(Server.MapPath("~/Images"), fn));
+                    //System.Drawing.Bitmap upimg = new System.Drawing.Bitmap(image.UploadedFile.InputStream);
+                    //System.Drawing.Bitmap svimg = MyExtensions.CropUnwantedBackground(upimg);
+                    //svimg.Save(System.IO.Path.Combine(Server.MapPath("~/Images"), fn));
 
                     Image img = new Image
                     {
@@ -136,9 +136,10 @@ namespace GoaQuickTrips.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Image image = db.Images.Find(id);
+            int AptId = (int)image.ApartmentID;
             db.Images.Remove(image);
             db.SaveChanges();
-            return RedirectToAction("Index", new { image.ApartmentID });
+            return RedirectToAction("Index", new { id =AptId });
         }
 
         protected override void Dispose(bool disposing)

@@ -32,6 +32,7 @@ namespace GoaQuickTrips
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
+                      "~/Content/jquery-ui.min.css",
                       "~/Content/EA.css"));
         }
     }

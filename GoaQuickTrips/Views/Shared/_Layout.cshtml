@@ -3,8 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - </title>
-	<link rel="icon" href="~/Custom/BBS.ico">
+    <title>@ViewBag.Title - Goa Quick Trips</title>
+    
+	<link rel="icon" href="~/Custom/favicon.ico">
     @Styles.Render("~/Content/themes/base/css")
     @Scripts.Render("~/bundles/modernizr")
     @Styles.Render("~/Content/css")
@@ -14,7 +15,7 @@
 </head>
 <body >
     @Html.Partial("_MenuPartial")
-    
+    <a id="emblem" href="~/"><img src="~/Custom/Emblem.png" height="180px" alt="Goa Quick Trips" /> </a>
     @Scripts.Render("~/bundles/jquery")
     
     @Scripts.Render("~/bundles/jqueryui")
@@ -34,8 +35,8 @@
         var sel = $('.dropdown-menu a');
         sel.addClass('myamenu');
 
-        var bdy = $("#TopBody a");
-        bdy.addClass('myatag');
+        //var bdy = $("#TopBody a");
+        //bdy.addClass('myatag');
 
         
 

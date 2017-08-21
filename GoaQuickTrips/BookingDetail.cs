@@ -24,5 +24,6 @@ namespace GoaQuickTrips
         public string BlockedReason { get; set; }
     
         public virtual Booking Booking { get; set; }
+        public virtual Apartment Apartment { get; set; }
     }
 }

@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<GoaQuickTrips.MasterAmenity>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Amenities";
 }
 
-<h2>Index</h2>
+<h2>Amenities</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -23,9 +23,8 @@
             @Html.DisplayFor(modelItem => item.Amenity)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MasterID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MasterID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MasterID })
+            @Html.ActionLink("Edit", "Edit", new { id=item.MasterID }) 
+           
         </td>
     </tr>
 }

@@ -3,22 +3,27 @@
 @{
     ViewBag.Title = "Delete";
 }
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 
 <h2>Delete</h2>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Cart</h4>
+    
     <hr />
     <dl class="dl-horizontal">
+       
+
         <dt>
-            @Html.DisplayNameFor(model => model.UserID)
+            @Html.DisplayNameFor(model => model.Apartment.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.UserID)
+            @Html.DisplayFor(model => model.Apartment.Name)
         </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.CheckIn)
         </dt>
@@ -44,19 +49,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.OrigPrice)
+            Price
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.OrigPrice)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Apartment.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Apartment.Name)
         </dd>
 
     </dl>
@@ -66,7 +63,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Back to List", "Index", null, new { @class="ButtonA"})
         </div>
     }
 </div>

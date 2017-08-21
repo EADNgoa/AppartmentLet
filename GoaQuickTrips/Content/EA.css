@@ -1,15 +1,26 @@
 body {
     background-image: url("/Images/Background.jpg");
+    background-repeat: no-repeat;
     top: 0;
     left: 0;
     min-width: 100%;
     min-height: 100%;
     color: black;
+    padding-top: 50px;
 }
 
 
 a, .navbar-nav, .well-lg {
     color: #E0A67A;
+}
+
+.navbar-inverse {
+    background-color: #161635;
+    border-color: #161635;
+    opacity: .95;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 18px;
 }
 
 .myamenu {
@@ -41,10 +52,8 @@ a, .navbar-nav, .well-lg {
         background-image: url(../EAwell.jpg);
         background-size: 100% 100%;
         background-repeat: no-repeat;
-        padding-top: 5px;
-        padding-left: 30px;
-        padding-bottom: 10px;
-        padding-right: 15px;
+        padding: 5px 15px 10px 30px;  
+        
     }
 
 
@@ -58,13 +67,15 @@ input[type=checkbox] {
  */
  #emblem {
         position: fixed;
-        left: 0px;
+        left: 35px;
         top: 15px;
-        -webkit-filter: drop-shadow(12px 12px 25px rgba(0,0,0,0.5));
+        /*-webkit-filter: drop-shadow(12px 12px 25px rgba(0,0,0,0.5));
         filter: drop-shadow(5px 5px 5px #222);
         -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
-        filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+        filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";*/
     }
+
+
 
 /* Multilevel nav menu */
     .dropdown-submenu {
@@ -128,7 +139,7 @@ input[type=checkbox] {
 }
 
 /* Attractive a tags. Div above renderBody is id =TopBody */
-#TopBody a {
+/*#TopBody a {
     color: brown;
     background-color: bisque;
     text-align: center;
@@ -138,10 +149,25 @@ input[type=checkbox] {
     filter: drop-shadow(5px 5px 5px #222);
     -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
     filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+}*/
+
+.ButtonA {
+    color: white !important;
+    background-color: gray;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 18px;
+    padding: 3px;
+    border: inset thin;
+    -webkit-filter: drop-shadow(12px 12px 25px rgba(0,0,0,0.5));
+    filter: drop-shadow(5px 5px 5px #222);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+    filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
 }
 
-
-
+h3 {
+    margin-top:0px;
+}
 /* Print only what is needed 
 <input type="button" onclick="javascript:window.print();" value="print a div!" /> */
 

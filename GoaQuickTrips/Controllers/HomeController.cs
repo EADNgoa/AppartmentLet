@@ -21,40 +21,61 @@ namespace GoaQuickTrips.Controllers
             ViewBag.ReturnAction = "ApartmentsView";
             return View("Index");
         }
-        [HttpPost]
+        
         public ActionResult ApartmentsView(FormCollection fn,int? page)
         {
-            string check_in = DateTime.Parse(fn["check_in"]).ToString("yyyy/MM/dd");
-            string check_out = DateTime.Parse(fn["check_Out"]).ToString("yyyy/MM/dd");
-            int guests = int.Parse(fn["guest"]);
-        
-            if ((guests != 0) && (check_in != null) && (check_out != null))
+            DateTime IN, OUT;
+            int guests;
+            if (fn["check_in"] != null)
             {
-                Session["in"] = check_in;
-                Session["out"] = check_out;
-                Session["Guests"] = guests;
-            }
-          
-            var IN = DateTime.Parse(check_in);
-            var OUT = DateTime.Parse(check_out);
-            var bookings = db.BookingDetails.Where(i => i.CheckIn <= IN &&  i.CheckIn >= IN ||  i.CheckOut <= OUT && i.CheckOut >= IN).Select(id => id.ApartmentID);
-            var apartments = db.Apartments.Where(a => a.NoOfGuests >= guests).Where(a => !bookings.Contains(a.ApartmentID)).OrderBy(a =>a.Name);
+                string check_in = DateTime.Parse(fn["check_in"]).ToString("yyyy/MM/dd");
+                string check_out = DateTime.Parse(fn["check_Out"]).ToString("yyyy/MM/dd");
+                guests = int.Parse(fn["guest"]);
 
+                if ((guests != 0) && (check_in != null) && (check_out != null))
+                {
+                    Session["in"] = check_in;
+                    Session["out"] = check_out;
+                    Session["Guests"] = guests;
+                }
+
+                IN = DateTime.Parse(check_in);
+                OUT = DateTime.Parse(check_out);
+            }
+            else if (Session["in"] != null)
+            {
+                IN = DateTime.Parse(Session["in"].ToString());
+                OUT = DateTime.Parse(Session["out"].ToString());
+                guests = int.Parse(Session["Guests"].ToString());
+            }
+            else
+                return RedirectToAction("Index");
+
+            var bookings = db.BookingDetails.Where(i => i.CheckIn <= OUT &&  i.CheckIn >= IN ||  i.CheckOut <= OUT && i.CheckOut >= IN).Select(id => id.ApartmentID);
+            var apartments = db.Apartments.Where(a => a.NoOfGuests >= guests).Where(a => !bookings.Contains(a.ApartmentID)).OrderBy(a =>a.Name);
+            ViewBag.ReturnAction = "ApartmentsView";
             int pageSize = 3;
             int pageNumber = (page ?? 1);
-            return View(apartments.ToPagedList(pageNumber, pageSize));
+            string ens = "";
+            var PagedApts = apartments.ToPagedList(pageNumber, pageSize);
+            foreach (var item in PagedApts)            
+                ens += $"{item.Name}&&&{item.Lat}&&&{item.Lang}****";
+            
+            ViewBag.encodedString = ens.Substring(0,ens.Length-4);
+            
+            return View(PagedApts);
 
         }
  
 
-        public ActionResult BookedCustomer(BookingViewModel model)
+        public ActionResult BookedCustomer()
         {
 
             var UserID = User.Identity.GetUserId();
 
             //BookingViewModel bvm = new BookingViewModel();
 
-            var bkings = db.Bookings.Where(b => b.UserID == UserID).ToList();
+            var bkings = db.Bookings.Where(b => b.UserID == UserID).OrderByDescending(b =>b.BookDate).ToList();
             //bvm.Bookingdata = bkings;
 
 
@@ -77,6 +98,13 @@ namespace GoaQuickTrips.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (Session["in"] == null)
+                return RedirectToAction("Index");
+
+
+            Session["AptPrice"] = apartment.Prices.OrderByDescending(p => p.WEF).FirstOrDefault(p => (DateTime)p.WEF <= DateTime.Parse(Session["in"].ToString())).Price1;
+
             return View(apartment);
         }
 
@@ -90,7 +118,7 @@ namespace GoaQuickTrips.Controllers
            
             var IN = DateTime.Parse(Session["in"].ToString());
             var OUT = DateTime.Parse(Session["out"].ToString());
-            var item = new Cart { UserID = UserID, ApartmentID = cartItem.ApartmentID, CheckIn = IN, CheckOut=OUT, NoOfGuests=(int)Session["guests"],OrigPrice=null };
+            var item = new Cart { UserID = UserID, ApartmentID = cartItem.ApartmentID, CheckIn = IN, CheckOut=OUT, NoOfGuests=(int)Session["guests"],OrigPrice= (decimal)Session["AptPrice"] };
             db.Carts.Add(item);
            
             db.SaveChanges();

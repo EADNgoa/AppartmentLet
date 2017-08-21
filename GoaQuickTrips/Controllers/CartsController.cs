@@ -13,7 +13,7 @@ using System.Web.UI;
 
 namespace QuickTrips.Controllers
 {
-    [Authorize(Roles = "USER")]
+    [Authorize(Roles = "ADMIN,USER")]
     public class CartsController : Controller
     {
         private QuickTripsEntities db = new QuickTripsEntities();
@@ -23,19 +23,19 @@ namespace QuickTrips.Controllers
         {
             var UserID = User.Identity.GetUserId();
 
-            if (Session["id"] != null)
-            {
-                int id = (int)Session["id"];
+            //if (Session["id"] != null)
+            //{
+            //    int id = (int)Session["id"];
 
-                var cartItem = db.Apartments.Find(id);
+            //    var cartItem = db.Apartments.Find(id);
 
 
-                var IN = DateTime.Parse(Session["in"].ToString());
-                var OUT = DateTime.Parse(Session["out"].ToString());
-                var item = new Cart { UserID = UserID, ApartmentID = cartItem.ApartmentID, CheckIn = IN, CheckOut = OUT, NoOfGuests = (int)Session["guests"], OrigPrice = null };
-                db.Carts.Add(item);
-                db.SaveChanges();
-            }
+            //    var IN = DateTime.Parse(Session["in"].ToString());
+            //    var OUT = DateTime.Parse(Session["out"].ToString());
+            //    var item = new Cart { UserID = UserID, ApartmentID = cartItem.ApartmentID, CheckIn = IN, CheckOut = OUT, NoOfGuests = (int)Session["guests"], OrigPrice = (decimal)Session["AptPrice"] };
+            //    db.Carts.Add(item);
+            //    db.SaveChanges();
+            //}
             var carts = db.Carts.Include(c => c.Apartment).Where(u =>u.UserID == UserID);
             return View(carts.ToList());
         }
@@ -126,7 +126,7 @@ namespace QuickTrips.Controllers
                     Session["bookingid"] = item1.BookingID;
                     foreach (var item in bookings)
                     {
-                        var item2 = new BookingDetail { BookingID = item1.BookingID, ApartmentID = item.ApartmentID, CheckIn = item.CheckIn, CheckOut = item.CheckOut, NoOfGuests = item.NoOfGuests, Price = null, BlockedReason = null };
+                        var item2 = new BookingDetail { BookingID = item1.BookingID, ApartmentID = item.ApartmentID, CheckIn = item.CheckIn, CheckOut = item.CheckOut, NoOfGuests = item.NoOfGuests, Price = item.OrigPrice, BlockedReason = null };
                         db.BookingDetails.Add(item2);
                     }
                     db.SaveChanges();
@@ -159,7 +159,7 @@ namespace QuickTrips.Controllers
            
           
 
-            return RedirectToAction("Payment");
+            return RedirectToAction("BookedCustomer","Home");
         }
 
         // GET: Carts/Edit/5

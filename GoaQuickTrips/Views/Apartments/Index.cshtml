@@ -29,24 +29,16 @@
     }
 </style>
 
-<h2>Index</h2>
+<h2>Apartments</h2>
 <div class="container">
     <table class="table">
         <tr>
             <th>
                Name
             </th>
+            
             <th>
-               Description
-            </th>
-            <th>
-               Rules
-            </th>
-            <th>
-              Notes
-            </th>
-            <th>
-               No Of Guests
+               Max Guests
             </th>
             <th>
                Address
@@ -57,18 +49,7 @@
             <th>
                Phone No
             </th>
-            <th>
-                Location Info
-            </th>
-            <th>
-                Cancellation Policy
-            </th>
-            <th>
-               Lat
-            </th>
-            <th>
-                Lang
-            </th>
+           
           
             <th></th>
         </tr>
@@ -79,15 +60,8 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
-                <td class="truncate">
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td class="truncate">
-                    @Html.DisplayFor(modelItem => item.Rules)
-                </td>
-                <td class="truncate">
-                    @Html.DisplayFor(modelItem => item.Notes)
-                </td>
+               
+               
                 <td> 
                     @Html.DisplayFor(modelItem => item.NoOfGuests)
                 </td>
@@ -95,28 +69,15 @@
                     @Html.DisplayFor(modelItem => item.Address)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Email)
+                    @item.Email
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Phone)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LocationInfo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CancellationPolicy)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Lat)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Lang)
-                </td>
+                
                
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ApartmentID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ApartmentID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ApartmentID })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ApartmentID })                     
                 </td>
             </tr>
         }

@@ -1,10 +1,10 @@
 ﻿@model GoaQuickTrips.MasterAmenity
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Add apartment amenities";
 }
 
-<h2>Create</h2>
+<h2>@ViewBag.Title</h2>
 
 
 @using (Html.BeginForm((string)ViewBag.ReturnAction, "MasterAmenities", FormMethod.Post))
@@ -13,7 +13,7 @@
     @Html.Hidden("ApartmentID", (int)ViewBag.ApartmentID)
     @Html.Hidden("Amenity")
     <div class="form-horizontal">
-        <h4>MasterAmenity</h4>
+        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -31,9 +31,6 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 <table class="table">
     <tr>
         <th>
@@ -58,6 +55,9 @@
     }
 
 </table>
+<div>    
+    <a href="/Apartments/Edit/@ViewBag.ApartmentID">Back</a>
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
