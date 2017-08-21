@@ -268,15 +268,17 @@
 
 </style>
 
-<div class="container section-details">
-    <section class="section-white">
+
+<div class="container profile-content">
+    <section>
     <h2>@Model.Name</h2>
         <h3>Book Now at just Rs. &nbsp; 
         @(Session["AptPrice"].ToString())
         </h3>
         @Html.ActionLink("Add To Cart", "AddToCart", new { id = Model.ApartmentID },new { @class = "ButtonA pull-right" } ) &nbsp;
-        @*@Html.ActionLink("Back to List", "Index",null, new { @class = "ButtonA pull-right" })*@
+        @Html.ActionLink("Back to List", "Index",null, new { @class = "ButtonA pull-right" })
         <p>&nbsp;</p>
+
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
             <ol class="carousel-indicators">
@@ -325,7 +327,7 @@
         </div>
 
     </section>
-    <div class="section-white">
+    <div class="">
 
         <hr />
 
@@ -421,12 +423,18 @@
             </dd>
 
 
+            <dt>Amenities:</dt>
+            @foreach (var item in Model.MasterAmenities)
+            {
+               
+                    <dd>
+                        @item.Amenity
+                    </dd>
+                
+            }
 
         </dl>
-        <p>
-            
-           
-        </p>
+
 
         <div class="row">
       

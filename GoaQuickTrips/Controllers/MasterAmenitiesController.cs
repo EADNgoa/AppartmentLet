@@ -62,6 +62,20 @@ namespace GoaQuickTrips.Controllers
 
             return  RedirectToAction("AddAmenity",new{ id = apartmentid});  
         }
+        public ActionResult DeleteAmenity(int? id ,int? aptid)
+        {
+          
+            var Apart = db.Apartments.FirstOrDefault(x => x.ApartmentID==aptid);
+
+            var Amenity = db.MasterAmenities.FirstOrDefault(x => x.MasterID == id);
+          
+
+            Apart.MasterAmenities.Remove(Amenity); // Remove it 
+              var res=db.SaveChanges();
+
+            return RedirectToAction("AddAmenity", new { id = aptid });
+          
+        }
 
 
 

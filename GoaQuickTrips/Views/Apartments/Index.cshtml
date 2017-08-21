@@ -1,5 +1,5 @@
-﻿@model IEnumerable<GoaQuickTrips.Apartment>
-
+﻿@model PagedList.IPagedList<GoaQuickTrips.Apartment>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
 }
@@ -84,6 +84,10 @@
 
     </table>
 </div>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, LedgerDetailsID = ViewBag.LedgerDetailsID }))
 
 <script>
   

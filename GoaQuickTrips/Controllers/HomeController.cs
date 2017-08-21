@@ -120,7 +120,9 @@ namespace GoaQuickTrips.Controllers
             var OUT = DateTime.Parse(Session["out"].ToString());
             var item = new Cart { UserID = UserID, ApartmentID = cartItem.ApartmentID, CheckIn = IN, CheckOut=OUT, NoOfGuests=(int)Session["guests"],OrigPrice= (decimal)Session["AptPrice"] };
             db.Carts.Add(item);
+           
             db.SaveChanges();
+            Session["cartid"] = item.CartID;
             return RedirectToAction("Index", "Carts");
         }
         public ActionResult About()

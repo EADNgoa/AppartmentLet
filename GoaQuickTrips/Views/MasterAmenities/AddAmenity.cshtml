@@ -49,7 +49,7 @@
 
             </td>
             <td>
-              @* @Html.ActionLink("Delete", "Delete", new { id = item. })*@
+               @Html.ActionLink("Delete", "DeleteAmenity", new { id = item.MasterID ,aptid=item.Apartments.First().ApartmentID})
             </td>
         </tr>
     }
