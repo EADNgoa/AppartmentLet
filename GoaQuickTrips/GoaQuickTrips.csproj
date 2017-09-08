@@ -317,6 +317,7 @@
     <Content Include="GQTmodel.edmx.diagram">
       <DependentUpon>GQTmodel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -371,11 +372,6 @@
     <Content Include="Views\Shared\pli.cshtml" />
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
     <Content Include="Views\Shared\_ReportsLayout.cshtml" />
-    <Content Include="Views\Tables\Create.cshtml" />
-    <Content Include="Views\Tables\Delete.cshtml" />
-    <Content Include="Views\Tables\Details.cshtml" />
-    <Content Include="Views\Tables\Edit.cshtml" />
-    <Content Include="Views\Tables\Index.cshtml" />
     <Content Include="Views\Carts\AddCustomer.cshtml" />
     <Content Include="Views\Carts\Delete.cshtml" />
     <Content Include="Views\Carts\Details.cshtml" />
@@ -446,6 +442,8 @@
     <Content Include="Views\ReviewDetails\Edit.cshtml" />
     <Content Include="Views\ReviewDetails\Index.cshtml" />
     <Content Include="Views\Prices\_ViewStart.cshtml" />
+    <Content Include="Views\Reviews\_ViewStart.cshtml" />
+    <Content Include="Views\ReviewDetails\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

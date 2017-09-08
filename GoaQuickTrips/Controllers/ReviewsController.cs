@@ -1,26 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using GoaQuickTrips;
-using Microsoft.AspNet.Identity;
+using PagedList;
 
 namespace GoaQuickTrips.Controllers
 {
-    public class ReviewsController : Controller
+    [Authorize]
+    public class ReviewsController : EAController
     {
-        private QuickTripsEntities db = new QuickTripsEntities();
-
         // GET: Reviews
         [Authorize(Roles = "ADMIN")]
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var reviews = db.Reviews;
-            return View(reviews.ToList());
+            var reviews = db.Reviews.OrderByDescending(r=>r.ReviewDate);
+
+            int pageSize = 30;
+            int pageNumber = (page ?? 1);
+            
+            return View(reviews.ToPagedList(pageNumber, pageSize));
         }
 
 
@@ -56,19 +57,24 @@ namespace GoaQuickTrips.Controllers
         {
             var UserID = User.Identity.GetUserId();
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && UserID != null)
             {
-                ViewBag.ApartmentID = review.ApartmentID;
-                review.UserID = UserID;
-                review.ReviewDate = DateTime.Now;
-                review.IsVisible = true;
-                db.Reviews.Add(review);
-                db.SaveChanges();
-                return View();
+                var hasStayed = db.Bookings.Where(bc => bc.UserID == UserID && bc.StatusID == 2);
+                var KnowsResort = hasStayed.Where(s => s.BookingDetails.Any(d => d.ApartmentID == review.ApartmentID));
+                if (KnowsResort != null)
+                {
+                    ViewBag.ApartmentID = review.ApartmentID;
+                    review.UserID = UserID;
+                    review.ReviewDate = DateTime.Now;
+                    review.IsVisible = true;
+                    db.Reviews.Add(review);
+                    db.SaveChanges();
+                    return RedirectToAction("BookedCustomer", "Home");
+                }
             }
 
           
-            return View(review);
+            return RedirectToAction("BookedCustomer", "Home");
         }
 
         // GET: Reviews/Edit/5

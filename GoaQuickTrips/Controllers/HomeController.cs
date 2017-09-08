@@ -9,12 +9,8 @@ using PagedList;
 
 namespace GoaQuickTrips.Controllers
 {
-    public class HomeController : Controller
-    {
-        private QuickTripsEntities db = new QuickTripsEntities();
-
-        
-
+    public class HomeController : EAController
+    {   
          public ActionResult Index()
         {
 
@@ -51,39 +47,35 @@ namespace GoaQuickTrips.Controllers
             else
                 return RedirectToAction("Index");
 
-            var bookings = db.BookingDetails.Where(i => i.CheckIn <= OUT &&  i.CheckIn >= IN ||  i.CheckOut <= OUT && i.CheckOut >= IN).Select(id => id.ApartmentID);
+            var bookings = db.BookingDetails.Where(i => IN <= i.CheckOut && OUT >= i.CheckIn && i.Booking.StatusID != 3).Select(id => id.ApartmentID);
             var apartments = db.Apartments.Where(a => a.NoOfGuests >= guests).Where(a => !bookings.Contains(a.ApartmentID)).OrderBy(a =>a.Name);
             ViewBag.ReturnAction = "ApartmentsView";
             int pageSize = 3;
             int pageNumber = (page ?? 1);
-            string ens = "";
             var PagedApts = apartments.ToPagedList(pageNumber, pageSize);
+            string ens = "";
             foreach (var item in PagedApts)            
                 ens += $"{item.Name}&&&{item.Lat}&&&{item.Lang}****";
             
-            ViewBag.encodedString = ens.Substring(0,ens.Length-4);
+            ViewBag.encodedString = (ens.Length>4) ? ens.Substring(0,ens.Length-4):"";
             
             return View(PagedApts);
 
         }
  
-
-        public ActionResult BookedCustomer()
+        [Authorize]
+        public ActionResult BookedCustomer(int? page)
         {
 
             var UserID = User.Identity.GetUserId();
 
-            //BookingViewModel bvm = new BookingViewModel();
+            //show all records for this user (but if admin dont show the blocked records as taht should be seen only in the admin section)
+            var bkings = db.Bookings.Where(b => b.UserID == UserID && b.StatusID != 4).OrderByDescending(b =>b.BookDate);
 
-            var bkings = db.Bookings.Where(b => b.UserID == UserID).OrderByDescending(b =>b.BookDate).ToList();
-            //bvm.Bookingdata = bkings;
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
 
-
-            //bkings.ForEach(bd => boo)
-
-            //var bookedDetails =db.Bookings.Join(db.BookingDetails,b => b.BookingID,bd=> bd.BookingID,(b,bd) => new {b.BookingID,b.UserID,b.StatusID,bd.ApartmentID,bd.CheckIn,bd.CheckOut,bd.Price,bd.NoOfGuests }).Where(i=>i.UserID ==UserID).ToList();
-            return View(bkings);
-       
+            return View(bkings.ToPagedList(pageNumber, pageSize));
       }
 
 
@@ -104,7 +96,7 @@ namespace GoaQuickTrips.Controllers
 
 
             Session["AptPrice"] = apartment.Prices.OrderByDescending(p => p.WEF).FirstOrDefault(p => (DateTime)p.WEF <= DateTime.Parse(Session["in"].ToString())).Price1;
-
+            
             return View(apartment);
         }
 
@@ -122,7 +114,7 @@ namespace GoaQuickTrips.Controllers
             db.Carts.Add(item);
            
             db.SaveChanges();
-            Session["cartid"] = item.CartID;
+            
             return RedirectToAction("Index", "Carts");
         }
         public ActionResult About()

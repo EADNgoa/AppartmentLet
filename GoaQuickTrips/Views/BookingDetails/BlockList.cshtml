@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<GoaQuickTrips.BookingDetail>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Blocked Dates";
 }
 
-<h2>Index</h2>
+<h2>Blocked Dates</h2>
 
 
 <table class="table">
@@ -48,8 +48,7 @@
                 @Html.DisplayFor(modelItem => item.BlockedReason)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.BookingDetailID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.BookingDetailID }) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.BookingDetailID }) |               
                 @Html.ActionLink("Unblock", "Delete", new { id = item.BookingDetailID })
             </td>
         </tr>

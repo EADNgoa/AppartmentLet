@@ -10,16 +10,12 @@ using GoaQuickTrips;
 using Microsoft.AspNet.Identity;
 using PagedList;
 
-namespace QuickTrips.Areas.AdminSection.Controllers
+namespace GoaQuickTrips.Controllers
 {   [Authorize(Roles = "ADMIN")]
-    public class ApartmentsController : Controller
+    public class ApartmentsController : EAController
     {
-        private QuickTripsEntities db = new QuickTripsEntities();
-
-
-
-        // GET: AdminSection/Apartments
         
+        // GET: AdminSection/Apartments        
         public ActionResult Index(int? page)
         {
             var apartments = db.Apartments;
@@ -54,14 +50,23 @@ namespace QuickTrips.Areas.AdminSection.Controllers
             var IN = DateTime.Parse(checkin);
             var OUT = DateTime.Parse(checkout);
 
-            var item1 = new Booking { UserID = UserID, BookDate = DateTime.Now, StatusID = null };
-            db.Bookings.Add(item1);
-            db.SaveChanges();
-            var item2 = new BookingDetail { BookingID = item1.BookingID, ApartmentID = apartments.ApartmentID, CheckIn = IN, CheckOut = OUT, Price = null, BlockedReason = breason };
-            db.BookingDetails.Add(item2);
-            
-            db.SaveChanges();
-            return RedirectToAction("BlockApartments");
+            var AlreadyBook = db.BookingDetails.FirstOrDefault(i => IN <= i.CheckOut && OUT >= i.CheckIn && i.Booking.StatusID !=3 && i.ApartmentID==id);
+
+            if (AlreadyBook==null)
+            {
+                var item1 = new Booking { UserID = UserID, BookDate = DateTime.Now, StatusID = 4 };
+                db.Bookings.Add(item1);
+                db.SaveChanges();
+                var item2 = new BookingDetail { BookingID = item1.BookingID, ApartmentID = apartments.ApartmentID, CheckIn = IN, CheckOut = OUT, Price = 0, BlockedReason = breason };
+                db.BookingDetails.Add(item2);
+
+                db.SaveChanges();
+                return RedirectToAction("BlockList", "BookingDetails" );
+            }
+            else
+            {
+                throw new System.InvalidOperationException($"There is a booking ref: {AlreadyBook.BookingID} on these dates. Kindly cancel the booking if you wish to block these dates");
+            }
         }
 
      

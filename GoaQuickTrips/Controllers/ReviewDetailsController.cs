@@ -11,10 +11,9 @@ using Microsoft.AspNet.Identity;
 
 namespace GoaQuickTrips.Controllers
 {
-    public class ReviewDetailsController : Controller
+    [Authorize(Roles = "ADMIN")]
+    public class ReviewDetailsController : EAController
     {
-        private QuickTripsEntities db = new QuickTripsEntities();
-
         // GET: ReviewDetails
         public ActionResult Index()
         {
@@ -42,7 +41,7 @@ namespace GoaQuickTrips.Controllers
         {
 
             ViewBag.ReviewID = id;
-            Session["rid"] = id;
+            
             return View();
         }
 
@@ -54,18 +53,16 @@ namespace GoaQuickTrips.Controllers
         public ActionResult Create([Bind(Include = "ReviewDetailID,ReviewID,UserID,ReviewDate,Reply,ISvisible")] ReviewDetail reviewDetail)
         {
             var UserID = User.Identity.GetUserId();
-
-    
-
+            
             if (ModelState.IsValid)
             {
-                reviewDetail.ReviewID = (int)Session["rid"];
+                reviewDetail.ReviewID = reviewDetail.ReviewID;
                 reviewDetail.UserID = UserID;
                 reviewDetail.ReviewDate = DateTime.Now;
                 reviewDetail.ISvisible = true;
                 db.ReviewDetails.Add(reviewDetail);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Reviews");
             }
 
             ViewBag.ReviewID = new SelectList(db.Reviews, "ReviewID", "UserID", reviewDetail.ReviewID);

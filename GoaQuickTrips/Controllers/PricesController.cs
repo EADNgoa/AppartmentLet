@@ -10,10 +10,9 @@ using GoaQuickTrips;
 
 namespace GoaQuickTrips.Controllers
 {
-    public class PricesController : Controller
+    [Authorize(Roles = "ADMIN")]
+    public class PricesController : EAController
     {
-        private QuickTripsEntities db = new QuickTripsEntities();
-
         // GET: Prices
         public ActionResult Index(int? id)
         {

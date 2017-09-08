@@ -24,6 +24,7 @@ namespace GoaQuickTrips
     [MetadataType(typeof(BookingDetailsMetadata))]
     public partial class BookingDetail
     {
+        public int NoOfNights => (int)((TimeSpan)(CheckOut - CheckIn)).TotalDays;
     }
 
     [MetadataType(typeof(BookingsMetadata))]
@@ -34,7 +35,7 @@ namespace GoaQuickTrips
     [MetadataType(typeof(CartMetadata))]
     public partial class Cart
     {
-
+        public int NoOfNights => (int)((TimeSpan)(CheckOut - CheckIn)).TotalDays;
     }
 
     [MetadataType(typeof(CustomersMetadata))]

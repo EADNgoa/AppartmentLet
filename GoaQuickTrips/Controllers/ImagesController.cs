@@ -10,10 +10,9 @@ using GoaQuickTrips;
 
 namespace GoaQuickTrips.Controllers
 {
-    public class ImagesController : Controller
+    [Authorize(Roles = "ADMIN")]
+    public class ImagesController : EAController
     {
-        private QuickTripsEntities db = new QuickTripsEntities();
-
         // GET: Images
         public ActionResult Index(int? id)
         {

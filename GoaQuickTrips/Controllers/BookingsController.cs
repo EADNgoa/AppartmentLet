@@ -9,22 +9,24 @@ using System.Web.Mvc;
 using GoaQuickTrips;
 using System.Web.Security;
 using Microsoft.AspNet.Identity;
+using PagedList;
 
 namespace GoaQuickTrips.Controllers
-{ 
-    public class BookingsController : Controller
-    {
-        private QuickTripsEntities db = new QuickTripsEntities();
+{
+    [Authorize]
+    public class BookingsController : EAController
+    {   // GET: Bookings
+        public ActionResult Index(int? page, int BkRefID =0)
+        {   
+            var bookings= db.Bookings.OrderByDescending(u=>u.BookDate).ThenByDescending(u => u.BookingID);
 
-        // GET: Bookings
-       
-        public ActionResult Index()
-        {
+            if (BkRefID > 0)
+                bookings = bookings.Where(b => b.BookingID == BkRefID).OrderByDescending(u => u.BookDate).ThenByDescending(u => u.BookingID);
 
-            var UserID = User.Identity.GetUserId();
-            var bookings= db.Bookings.Where(u => u.UserID == UserID);
-      
-            return View(db.Bookings.ToList());
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            
+            return View(bookings.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult Confirm(int? id)

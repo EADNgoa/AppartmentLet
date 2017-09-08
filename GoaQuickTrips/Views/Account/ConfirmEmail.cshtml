@@ -1,12 +1,23 @@
 ﻿@{
-    ViewBag.Title = "Confirm Email";
+    ViewBag.Title = "Welcome to Goa Quick Trips";
 }
-
+<style>
+    .banner {
+        margin-top: 100px;
+        padding: 30px;
+        z-index: 50;
+        background: rgba(116, 129, 131, 0.8);
+        color: white;
+        border-radius: 8px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    }
+</style>
 <h2>@ViewBag.Title.</h2>
-<div>
+<div class="banner">
     <p>
         Thank you for signing up. Your request is being processed.
-        Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-        after our admin have verified your identity.
+        Please @Html.ActionLink("Click here to go back to the home page", "Index", "Home", routeValues: null, htmlAttributes: new { id = "loginLink" })
+        
     </p>
 </div>

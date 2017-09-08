@@ -13,17 +13,37 @@
         -moz-box-sizing: border-box;
         box-sizing: border-box;
     }
-
+    .profile-content {
+        color: white;
+        margin-top: 20px;
+        padding: 30px;
+        z-index: 80;
+        background: rgba(116, 129, 131, 0.9);
+        border-radius: 8px;
+        // -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+        // box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    }
    
+  
 
     ul {
         list-style-type: none;
     }
 
+    .amli {
+        display: block;
+        width: 25%;
+        float: left;
+    }
 .slide{
     height:300px;
 }
-
+    .flowDiv {
+        
+        height: 350px;
+        overflow-x: hidden;
+        overflow-y:auto;
+    }
 
     .comments-container {
         margin: 60px auto 15px;
@@ -271,12 +291,12 @@
 
 <div class="container profile-content">
     <section>
-    <h2>@Model.Name</h2>
+    <h2 style="margin:0px;">@Model.Name</h2>
         <h3>Book Now at just Rs. &nbsp; 
         @(Session["AptPrice"].ToString())
         </h3>
-        @Html.ActionLink("Add To Cart", "AddToCart", new { id = Model.ApartmentID },new { @class = "ButtonA pull-right" } ) &nbsp;
-        @Html.ActionLink("Back to List", "Index",null, new { @class = "ButtonA pull-right" })
+        @Html.ActionLink("Add To Cart", "AddToCart", new { id = Model.ApartmentID },new { @class = "ButtonA pull-right" } ) 
+        <a href="javascript: history.go(-1)" class="ButtonA">Back</a>
         <p>&nbsp;</p>
 
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -284,7 +304,7 @@
             <ol class="carousel-indicators">
                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 
-                @for (int i = 1; i < Model.Images.Count - 1; i++)
+                @for (int i = 1; i < Model.Images.Count; i++)
                 {
                     <li data-target="#myCarousel" data-slide-to="@(i)"></li>
                 }
@@ -327,12 +347,12 @@
         </div>
 
     </section>
-    <div class="">
+    
 
         <hr />
-
+    <div class="flowDiv">
         <dl class="dl-horizontal">
-            
+
 
             <dt>
                 @Html.DisplayNameFor(model => model.Description)
@@ -423,72 +443,73 @@
             </dd>
 
 
-            <dt>Amenities:</dt>
-            @foreach (var item in Model.MasterAmenities)
-            {
-               
-                    <dd>
-                        @item.Amenity
-                    </dd>
-                
-            }
-
         </dl>
 
+        <hr />
 
+        <div class="comments-container">
+            <h2>Amenities</h2>
+            <ul>
+                @foreach (var amn in Model.MasterAmenities)
+                {
+                    <li class="amli">@amn.Amenity</li>
+                }
+            </ul>
+        </div>
         <div class="row">
-      
+
             <div class="comments-container">
-                <h1>Comments</h1>
-                <ul id="comments-list" class="comments-list">
-                    <li>
-@foreach (var cmt in Model.Reviews)
-{
-    if (cmt.IsVisible == true)
-    {
-                        <div class="comment-main-level">
-                         
-                            <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
-                            <div class="comment-box">
-                                <div class="comment-head">
-                                    <h5 class=""><b>@cmt.UserID</b></h5>
-                                    <span>@cmt.ReviewDate</span>
-                                    <i class="fa fa-reply"></i>
-                                    <i class="fa fa-heart"></i>
-                                </div>
-                                <div class="comment-content">
-                                    @cmt.Review1;
-                                </div>
-                            </div>
-                          
-                        </div>
-        foreach (var rpl in cmt.ReviewDetails)
-        {
-                        <ul class="comments-list reply-list">
+                <h2 style="color: white;">Reviews</h2>
+                @foreach (var cmt in Model.Reviews)
+                {
+                    if (cmt.IsVisible == true)
+                    {
+                        <ul id="comments-list" class="comments-list">
                             <li>
-                                <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
-                                <div class="comment-box">
-                                    <div class="comment-head">
-                                        <h6 class="comment-name"><b>@rpl.UserID;</b></h6>
-                                        <span>@rpl.ReviewDate;</span>
-                                        <i class="fa fa-reply"></i>
-                                        <i class="fa fa-heart"></i>
+                                <div class="comment-main-level">
+
+                                    <div class="comment-avatar"><img src="~/Custom/Review.jpg" alt=""></div>
+                                    <div class="comment-box">
+                                        <div class="comment-head">
+                                            <h5 style="color:black;">
+                                                <b>Verified Guest</b> &nbsp;
+                                                @String.Format("{0:dd/MMM/yyyy}", cmt.ReviewDate)
+                                            </h5>
+                                            
+                                        </div>
+                                        <div class="comment-content">
+                                            @cmt.Review1
+                                        </div>
                                     </div>
-                                    <div class="comment-content">
-                                        @rpl.Reply;
-                                    </div>
+
                                 </div>
+                                @foreach (var rpl in cmt.ReviewDetails)
+                                {
+                                    <ul class="comments-list reply-list">
+                                        <li>
+                                            <div class="comment-avatar"><img src="~/Custom/Review.jpg" alt=""></div>
+                                            <div class="comment-box">
+                                                <div class="comment-head">
+                                                    <h6 class="comment-name"><b>Admin</b></h6>
+                                                    <span>@String.Format("{0:dd/MMM/yyyy}", rpl.ReviewDate)</span>
+                                                    
+                                                </div>
+                                                <div class="comment-content">
+                                                    @rpl.Reply
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                }
                             </li>
-                          
                         </ul>
-        }
-    }
-}
-                    </li>
-              
-                </ul>
+                    }
+                }
+
             </div>
         </div>
+
     </div>
 
 </div>

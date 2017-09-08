@@ -10,10 +10,9 @@ using GoaQuickTrips;
 
 namespace GoaQuickTrips.Controllers
 {
-    public class StatusController : Controller
+    [Authorize(Roles = "ADMIN")]
+    public class StatusController : EAController
     {
-        private QuickTripsEntities db = new QuickTripsEntities();
-
         // GET: Status
         public ActionResult Index()
         {

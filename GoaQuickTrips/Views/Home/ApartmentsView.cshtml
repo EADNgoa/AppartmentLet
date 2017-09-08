@@ -51,11 +51,11 @@
         width: 300px;
     }
     .profile-sidebar {
-        color: white;
+        color: black;
         margin-top: 20px;
         padding: 30px;
         z-index: 80;
-        background: rgba(0, 0, 0, 0.9);
+        background: rgba(116, 129, 131, 0.8);
         border-radius: 8px;
     }
     .profile-content {
@@ -63,15 +63,19 @@
         margin-top: 20px;
         padding: 30px;
         z-index: 80;
-        background: rgba(0, 0, 0, 0.9);
+        background: rgba(116, 129, 131, 0.9);
         border-radius: 8px;
-       // -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-       // box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+        // -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+        // box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
     }
 
     .prod_page{
         border:2px;
         border-color:cadetblue;
+    }
+
+    .pagination {
+        margin:0px;
     }
 
 </style>
@@ -80,6 +84,8 @@
 </header>
 <br />
 <br />
+
+
 <div class="container">
     <div class="row profile">
         <div class="col-md-3">
@@ -96,9 +102,9 @@
 
                             <tbody>
                                 <tr>
-                                    <td> <input type="date" class="form-control input-md" name="check_in" id="check_in" placeholder="@Session["in"].ToString()" value="@Session["in"].ToString()"></td>
+                                    <td> <input type="date" class="form-control input-md" name="check_in" id="check_in" placeholder="@(String.Format("{0:dd-MMM-yyyy}", DateTime.Parse(Session["in"].ToString())))" value="@(String.Format("{0:dd-MMM-yyyy}", DateTime.Parse(Session["in"].ToString())))"></td>
                                 </tr>
-                                <tr><td><input type="date" class="form-control  input-md" name="check_out" id="check_out" placeholder="@Session["out"].ToString()" value="@Session["out"].ToString()"></td></tr>
+                                <tr><td><input type="date" class="form-control  input-md" name="check_out" id="check_out" placeholder="@(String.Format("{0:dd-MMM-yyyy}", DateTime.Parse(Session["out"].ToString())))" value="@(String.Format("{0:dd-MMM-yyyy}", DateTime.Parse(Session["out"].ToString())))"></td></tr>
                                 <tr>
                                     <td>
 
@@ -134,6 +140,9 @@
         </div>
         <div class="col-md-9">
             <div class="profile-content">
+                <h3> @((Model.Count() == 0) ? "We couldn't find any available apartments for these dates. Please search again." : "")</h3>
+
+
 
              @foreach (GoaQuickTrips.Apartment item in Model)
              { <div class="prod_page">
@@ -142,15 +151,31 @@
                                 <div class="col-md-12 col-xs-12 col-sm-12">
                                     <div class="col-md-4 col-sm-4 col-xs-12">
                                         <div class="product_item_view">
-                                            <img src="/Images/@item.Images.First().Path" class="img-responsive" />
+                                            @if (@item.Images.Count > 0)
+                                            {
+                                                <img src="/Images/@item.Images.First().Path" class="img-responsive" />
+                                            }
                                         </div>
                                     </div>
 
                                     <div class="col-md-8 col-sm-8 col-xs-12">
                                         <div class="product_detail_view">
                                             <div class="pro_heading">
-                                              <b><h3>@Html.DisplayFor(modelItem => item.Name) at just Rs. 
-                                                  @(item.Prices.OrderByDescending(p => p.WEF).FirstOrDefault(p => (DateTime)p.WEF <= DateTime.Parse(Session["in"].ToString())).Price1)
+                                              <b><h3>
+                                                  @Html.DisplayFor(modelItem => item.Name) at just Rs. 
+                                                  @{ 
+                                                      var cost = item.Prices.OrderByDescending(p => p.WEF).FirstOrDefault(p => (DateTime)p.WEF <= DateTime.Parse(Session["in"].ToString()));
+                                                      var costprice = cost?.Price1 ?? 0;
+                                                   }
+
+                                                      @if(costprice == 0)
+                                                      {
+                                                          @:(Comming Soon!)
+                                                      } else
+                                                      {
+                                                          @costprice
+                                                      }
+                                                  
                                                   </h3></b>
                                             </div>
                                             <div class="">
@@ -182,8 +207,10 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <hr />
                     <br />
-                    <br />
+                    
                 }
                  <center>
         Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
@@ -234,35 +261,37 @@
                 stringArray = encodedString.split("****");
 
                 var x;
-                for (x = 0; x < stringArray.length; x = x + 1) {
-                    var addressDetails = [];
-                    var marker;
-                    //Separate each field
-                    addressDetails = stringArray[x].split("&&&");
-                    //Load the lat, long data
-                    var lat = new google.maps.LatLng(addressDetails[1], addressDetails[2]);
-                    //Create a new marker and info window
-                    marker = new google.maps.Marker({
-                        map: map,
-                        position: lat,
-                        
-                        //Content is what will show up in the info window
-                        content: addressDetails[0]
-                    });
-                    //Pushing the markers into an array so that it's easier to manage them
-                    markersArray.push(marker);
-                    google.maps.event.addListener(marker, 'click', function () {
-                        closeInfos();
-                        var info = new google.maps.InfoWindow({ content: this.content });
+                if (stringArray.l > 0) {
+                    for (x = 0; x < stringArray.length; x = x + 1) {
+                        var addressDetails = [];
+                        var marker;
+                        //Separate each field
+                        addressDetails = stringArray[x].split("&&&");
+                        //Load the lat, long data
+                        var lat = new google.maps.LatLng(addressDetails[1], addressDetails[2]);
+                        //Create a new marker and info window
+                        marker = new google.maps.Marker({
+                            map: map,
+                            position: lat,
 
-                        //On click the map will load the info window
-                        info.open(map, this);
-                        infos[0] = info;
-                    });
+                            //Content is what will show up in the info window
+                            content: addressDetails[0]
+                        });
+                        //Pushing the markers into an array so that it's easier to manage them
+                        markersArray.push(marker);
+                        google.maps.event.addListener(marker, 'click', function () {
+                            closeInfos();
+                            var info = new google.maps.InfoWindow({ content: this.content });
 
-                    
-                    //Extends the boundaries of the map to include this new location
-                    bounds.extend(lat);
+                            //On click the map will load the info window
+                            info.open(map, this);
+                            infos[0] = info;
+                        });
+
+
+                        //Extends the boundaries of the map to include this new location
+                        bounds.extend(lat);
+                    }
                 }
                 //Takes all the lat, longs in the bounds variable and autosizes the map
                 map.fitBounds(bounds);
@@ -277,4 +306,52 @@
                 }
 
             });
+
+            $(document).ready(function () {
+                var showChar = 150;
+                var ellipsestext = "...";
+                var moretext = "more";
+                var lesstext = "less";
+                $('.more').each(function () {
+                    var content = $(this).html();
+
+                    if (content.length > showChar) {
+
+                        var c = content.substr(0, showChar);
+                        var h = content.substr(showChar - 1, content.length - showChar);
+
+                        var html = c + '<span class="moreellipses">' + ellipsestext + '&nbsp;</span><span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
+
+                        $(this).html(html);
+                    }
+
+                });
+
+                $(".morelink").click(function () {
+                    if ($(this).hasClass("more")) {
+                        $(this).removeClass("more");
+
+                        $(this).html(moretext);
+                    } else {
+                        $(this).addClass("less");
+                        $(this).removeClass("less");
+                        $(this).addClass("more");
+                        $(this).html(lesstext);
+                    }
+                    $(this).parent().prev().toggle();
+                    $(this).prev().toggle();
+                    return false;
+                });
+                $('.truncate').each(function () {
+                    var that = $(this),
+                        title = that.text(),
+                        chars = title.length;
+
+                    if (chars > 33) {
+                        var newTitle = title.substring(0, 100) + "...";
+                        that.text(newTitle);
+                    }
+                });
+            });
+
 </script>

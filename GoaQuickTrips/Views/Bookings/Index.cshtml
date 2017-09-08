@@ -1,22 +1,32 @@
-﻿@model IEnumerable<GoaQuickTrips.Booking>
+﻿@model PagedList.IPagedList<GoaQuickTrips.Booking>
+@using PagedList.Mvc;
+
+
+
 
 @{
     ViewBag.Title = "BookedCustomer";
 }
 
-<h2>BookedCustomer</h2>
-
+<h2>Booking List</h2>
+@using (Html.BeginForm("Index", "Bookings", FormMethod.Post))
+{
+    <label>Search for Booking Ref. Number:</label>
+    <input type="text" name="BkRefID" value="" />
+    <input type="submit" name="Search" value="Search" />
+}
 
 <table class="table">
     <tr>
+        <th>Booking Ref.</th>
         <th>
-            @Html.DisplayNameFor(model => model.UserID)
+            Pax Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BookDate)
+            @Html.DisplayNameFor(model => model.FirstOrDefault().BookDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Status.Status1)
+            Status
         </th>
         <th></th>
     </tr>
@@ -24,15 +34,26 @@
     @foreach (var item in Model)
     {
 
-        <tr>
+        <tr style="background-color:darkblue;">
             <td>
-                @Html.DisplayFor(modelItem => item.UserID)
+                BkRef- @item.BookingID
+            </td>
+            <td>
+                @if (item.StatusID == 4)
+                {
+                    @:Blocked by admin 
+                }
+                else
+                {
+                    @item.BookedCustomers.First().Customer.FName
+                    @item.BookedCustomers.First().Customer.SName
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BookDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Status.Status1)
+                Status
             </td>
             <td>
                 @Html.ActionLink("Confirm", "Confirm", new { id = item.BookingID })
@@ -41,18 +62,18 @@
         </td>
         </tr>
         <tr>
-            <td>
+            <td colspan="4">
                 <table class="table-bordered">
                     <tbody>
 
                         @foreach (var bd in item.BookingDetails)
                         {
                             <tr>
-                                <td>Apartment:@Html.DisplayFor(modelItem => bd.ApartmentID)</td>
-                                <td>Check in:@Html.DisplayFor(modelItem => bd.CheckIn)</td>
-                                <td>Check Out:@Html.DisplayFor(modelItem => bd.CheckOut)</td>
-                                <td>No Of guest:@Html.DisplayFor(modelItem => bd.NoOfGuests)</td>
-                                <td>Price:@Html.DisplayFor(modelItem => bd.Price)</td>
+                                <td><u>@Html.DisplayFor(modelItem => bd.Apartment.Name)</u></td>
+                                <td>In: @Html.DisplayFor(modelItem => bd.CheckIn)</td>
+                                <td>Out: @Html.DisplayFor(modelItem => bd.CheckOut)</td>
+                                <td>Guest: @Html.DisplayFor(modelItem => bd.NoOfGuests)</td>
+                                <td>Price: @Html.DisplayFor(modelItem => bd.Price)</td>
 
                             </tr>
                         }
@@ -61,6 +82,23 @@
                 </table>
             </td>
         </tr>
+        <tr>
+            <td colspan="4">
+                <strong>List of Guests</strong>
+                <ul>
+                    @foreach (var g in item.BookedCustomers)
+                    {
+                        <li>@g.Customer.FName &nbsp; @g.Customer.SName</li>
+                    }
+                </ul>
+            </td>
+        </tr>
     }
 
 </table>
+<center>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page}))
+</center>

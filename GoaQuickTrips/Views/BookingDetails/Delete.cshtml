@@ -43,21 +43,7 @@
             @Html.DisplayFor(model => model.CheckOut)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NoOfGuests)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NoOfGuests)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
+     
 
         <dt>
             @Html.DisplayNameFor(model => model.BlockedReason)
@@ -74,7 +60,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Yes" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input action="action" onclick="window.history.go(-1); return false;" type="button" value="Back" />
         </div>
     }
 </div>

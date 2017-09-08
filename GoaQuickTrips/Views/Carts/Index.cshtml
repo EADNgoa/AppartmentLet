@@ -62,7 +62,7 @@
                                 @Html.DisplayFor(modelItem => item.CheckOut)
                             </td>
                             <td class="text-right">
-                                Rs. @(item.NoOfNights * item.OrigPrice)
+                                Rs. @($"{item.NoOfNights * item.OrigPrice:n}")
                             </td>
                                 @{   total += (decimal)(item.OrigPrice*item.NoOfNights); }
                             <td class="col-sm-1 col-md-1">                               
@@ -78,8 +78,8 @@
                         <td>   </td>
                         <td></td>
                         <td></td>
-                        <td></td>
-                        <td class="text-right"><h3><strong>Rs. @total</strong></h3></td>
+                        
+                        <td colspan="2" class="text-right"><h3><strong>Rs. @($"{total:n}")</strong></h3></td>
                         <td></td>
                     </tr>
                     <tr>

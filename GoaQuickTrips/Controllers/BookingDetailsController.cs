@@ -11,10 +11,8 @@ using GoaQuickTrips;
 namespace GoaQuickTrips.Controllers
 {
     [Authorize(Roles = "ADMIN")]
-    public class BookingDetailsController : Controller
+    public class BookingDetailsController : EAController
     {
-        private QuickTripsEntities db = new QuickTripsEntities();
-
         // GET: BookingDetails
         public ActionResult Index()
         {
@@ -34,7 +32,7 @@ namespace GoaQuickTrips.Controllers
 
         public ActionResult BlockList()
         {
-            var BlockedList = db.BookingDetails.Where(a => a.BlockedReason != null);
+            var BlockedList = db.BookingDetails.Where(a => a.Booking.StatusID==4).OrderByDescending(a =>a.CheckIn);
             return View(BlockedList.ToList());
         }
 
@@ -129,7 +127,9 @@ namespace GoaQuickTrips.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             BookingDetail bookingDetail = db.BookingDetails.Find(id);
+            var Bkg = db.Bookings.Find(bookingDetail.BookingID);
             db.BookingDetails.Remove(bookingDetail);
+            db.Bookings.Remove(Bkg);
             db.SaveChanges();
             return RedirectToAction("BlockList");
         }
