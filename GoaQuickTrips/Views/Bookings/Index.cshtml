@@ -85,12 +85,19 @@
         <tr>
             <td colspan="4">
                 <strong>List of Guests</strong>
-                <ul>
-                    @foreach (var g in item.BookedCustomers)
-                    {
-                        <li>@g.Customer.FName &nbsp; @g.Customer.SName</li>
-                    }
-                </ul>
+                <table width=80%>
+                        @foreach (var g in item.BookedCustomers)
+                        {
+                        <tr>
+                            <td>@g.Customer.FName &nbsp; @g.Customer.SName</td>
+                            <td width=10%></td>
+                            <td>@g.Customer.Phone</td>
+                            <td width=10%></td>
+                            <td>@g.Customer.Email</td>
+                        </tr>
+                        }
+                </table>
+
             </td>
         </tr>
     }
