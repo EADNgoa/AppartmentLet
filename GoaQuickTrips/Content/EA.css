@@ -15,8 +15,10 @@ body {
 a, .navbar-nav, .well-lg {
     color: #E0A67A;
 }
-
-.navbar-inverse {
+.body-content {
+    margin-left: 180px;
+}
+    .navbar-inverse {
     background-color: #161635;
     border-color: #161635;
     opacity: .95;
@@ -69,7 +71,7 @@ input[type=checkbox] {
  */
  #emblem {
         position: fixed;
-        left: 35px;
+        left: 15px;
         top: 15px;
         /*-webkit-filter: drop-shadow(12px 12px 25px rgba(0,0,0,0.5));
         filter: drop-shadow(5px 5px 5px #222);

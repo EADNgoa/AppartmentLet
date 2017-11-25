@@ -53,7 +53,7 @@
                 @Html.DisplayFor(modelItem => item.BookDate)
             </td>
             <td>
-                Status
+                @Html.DisplayFor(modelItem => item.Status.Status1)
             </td>
             <td>
                 @Html.ActionLink("Confirm", "Confirm", new { id = item.BookingID })
@@ -74,7 +74,8 @@
                                 <td>Out: @Html.DisplayFor(modelItem => bd.CheckOut)</td>
                                 <td>Guest: @Html.DisplayFor(modelItem => bd.NoOfGuests)</td>
                                 <td>Price: @Html.DisplayFor(modelItem => bd.Price)</td>
-
+                                <td>Nights: @Html.DisplayFor(modelItem => bd.NoOfNights)</td>
+                                <td>Total: @(bd.Price*bd.NoOfNights)</td>
                             </tr>
                         }
 

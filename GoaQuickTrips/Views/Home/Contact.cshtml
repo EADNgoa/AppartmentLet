@@ -1,17 +1,33 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "Contact Us.";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+<style>
+    .body-content {
+        color: white;
+        margin-top: 30px;
+        padding: 30px;
+        z-index: 10;
+        background: rgba(0, 0, 0, 0.9);
+        border-radius: 8px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    }
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+ 
+</style>
+
+<center>
+    <h2>@ViewBag.Title.</h2>
+
+    <address>
+        Working Hours<br />
+        10am to 5pm<br />
+    </address>
+
+    <address>
+        <strong>write to us:</strong>   <a href="mailto:reservations@goaquicktrips.com">reservations@goaquicktrips.com</a><br />
+        <abbr title="Phone">P: 7775829654</abbr><br />
+        <abbr title="Phone">P: 7083238994</abbr>
+    </address>
+</center>
