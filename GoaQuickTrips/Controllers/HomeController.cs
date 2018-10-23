@@ -15,7 +15,8 @@ namespace GoaQuickTrips.Controllers
         {
 
             ViewBag.ReturnAction = "ApartmentsView";
-            return View("Index");
+            var GetApartments = db.Apartments;
+            return View("Index",GetApartments);
         }
         
         public ActionResult ApartmentsView(FormCollection fn,int? page)
@@ -91,11 +92,10 @@ namespace GoaQuickTrips.Controllers
                 return HttpNotFound();
             }
 
-            if (Session["in"] == null)
-                return RedirectToAction("Index");
+            
 
 
-            Session["AptPrice"] = apartment.Prices.OrderByDescending(p => p.WEF).FirstOrDefault(p => (DateTime)p.WEF <= DateTime.Parse(Session["in"].ToString())).Price1;
+            Session["AptPrice"] = apartment.Prices.OrderByDescending(p => p.WEF).FirstOrDefault(p => (DateTime)p.WEF <= DateTime.Now).Price1;
             
             return View(apartment);
         }

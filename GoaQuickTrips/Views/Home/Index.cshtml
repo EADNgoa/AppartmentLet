@@ -1,79 +1,47 @@
-﻿@model  GoaQuickTrips.Apartment
-
-
-
-
-
-<style type="text/css">
-    .ButtonClicked {
-        background-color: green;
-        color: green;
-    }
-</style>
-
-
-
-<style>
-   
-html{
-    height:100%;
-}
-
-
-    .banner {
-        margin-top: 250px;
-        padding: 30px;
-        z-index: 80;
-        background: rgba(116, 129, 131, 0.8);
-        border-radius: 8px;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-    }
-
-    td {
-        padding:10px;
-    }
-</style>
-<center>
-    <div class="col-md-12 banner">
-     
+﻿@model  IEnumerable<Apartment>
+    <style>
+        section:hover{
+            opacity:0.5;
+        }
+        a{
+            color:black;
+        }
+        a:hover{
+            color:dimgray;
+        }
+    </style>
+<header class="masthead text-center text-white">
+    <div class="masthead-content">
         <div class="container">
-
-
-            <table>
-                @using (Html.BeginForm((string)ViewBag.ReturnAction, "Home", FormMethod.Post))
-                {
-            
-                        <tbody>                            
-                            <tr>
-                                <td> <input type="date" id="ForDate" class="form-control input-lg" name="check_in"  placeholder="Check in"></td>
-                                <td><input type="date" id="ToDate" class="form-control  input-lg" name="check_out"  placeholder="Check out"></td>
-
-                                <td>
-
-                                    <select name='guest' id="guest" class="form-control  input-lg">
-                                        <option value=''>Guest</option>
-                                        <option value='1'>1+</option>
-                                        <option value='2'>2+</option>
-                                        <option value='3'>3+</option>
-                                        <option value='4'>4+</option>
-                                        <option value='5'>5+</option>
-                                        <option value='6'>6+</option>
-                                        <option value='7'>7+</option>
-                                        <option value='8'>8+</option>
-                                        <option value='9'>9+</option>
-                                        <option value='10'>10+</option>
-                                    </select>
-                                </td>
-                                <td> <input type="submit" value="Search" class="btn btn-default  input-lg" /></td>
-                            </tr>
-                        </tbody>
-
-                }
-            </table>
-
+            <h1 class="masthead-heading mb-0">One Page Wonder</h1>
+            <h2 class="masthead-subheading mb-0">Will Rock Your Socks Off</h2>
+            <a href="#" class="btn btn-primary btn-xl rounded-pill mt-5">Learn More</a>
         </div>
-</div>
-</center>
-
+    </div>
+    <div class="bg-circle-1 bg-circle"></div>
+    <div class="bg-circle-2 bg-circle"></div>
+    <div class="bg-circle-3 bg-circle"></div>
+    <div class="bg-circle-4 bg-circle"></div>
+</header>
+@foreach (var item in Model) {
+  <a href="/Home/ApartmentDetail?id=@item.ApartmentID">  
+<section>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 order-lg-2">
+                <div class="p-5">
+                    <img class="img-fluid rounded-circle" src="img/@item.Images.First().Path" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6 order-lg-1">
+                <div class="p-5">
+                    <h2 class="display-4">@item.Name</h2>
+                    <p style="font-size:large !important;">@item.Description.Substring(0,item.Description.Length)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+  </a>
+}
 

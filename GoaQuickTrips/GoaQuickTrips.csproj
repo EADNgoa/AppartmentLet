@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -278,13 +279,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\GoaQuickTrips.mdf" />
-    <Content Include="App_Data\GoaQuickTrips_log.ldf">
-      <DependentUpon>GoaQuickTrips.mdf</DependentUpon>
-    </Content>
+    <Content Include="App_Data\GoaQuickTrips_log.ldf" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\datepicker.css" />
-    <Content Include="Content\EA.css" />
+    <Content Include="Content\one-page-wonder.css" />
+    <Content Include="Content\one-page-wonder.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Custom\BBS.ico" />
     <Content Include="Custom\EAwell.jpg" />
@@ -304,6 +304,10 @@
       <DependentUpon>GQTmodel.edmx</DependentUpon>
       <LastGenOutput>GQTmodel.cs</LastGenOutput>
     </Content>
+    <Content Include="img\01.jpg" />
+    <Content Include="img\02.jpg" />
+    <Content Include="img\03.jpg" />
+    <Content Include="Scripts\gulpfile.js" />
     <Content Include="Reset.sql" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -317,6 +321,14 @@
     <Content Include="GQTmodel.edmx.diagram">
       <DependentUpon>GQTmodel.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\one-page-wonder.scss" />
+    <Content Include="Content\_bootstrap-overrides.scss" />
+    <Content Include="Content\_global.scss" />
+    <Content Include="Content\_masthead.scss" />
+    <Content Include="Content\_mixins.scss" />
+    <Content Include="Content\_navbar.scss" />
+    <Content Include="Content\_variables.scss" />
+    <Content Include=".travis.yml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -333,6 +345,20 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="vendor\bootstrap\css\bootstrap-grid.css" />
+    <Content Include="vendor\bootstrap\css\bootstrap-grid.min.css" />
+    <Content Include="vendor\bootstrap\css\bootstrap-reboot.css" />
+    <Content Include="vendor\bootstrap\css\bootstrap-reboot.min.css" />
+    <Content Include="vendor\bootstrap\css\bootstrap.css" />
+    <Content Include="vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="vendor\bootstrap\js\bootstrap.bundle.js" />
+    <Content Include="vendor\bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="vendor\bootstrap\js\bootstrap.min.js" />
+    <Content Include="vendor\jquery\jquery.js" />
+    <Content Include="vendor\jquery\jquery.min.js" />
+    <Content Include="vendor\jquery\jquery.slim.js" />
+    <Content Include="vendor\jquery\jquery.slim.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -444,6 +470,14 @@
     <Content Include="Views\Prices\_ViewStart.cshtml" />
     <Content Include="Views\Reviews\_ViewStart.cshtml" />
     <Content Include="Views\ReviewDetails\_ViewStart.cshtml" />
+    <Content Include="vendor\bootstrap\css\bootstrap.css.map" />
+    <Content Include="vendor\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="vendor\bootstrap\js\bootstrap.bundle.js.map" />
+    <Content Include="vendor\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <Content Include="vendor\bootstrap\js\bootstrap.js.map" />
+    <Content Include="vendor\bootstrap\js\bootstrap.min.js.map" />
+    <Content Include="vendor\jquery\jquery.min.map" />
+    <Content Include="vendor\jquery\jquery.slim.min.map" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -505,4 +539,11 @@
   </Target>
   <Target Name="AfterBuild">
   </Target> -->
+  <Target Name="CopyRoslynFiles" AfterTargets="AfterBuild" Condition="!$(Disable_CopyWebApplication) And '$(OutDir)' != '$(OutputPath)'">
+    <ItemGroup>
+      <RoslynFiles Include="$(CscToolPath)\*" />
+    </ItemGroup>
+    <MakeDir Directories="$(WebProjectOutputDir)\bin\roslyn" />
+    <Copy SourceFiles="@(RoslynFiles)" DestinationFolder="$(WebProjectOutputDir)\bin\roslyn" SkipUnchangedFiles="true" Retries="$(CopyRetryCount)" RetryDelayMilliseconds="$(CopyRetryDelayMilliseconds)" />
+  </Target>
 </Project>
