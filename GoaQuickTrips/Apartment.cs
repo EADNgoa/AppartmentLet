@@ -23,6 +23,7 @@ namespace GoaQuickTrips
             this.Reviews = new HashSet<Review>();
             this.MasterAmenities = new HashSet<MasterAmenity>();
             this.BookingDetails = new HashSet<BookingDetail>();
+            this.Customers = new HashSet<Customer>();
         }
     
         public int ApartmentID { get; set; }
@@ -51,5 +52,7 @@ namespace GoaQuickTrips
         public virtual ICollection<MasterAmenity> MasterAmenities { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BookingDetail> BookingDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Customer> Customers { get; set; }
     }
 }

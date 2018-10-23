@@ -281,13 +281,14 @@
 
 <div class=" ">
     <header class="masthead text-center text-white">
+
         <h1 style="margin:0px;" class="masthead-heading">@Model.Name</h1>
         <h1 class="masthead-subheading">
             Book Now at just Rs. &nbsp;
             @(Session["AptPrice"].ToString())
         </h1>
         @*<a href="javascript: history.go(-1)" class="ButtonA">Back</a>*@
-        @Html.ActionLink("Add To Cart", "AddToCart", new { id = Model.ApartmentID }, new { @class = "ButtonA pull-right" })
+        @Html.ActionLink("Send Query", "CustomerForm", new { id = Model.ApartmentID }, new { @class = "btn-warning pull-right" })
 
         <p>&nbsp;</p>
 

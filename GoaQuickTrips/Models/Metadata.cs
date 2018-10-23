@@ -178,8 +178,7 @@ namespace GoaQuickTrips
         [Display(Name = "Phone:")]              
         public string Phone;
 
-        [Display(Name ="ID Proof:")]
-        public string IDpicture;
+     
 
     }
 

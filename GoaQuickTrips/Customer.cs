@@ -25,8 +25,9 @@ namespace GoaQuickTrips
         public string SName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public string IDpicture { get; set; }
+        public Nullable<int> ApartmentID { get; set; }
     
+        public virtual Apartment Apartment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BookedCustomer> BookedCustomers { get; set; }
     }

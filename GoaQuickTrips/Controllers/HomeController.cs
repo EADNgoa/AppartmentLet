@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Web.Mvc;
 using GoaQuickTrips.Models;
 using Microsoft.AspNet.Identity;
@@ -99,8 +100,54 @@ namespace GoaQuickTrips.Controllers
             
             return View(apartment);
         }
+        public ActionResult CustomerForm(int id)
+        {
+            ViewBag.AptID = id;
+            ViewBag.AptName = db.Apartments.Find(id).Name;
+            return View("Customer");
+        }
+        [HttpPost]
+        public ActionResult CustomerForm([Bind(Include = "FName,SName,Email,Address,Phone,ApartmentID")] Customer cust)
+        {
+            string GetApartmentName = db.Apartments.Find(cust.ApartmentID).Name;
+            var EmailToSend = "Full Name:"+cust.FName +""+cust.SName+"\n"+"Email:"+cust.Email+"Phone:"+cust.Phone+"\n"+"Apartment Name:"+GetApartmentName;
+           
+            var QuickTripEmail = "contact@goaquicktrips.com";
+           var Body = EmailToSend;
+         
+            var errorMessage = "";
+            SmtpClient smtpClient = new SmtpClient();
+            MailMessage message = new MailMessage();
+            try
+            {
+                db.Customers.Add(cust);
+                db.SaveChanges();
+                MailAddress fromAddress = new MailAddress(cust.Email, cust.FName+" "+cust.SName);
+                smtpClient.Host = "localhost";
+                smtpClient.Port = 25;
+                smtpClient.Host = "smtp.gmail.com";
+                message.From = fromAddress;
+                message.To.Add(QuickTripEmail);
+                message.Subject = "Enquiry";
+                message.IsBodyHtml = false;
+                message.Body = Body;
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Credentials = new NetworkCredential("diptesh03@gmail.com", "warislove123");
+                smtpClient.EnableSsl = true;
+                smtpClient.Send(message);
+                return View("QuerySuccessMessage");
 
-            
+            }
+            catch (System.Net.Mail.SmtpException ex)
+            {
+                Response.Write(ex.ToString());
+            }
+
+
+            return View();
+        }
+
+
         public ActionResult AddToCart(int? id)
         {
             Session["id"] = id;

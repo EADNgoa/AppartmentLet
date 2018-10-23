@@ -131,7 +131,7 @@ namespace GoaQuickTrips.Controllers
                         var email = fm["email" + i];
                         var phone = fm["phone" + i];
 
-                        var item3 = new Customer { FName = fname, SName = sname, Email = email, Phone = phone, IDpicture = null };
+                        var item3 = new Customer { FName = fname, SName = sname, Email = email, Phone = phone };
                         db.Customers.Add(item3);
                         db.SaveChanges();
                         var item4 = new BookedCustomer { CartID = cartItem.FirstOrDefault().CartID, BookingID = (int)Session["bookingid"], CustomerID = item3.CustomerID };

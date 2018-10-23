@@ -19,8 +19,8 @@ namespace GoaQuickTrips
         public Nullable<int> BookingID { get; set; }
         public Nullable<int> CustomerID { get; set; }
     
-        public virtual Customer Customer { get; set; }
         public virtual Booking Booking { get; set; }
         public virtual Cart Cart { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }
