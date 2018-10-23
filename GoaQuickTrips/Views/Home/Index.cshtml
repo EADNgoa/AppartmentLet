@@ -3,9 +3,7 @@
         section:hover{
             opacity:0.5;
         }
-        a{
-            color:black;
-        }
+   
         a:hover{
             color:dimgray;
         }
@@ -18,13 +16,13 @@
             <a href="#" class="btn btn-primary btn-xl rounded-pill mt-5">Learn More</a>
         </div>
     </div>
-    <div class="bg-circle-1 bg-circle"></div>
+    <div class="bg-circle-1 bg-circle "></div>
     <div class="bg-circle-2 bg-circle"></div>
     <div class="bg-circle-3 bg-circle"></div>
     <div class="bg-circle-4 bg-circle"></div>
 </header>
 @foreach (var item in Model) {
-  <a href="/Home/ApartmentDetail?id=@item.ApartmentID">  
+  <a href="/Home/ApartmentDetail?id=@item.ApartmentID" style="color:black;">  
 <section>
     <div class="container">
         <div class="row align-items-center">

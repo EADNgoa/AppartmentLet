@@ -6,10 +6,8 @@
     <edmx:Diagrams>
       <Diagram DiagramId="dd5033f2b4684978b8f0a58d9b6334ba" Name="Diagram1" ZoomLevel="73">
         <EntityTypeShape EntityType="QuickTripsModel.BookedCustomer" Width="1.5" PointX="5.25" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuickTripsModel.Customer" Width="1.5" PointX="3" PointY="19.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QuickTripsModel.Price" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
         <EntityTypeShape EntityType="QuickTripsModel.Status" Width="1.5" PointX="0.75" PointY="17.125" IsExpanded="true" />
-        <AssociationConnector Association="QuickTripsModel.FK_BookedCustomer_Customers" ManuallyRouted="false" />
         <EntityTypeShape EntityType="QuickTripsModel.Booking" Width="1.5" PointX="3" PointY="4.25" />
         <EntityTypeShape EntityType="QuickTripsModel.Cart" Width="1.5" PointX="3" PointY="16.125" />
         <AssociationConnector Association="QuickTripsModel.FK_BookedCustomer_Bookings" />
@@ -30,6 +28,9 @@
         <EntityTypeShape EntityType="QuickTripsModel.MasterAmenity" Width="1.5" PointX="0.75" PointY="12.25" />
         <AssociationConnector Association="QuickTripsModel.Amenities_Apartments" />
         <AssociationConnector Association="QuickTripsModel.FK_BookingDetails_ToApartments" />
+        <EntityTypeShape EntityType="QuickTripsModel.Customer" Width="1.5" PointX="3" PointY="19.875" />
+        <AssociationConnector Association="QuickTripsModel.FK_Customers_Apartment" />
+        <AssociationConnector Association="QuickTripsModel.FK_BookedCustomer_Customers" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
