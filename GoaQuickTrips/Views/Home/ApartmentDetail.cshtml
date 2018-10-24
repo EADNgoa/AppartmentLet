@@ -282,13 +282,17 @@
 <div class=" ">
     <header class="masthead text-center text-white">
 
-        <h1 style="margin:0px;" class="masthead-heading">@Model.Name</h1>
-        <h1 class="masthead-subheading">
+        <h1 style="margin:0px;" class="masthead-content">@Model.Name</h1>
+        <div class="bg-circle-1 bg-circle "></div>
+        <div class="bg-circle-2 bg-circle"></div>
+        <div class="bg-circle-3 bg-circle"></div>
+        <div class="bg-circle-4 bg-circle"></div>
+        <h1 class="masthead-content">
             Book Now at just Rs. &nbsp;
             @(Session["AptPrice"].ToString())
         </h1>
         @*<a href="javascript: history.go(-1)" class="ButtonA">Back</a>*@
-        @Html.ActionLink("Send Query", "CustomerForm", new { id = Model.ApartmentID }, new { @class = "btn-warning pull-right" })
+        @Html.ActionLink("Send Query", "CustomerForm", new { id = Model.ApartmentID }, new { @class = "btn-warning pull-right masthead-content" })
 
         <p>&nbsp;</p>
 
