@@ -139,7 +139,9 @@ namespace GoaQuickTrips.Controllers
                 message.IsBodyHtml = false;
                 message.Body = Body;
                 smtpClient.UseDefaultCredentials = false;
+
                 smtpClient.Credentials = new NetworkCredential("reservations@goaquicktrips.com", "xxxxxxx");
+
                 smtpClient.EnableSsl = true;
                 NEVER_EAT_POISON_Disable_CertificateValidation();
                 smtpClient.Send(message);
