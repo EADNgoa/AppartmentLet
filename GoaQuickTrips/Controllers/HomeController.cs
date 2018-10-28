@@ -132,7 +132,7 @@ namespace GoaQuickTrips.Controllers
                 message.IsBodyHtml = false;
                 message.Body = Body;
                 smtpClient.UseDefaultCredentials = false;
-                smtpClient.Credentials = new NetworkCredential("diptesh03@gmail.com", "warislove123");
+                smtpClient.Credentials = new NetworkCredential("", "");
                 smtpClient.EnableSsl = true;
                 smtpClient.Send(message);
                 return View("QuerySuccessMessage");
