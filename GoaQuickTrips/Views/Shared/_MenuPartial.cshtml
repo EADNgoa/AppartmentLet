@@ -6,22 +6,40 @@
         padding-bottom: 10px;
         line-height: 20px;
     }
+
     a {
         padding-top: 10px;
         padding-bottom: 10px;
         line-height: 20px;
     }
+
+    #emblem {
+        position: fixed;
+        left: 5px;
+        top: 10px;
+        background-color:white;
+        -webkit-filter: drop-shadow(12px 12px 25px rgba(0,0,0,0.5));
+        filter: drop-shadow(5px 5px 5px #222);
+        -ms-filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+        filter: "progid:DXImageTransform.Microsoft.Dropshadow(OffX=12, OffY=12, Color='#444')";
+    }
+    .mainhead{
+        font-size:x-large !important;
+        margin-left:120px;
+    }
 </style>
-<nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top text-lg-left">
-    <div class="container">
-        <a class="navbar-brand" href="#">Start Bootstrap</a>
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+    <div class="container-fluid">
+        <a id="emblem" href="~/"><img src="~/Custom/Emblem.png" height=100px; alt="Goa Quick Trips" /> </a>
+        @Html.ActionLink("GOA QUICK TRIPS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand mainhead" })
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-       
+        
 
-            @Html.Partial("_LoginPartial")
 
-       
+        @Html.Partial("_LoginPartial")
+
+
     </div>
 </nav>
