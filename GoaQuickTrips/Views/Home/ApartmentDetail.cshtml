@@ -4,15 +4,15 @@
     ViewBag.Title = "Details";
 }
 <style>
-  
- 
+
+
     * {
         margin: 0;
         padding: 0;
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
-        font-size:large;
+        font-size: large;
     }
 
 
@@ -25,14 +25,15 @@
         width: 25%;
         float: left;
     }
-.slide{
-    height:300px;
-}
+
+    .slide {
+        height: 300px;
+    }
+
     .flowDiv {
-        
         height: 350px;
         overflow-x: hidden;
-        overflow-y:auto;
+        overflow-y: auto;
     }
 
     .comments-container {
@@ -256,27 +257,26 @@
         }
 
 
-    .section-details{
-    background-color:white !important;
-    border:5px;
-    padding:50px;
+    .section-details {
+        background-color: white !important;
+        border: 5px;
+        padding: 50px;
     }
 
 
 
 
-.section-white {
-   padding: 10px 0;
+    .section-white {
+        padding: 10px 0;
+    }
 
-}
-
-.section-white {
-  background-color: #fff;
-  color: #555;
-}
-
-
+    .section-white {
+        background-color: #fff;
+        color: #555;
+    }
 </style>
+@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">*@
+
 
 
 <div class=" ">
@@ -298,38 +298,36 @@
 
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
-            <ol class="carousel-indicators">
+            @*<ol class="carousel-indicators">
                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 
                 @for (int i = 1; i < Model.Images.Count; i++)
                 {
                     <li data-target="#myCarousel" data-slide-to="@(i)"></li>
                 }
-            </ol>
+            </ol>*@
 
             <!-- Wrapper for slides -->
             <div class="carousel-inner">
-                <div class="carousel-inner">
-
-                    @{ int j = 0;}
-                    @foreach (var item in Model.Images)
+                @{ int j = 0;}
+                @foreach (var item in Model.Images)
+                {
+                    if (j == 0)
                     {
-                        if (j == 0)
-                        {
-                            <div class="item active">
-                                <img src="/img/@item.Path" alt="@item.Name" style="max-height:300px; margin-left:auto; margin-right:auto;">
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="item">
-                                <img src="/img/@item.Path" alt="@item.Name" style="max-height:300px; margin-left:auto; margin-right:auto;">
-                            </div>
-                        }
-                        j++;
+                        <div class="item active">
+                            <img src="/img/@item.Path" alt="@item.Name" style="max-height:330px; margin-left:auto; margin-right:auto;">
+                        </div>
                     }
+                    else
+                    {
+                        <div class="item">
+                            <img src="/img/@item.Path" alt="@item.Name" style="max-height:350px; margin-left:auto; margin-right:auto;">
+                        </div>
+                    }
+                    j++;
+                }
 
-                </div>
+
             </div>
 
             <!-- Left and right controls -->
@@ -344,12 +342,27 @@
         </div>
 
     </header>
-    
+    <br />
 
-        <hr />
     <div class="container">
+        
         <dl class="dl-horizontal">
 
+            <dt>
+                For bookings <br />
+                contact:
+            </dt>
+
+            <dd>
+                <div class="alert alert-info">
+                    For bookings contact: <br />
+                    <br />
+                    Ronald :7083238994<br />
+                    Milion : 8668796992<br />
+                    <br />
+                    Email : <a href="mailto:reservations@goaqicktrips.com">reservations@goaqicktrips.com</a>
+                </div>
+            </dd>
 
             <dt>
                 @Html.DisplayNameFor(model => model.Description)
@@ -423,21 +436,8 @@
                 @Html.DisplayFor(model => model.CancellationPolicy)
             </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Lat)
-            </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Lat)
-            </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Lang)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Lang)
-            </dd>
 
 
         </dl>
@@ -453,7 +453,8 @@
                 }
             </ul>
         </div>
-        <div class="row">
+        <br />
+        
 
             <div class="comments-container">
                 <h2 style="color: white;">Reviews</h2>
@@ -472,7 +473,7 @@
                                                 <b>Verified Guest</b> &nbsp;
                                                 @String.Format("{0:dd/MMM/yyyy}", cmt.ReviewDate)
                                             </h5>
-                                            
+
                                         </div>
                                         <div class="comment-content">
                                             @cmt.Review1
@@ -489,7 +490,7 @@
                                                 <div class="comment-head">
                                                     <h6 class="comment-name"><b>Admin</b></h6>
                                                     <span>@String.Format("{0:dd/MMM/yyyy}", rpl.ReviewDate)</span>
-                                                    
+
                                                 </div>
                                                 <div class="comment-content">
                                                     @rpl.Reply
@@ -507,6 +508,6 @@
             </div>
         </div>
 
-    </div>
+    
 
 </div>
