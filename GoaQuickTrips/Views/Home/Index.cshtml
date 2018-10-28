@@ -34,13 +34,16 @@
                 <div class="row align-items-center">
                     <div class="col-lg-6 order-lg-2">
                         <div class="p-5">
-                            <img class="img-fluid rounded-circle" src="img/@item.Images.First().Path" alt="">
+                            @if (item.Images.Count > 0)
+                            {
+                                <img class="img-fluid rounded-circle" src="/img/@item.Images.First().Path" alt="">
+                            }
                         </div>
                     </div>
                     <div class="col-lg-6 order-lg-1">
                         <div class="p-5">
                             <h2 class="display-4">@item.Name</h2>
-                            <p>@item.Description</p>
+                            <p style="font-size:large !important;">@item.Description</p>
                         </div>
                     </div>
                 </div>
@@ -55,13 +58,16 @@
                 <div class="row align-items-center">
                     <div class="col-lg-6">
                         <div class="p-5">
-                            <img class="img-fluid rounded-circle" src="img/@item.Images.First().Path" alt="">
+                            @if (item.Images.Count > 0)
+                            {
+                                <img class="img-fluid rounded-circle" src="/img/@item.Images.First().Path" alt="">
+                            }
                         </div>
                     </div>
                     <div class="col-lg-6 ">
                         <div class="p-5">
                             <h2 class="display-4">@item.Name</h2>
-                            <p style="font-size:large !important;">@item.Description.Substring(0, item.Description.Length)</p>
+                            <p style="font-size:large !important;">@item.Description</p>
                         </div>
                     </div>
                 </div>

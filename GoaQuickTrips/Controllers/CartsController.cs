@@ -119,7 +119,7 @@ namespace GoaQuickTrips.Controllers
                     Session["bookingid"] = item1.BookingID;
                     foreach (var item in cartItem)
                     {
-                        var item2 = new BookingDetail { BookingID = item1.BookingID, ApartmentID = item.ApartmentID, CheckIn = item.CheckIn, CheckOut = item.CheckOut, NoOfGuests = item.NoOfGuests, Price = item.OrigPrice, BlockedReason = null };
+                        var item2 = new BookingDetail { BookingID = item1.BookingID, ApartmentID = item.ApartmentID, CheckIn = item.CheckIn, CheckOut = item.CheckOut, NoOfGuests = item.NoOfGuests, Price = item.OrigPrice.Value, BlockedReason = null };
                         db.BookingDetails.Add(item2);
                     }
                     db.SaveChanges();

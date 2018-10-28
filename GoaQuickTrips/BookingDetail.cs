@@ -20,7 +20,7 @@ namespace GoaQuickTrips
         public Nullable<System.DateTime> CheckIn { get; set; }
         public Nullable<System.DateTime> CheckOut { get; set; }
         public Nullable<int> NoOfGuests { get; set; }
-        public Nullable<decimal> Price { get; set; }
+        public decimal Price { get; set; }
         public string BlockedReason { get; set; }
     
         public virtual Booking Booking { get; set; }

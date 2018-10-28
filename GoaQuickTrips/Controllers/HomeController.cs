@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Web.Mvc;
 using GoaQuickTrips.Models;
 using Microsoft.AspNet.Identity;
@@ -107,46 +109,69 @@ namespace GoaQuickTrips.Controllers
             return View("Customer");
         }
         [HttpPost]
-        public ActionResult CustomerForm([Bind(Include = "FName,SName,Email,Address,Phone,ApartmentID")] Customer cust)
+        public ActionResult CustomerForm([Bind(Include = "FName,SName,Email,Address,Phone,ApartmentID,RequestStr")] Customer cust)
         {
             string GetApartmentName = db.Apartments.Find(cust.ApartmentID).Name;
-            var EmailToSend = "Full Name:"+cust.FName +""+cust.SName+"\n"+"Email:"+cust.Email+"Phone:"+cust.Phone+"\n"+"Apartment Name:"+GetApartmentName;
+            var Body = "Full Name:"+cust.FName +" "+cust.SName+"\n"+"Email:"+cust.Email+"\n Phone:"+cust.Phone+"\n"+"Apartment Name:"+GetApartmentName + "\n" + cust.RequestStr;
            
-            var QuickTripEmail = "contact@goaquicktrips.com";
-           var Body = EmailToSend;
-         
-            var errorMessage = "";
+            var QuickTripEmail = "reservations@goaquicktrips.com";
+           
             SmtpClient smtpClient = new SmtpClient();
             MailMessage message = new MailMessage();
             try
             {
                 db.Customers.Add(cust);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
                 MailAddress fromAddress = new MailAddress(cust.Email, cust.FName+" "+cust.SName);
-                smtpClient.Host = "localhost";
+                
                 smtpClient.Port = 25;
-                smtpClient.Host = "smtp.gmail.com";
+                smtpClient.Host = "goaquicktrips.com";
                 message.From = fromAddress;
                 message.To.Add(QuickTripEmail);
                 message.Subject = "Enquiry";
                 message.IsBodyHtml = false;
                 message.Body = Body;
                 smtpClient.UseDefaultCredentials = false;
-                smtpClient.Credentials = new NetworkCredential("", "");
+
+                smtpClient.Credentials = new NetworkCredential("reservations@goaquicktrips.com", "xxxxxxx");
+
                 smtpClient.EnableSsl = true;
+                NEVER_EAT_POISON_Disable_CertificateValidation();
                 smtpClient.Send(message);
                 return View("QuerySuccessMessage");
 
             }
-            catch (System.Net.Mail.SmtpException ex)
+            catch (Exception ex)
             {
-                Response.Write(ex.ToString());
+                throw ex;
             }
 
 
-            return View();
+            
         }
-
+        
+        static void NEVER_EAT_POISON_Disable_CertificateValidation()
+        {
+            // Disabling certificate validation can expose you to a man-in-the-middle attack
+            // which may allow your encrypted message to be read by an attacker
+            // https://stackoverflow.com/a/14907718/740639
+            ServicePointManager.ServerCertificateValidationCallback =
+                delegate (
+                    object s,
+                    X509Certificate certificate,
+                    X509Chain chain,
+                    SslPolicyErrors sslPolicyErrors
+                ) {
+                    return true;
+                };
+        }
 
         public ActionResult AddToCart(int? id)
         {
