@@ -20,7 +20,10 @@
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
-                @Html.Hidden("ApartmentID",(int)ViewBag.AptID)
+                if (ViewBag.AptID>0)
+                {
+                @Html.Hidden("ApartmentID", (int)ViewBag.AptID)
+                }
             <div class="form-horizontal">
                 <h4>Fill the Below form fo Enquiry</h4>
                 <hr />
