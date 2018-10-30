@@ -119,7 +119,7 @@ namespace GoaQuickTrips.Controllers
             {
                  GetApartmentName = db.Apartments.Find(cust.ApartmentID).Name;
             }
-            var Body = "Full Name:"+cust.FName +" "+cust.SName+"\n"+"Email:"+cust.Email+"\n Phone:"+cust.Phone+"\n"+"Apartment Name:"+GetApartmentName + "\n" + cust.RequestStr;
+            var Body = "Full Name:"+cust.FName +" "+cust.SName+"\n"+"Email:"+cust.Email+"\n" + "Phone:"+cust.Phone+"\n"+"Apartment Name:"+GetApartmentName + "\n" + cust.RequestStr;
            
             var QuickTripEmail = "reservations@goaquicktrips.com";
            

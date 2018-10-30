@@ -308,6 +308,7 @@
     <Content Include="img\01.jpg" />
     <Content Include="img\02.jpg" />
     <Content Include="img\03.jpg" />
+    <Content Include="img\Banner.jpg" />
     <Content Include="Scripts\gulpfile.js" />
     <Content Include="Reset.sql" />
     <Content Include="Scripts\bootstrap.js" />
