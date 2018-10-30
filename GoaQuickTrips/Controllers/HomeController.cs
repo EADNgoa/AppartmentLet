@@ -18,7 +18,7 @@ namespace GoaQuickTrips.Controllers
         {
 
             ViewBag.ReturnAction = "ApartmentsView";
-            var GetApartments = db.Apartments;
+            var GetApartments = db.Apartments.OrderByDescending(a => a.ApartmentID);
             return View("Index",GetApartments);
         }
         
