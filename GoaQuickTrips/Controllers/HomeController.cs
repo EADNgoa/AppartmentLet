@@ -102,16 +102,23 @@ namespace GoaQuickTrips.Controllers
             
             return View(apartment);
         }
-        public ActionResult CustomerForm(int id)
+        public ActionResult CustomerForm(int? id)
         {
-            ViewBag.AptID = id;
-            ViewBag.AptName = db.Apartments.Find(id).Name;
+            if (id != null)
+            {
+                ViewBag.AptID = id;
+                ViewBag.AptName = db.Apartments.Find(id).Name;
+            }
             return View("Customer");
         }
         [HttpPost]
         public ActionResult CustomerForm([Bind(Include = "FName,SName,Email,Address,Phone,ApartmentID,RequestStr")] Customer cust)
         {
-            string GetApartmentName = db.Apartments.Find(cust.ApartmentID).Name;
+            string GetApartmentName = " ";
+            if (cust.ApartmentID != null)
+            {
+                 GetApartmentName = db.Apartments.Find(cust.ApartmentID).Name;
+            }
             var Body = "Full Name:"+cust.FName +" "+cust.SName+"\n"+"Email:"+cust.Email+"\n Phone:"+cust.Phone+"\n"+"Apartment Name:"+GetApartmentName + "\n" + cust.RequestStr;
            
             var QuickTripEmail = "reservations@goaquicktrips.com";
